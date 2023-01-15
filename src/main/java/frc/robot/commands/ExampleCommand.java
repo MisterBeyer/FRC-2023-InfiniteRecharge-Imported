@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.Deadband;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
 
@@ -15,6 +17,8 @@ public class ExampleCommand extends CommandBase {
   private final Drivebase m_subsystem;
   private final DoubleSupplier m_left;
   private final DoubleSupplier m_right;
+  private XboxController gamePad;
+  private Deadband dead;
 
   /**
    * Creates a new ExampleCommand.
@@ -25,6 +29,8 @@ public class ExampleCommand extends CommandBase {
     m_subsystem = subsystem;
     m_left = left;
     m_right = right;
+    gamePad = new XboxController(0);
+    dead = new Deadband();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,7 +42,9 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.tankDrive(-1 * m_left.getAsDouble() * -1, -1 * m_right.getAsDouble());
+    double Joystickx = m_left.getAsDouble();
+    double Joysticky = m_right.getAsDouble();
+    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, 1 * dead.deadBand(Joysticky, .15));
   }
 
   // Called once the command ends or is interrupted.
