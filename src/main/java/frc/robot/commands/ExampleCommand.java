@@ -19,7 +19,7 @@ public class ExampleCommand extends CommandBase {
   private final DoubleSupplier m_right;
   private XboxController gamePad;
   private Deadband dead;
-
+  private static double x;
   /**
    * Creates a new ExampleCommand.
    *
@@ -27,24 +27,29 @@ public class ExampleCommand extends CommandBase {
    */
   public ExampleCommand(Drivebase subsystem, DoubleSupplier left, DoubleSupplier right) {
     m_subsystem = subsystem;
+    
     m_left = left;
     m_right = right;
+    
     gamePad = new XboxController(0);
     dead = new Deadband();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
 
+  
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+  }
+  
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double Joystickx = m_left.getAsDouble();
     double Joysticky = m_right.getAsDouble();
-    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, 1 * dead.deadBand(Joysticky, .15));
+    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, x * dead.deadBand(Joysticky, .15));
   }
 
   // Called once the command ends or is interrupted.

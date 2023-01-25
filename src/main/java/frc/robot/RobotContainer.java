@@ -5,16 +5,21 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import java.util.function.DoubleSupplier;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 import edu.wpi.first.math.*;
@@ -34,10 +39,7 @@ import edu.wpi.first.wpilibj.Compressor;
 public class RobotContainer {
   
   private final Drivebase drivebase;
-  // private final Spark front_Left = new Spark(4);
-  // private final Spark back_Left = new Spark(1);
-  // private final Spark front_Right = new Spark(11);
-  // private final Spark back_Right = new Spark(7);
+  private final Intake intake;
   private final XboxController gamePad;
   private Drivebase subsystem;
   
@@ -46,54 +48,39 @@ public class RobotContainer {
   private MotorControllerGroup left;
   private MotorControllerGroup right;
   private Deadband dead;
+  private ExampleCommand example;
 
+  private Constants constant; 
 
 
  // private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+     intake = new Intake();
     // Configure the button bindings
-
-
-  //  m_subsystem = subsystem;
-  //  m_left = left;
-  //  m_right = right;
-    // final Spark front_Left = new Spark(3);
-    // final Spark back_Left = new Spark(1);
-    // final Spark front_Right = new Spark(11);
-    // final Spark back_Right = new Spark(7);
-    
-    // MotorControllerGroup left = new MotorControllerGroup(front_Right, back_Right);
-    // MotorControllerGroup right = new MotorControllerGroup(front_Left, back_Left);
-
-
     //auto = new ExampleCommand(m_subsystem, m_left, m_right);
 
+
+    //TODO MARCUS IDEA
+     // 3 motors in diffrent subsystems for arm NAME THEM (top motor, midway motor, botton motor, )
+     // 1 motor to controll intake ( use last year code)
+
+    // TODO LUKE IDEA
+
+    /*TODO MAKE A SUBSYSTEM THAT CONTROLS A ARM( Pnumatics 2 pistons both on same solenoide
+    ( look at old pnumatic code see if we can just copy and paste))  */ 
+    /*  TODO AND A INTAKE(1  motor ( have it both pull things in and expell things)
+     ( look at code from Last Year robot with same thing)) */
+    /*  TODO A ELEVATOR (1 motor( both pulls and pushes things.))
+     * have both intake 
+    */
     drivebase = new Drivebase();
     dead = new Deadband();
     gamePad = new XboxController(0);
-    
+    drivebase.setDefaultCommand(new ExampleCommand(drivebase, () -> gamePad.getRawAxis(1), () -> gamePad.getRawAxis(5), () -> gamePad.getRightBumper(), () -> gamePad.getLeftBumper()));
     configureButtonBindings();
-    // Might have to chang raw axis 5 to 4 since 5 is forward and backward but 4 is left and right 
-    
-    // double Joystickx = gamePad.getRawAxis(1);
-    // double Joysticky = gamePad.getRawAxis(5);
-    // System.out.println("Joystickx is " + Joystickx);
-    // System.out.println("Joysticky is " + Joysticky);
-
-    
-    
-    // else if (  Joysticky <= .15 ){ 
-    // }
-          //  drivebase.setDefaultCommand(new ExampleCommand(drivebase, () -> dead.deadBand(Joystickx, .15), () -> dead.deadBand(Joysticky, .15)));
-          drivebase.setDefaultCommand(new ExampleCommand(drivebase, () -> gamePad.getRawAxis(1), () -> gamePad.getRawAxis(5)));
-
-    // Set up compressor
-      // compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-      // compressor.enableDigital();
-
-    
+    constant = new Constants();
   }
 
   /*
@@ -104,8 +91,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 // this activates the shoot command also might've gotte nthe button port wrong 
+    //JoystickButton joystick_1 = new JoystickButton(gamePad, 0);
+    // joystick_1.whileTrue(example);
     
-    
+  
+       
+
   }
 
   /**

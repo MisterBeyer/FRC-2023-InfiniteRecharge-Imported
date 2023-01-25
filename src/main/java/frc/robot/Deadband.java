@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj2.command.Command;
+
 /** Add your docs here. */
 public class Deadband {
     
@@ -23,4 +25,11 @@ public class Deadband {
         return 0;
 
     }
-}
+    
+      
+    
+      
+    }
+      
+    
+
