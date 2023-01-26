@@ -14,16 +14,15 @@ public class Drivebase extends SubsystemBase {
     private final CANSparkMax front_Right = new CANSparkMax(4, MotorType.kBrushless);
     private final CANSparkMax back_Right = new CANSparkMax(3, MotorType.kBrushless);
     Constants constant = new Constants();
-    public double speed = constant.drivingSpeed;
 
 // TODO: create a speed limitor method that creates a speed limit verible that can be sent to example cammond
 public void setSpeed(double speed) {
-    this.speed = speed;
+    
   }    
     public void tankDrive(double left_Input, double right_Input) {
         
-       front_Left.set(left_Input * speed);
-        front_Right.set(right_Input * speed);
+       front_Left.set(left_Input );
+        front_Right.set(right_Input );
 
         // m_left.set(left_Input);
         // m_right.set(right_Input);

@@ -8,6 +8,8 @@ import frc.robot.Deadband;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 /** An example command that uses an example subsystem.
@@ -17,6 +19,8 @@ public class ExampleCommand extends CommandBase {
   private final Drivebase m_subsystem;
   private final DoubleSupplier m_left;
   private final DoubleSupplier m_right;
+  private BooleanSupplier bumperRight;
+  private BooleanSupplier bumperLeft;
   private XboxController gamePad;
   private Deadband dead;
   private static double x;
@@ -25,9 +29,16 @@ public class ExampleCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(Drivebase subsystem, DoubleSupplier left, DoubleSupplier right) {
+  public ExampleCommand(
+    Drivebase subsystem, 
+    DoubleSupplier left, 
+    DoubleSupplier right,
+    BooleanSupplier bumperRight,
+    BooleanSupplier bumperLeft
+) {
     m_subsystem = subsystem;
-    
+    this.bumperRight = bumperRight;
+    this.bumperLeft = bumperLeft;
     m_left = left;
     m_right = right;
     
@@ -47,9 +58,20 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
     double Joystickx = m_left.getAsDouble();
     double Joysticky = m_right.getAsDouble();
+    if ( true == bumperLeft.getAsBoolean()) {
+      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .15, .15 * dead.deadBand(Joysticky, .15));
+
+    }
+    else if ( true == bumperRight.getAsBoolean()){
+      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, 1* dead.deadBand(Joysticky, .15));
+
+    }
+    else {
     m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, x * dead.deadBand(Joysticky, .15));
+    }
   }
 
   // Called once the command ends or is interrupted.

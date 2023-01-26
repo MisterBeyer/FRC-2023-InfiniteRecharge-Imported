@@ -15,17 +15,17 @@ import frc.robot.Constants;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Intake extends SubsystemBase {
+public class ElevatorStart extends SubsystemBase {
  // private final CANSparkMax motor = new CANSparkMax(3, MotorType.kBrushless);
- private final CANSparkMax front_Left = new CANSparkMax(5, MotorType.kBrushless);
+ //private final CANSparkMax front_Left = new CANSparkMax(5, MotorType.kBrushless);
 
   /** Creates a new Motor. */
-  public Intake() {
-  }
+  // public ElevatorStart() {
+  // }
 
-  public void motorStart(){
-    front_Left.set(.90);
-  }
+  // public void motorStart(){
+  //  // front_Left.set(.90);
+  // }
 
   @Override
   public void periodic() {

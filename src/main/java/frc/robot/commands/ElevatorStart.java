@@ -7,10 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 public class ElevatorStart extends CommandBase {
-private ElevatorStart elevator;
+private ElevatorStart ElevatorStart;
   /** Creates a new MotorStart. */
   public ElevatorStart() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  this.ElevatorStart = ElevatorStart;
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +22,7 @@ private ElevatorStart elevator;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Motor.motorStart();
+    //ElevatorStart
   }
 
   // Called once the command ends or is interrupted.

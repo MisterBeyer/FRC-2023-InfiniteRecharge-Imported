@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -39,7 +38,6 @@ import edu.wpi.first.wpilibj.Compressor;
 public class RobotContainer {
   
   private final Drivebase drivebase;
-  private final Intake intake;
   private final XboxController gamePad;
   private Drivebase subsystem;
   
@@ -53,11 +51,10 @@ public class RobotContainer {
   private Constants constant; 
 
 
- // private final Compressor compressor;
+  //private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-     intake = new Intake();
     // Configure the button bindings
     //auto = new ExampleCommand(m_subsystem, m_left, m_right);
 
@@ -78,7 +75,13 @@ public class RobotContainer {
     drivebase = new Drivebase();
     dead = new Deadband();
     gamePad = new XboxController(0);
-    drivebase.setDefaultCommand(new ExampleCommand(drivebase, () -> gamePad.getRawAxis(1), () -> gamePad.getRawAxis(5), () -> gamePad.getRightBumper(), () -> gamePad.getLeftBumper()));
+    drivebase.setDefaultCommand(
+        new ExampleCommand(
+          drivebase, 
+          () -> gamePad.getRawAxis(1), 
+          () -> gamePad.getRawAxis(5), 
+          () -> gamePad.getRightBumper(), 
+          () -> gamePad.getLeftBumper()));
     configureButtonBindings();
     constant = new Constants();
   }
