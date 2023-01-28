@@ -37,9 +37,8 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class RobotContainer {
   
-  private final Drivebase drivebase;
-  private final XboxController gamePad;
-  private Drivebase subsystem;
+  private  XboxController gamePad = new XboxController(0);
+  private Drivebase drivebase = new Drivebase();
   
   // private DoubleSupplier right;
   // private DoubleSupplier left;
@@ -72,18 +71,15 @@ public class RobotContainer {
     /*  TODO A ELEVATOR (1 motor( both pulls and pushes things.))
      * have both intake 
     */
-    drivebase = new Drivebase();
-    dead = new Deadband();
-    gamePad = new XboxController(0);
+    
     drivebase.setDefaultCommand(
         new ExampleCommand(
           drivebase, 
-          () -> gamePad.getRawAxis(1), 
+          () -> gamePad.getRawAxis(1),
           () -> gamePad.getRawAxis(5), 
-          () -> gamePad.getRightBumper(), 
-          () -> gamePad.getLeftBumper()));
+          () -> gamePad.getLeftBumper(),  
+          () -> gamePad.getRightBumper()));
     configureButtonBindings();
-    constant = new Constants();
   }
 
   /*
@@ -93,10 +89,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-// this activates the shoot command also might've gotte nthe button port wrong 
-    //JoystickButton joystick_1 = new JoystickButton(gamePad, 0);
-    // joystick_1.whileTrue(example);
-    
+
   
        
 

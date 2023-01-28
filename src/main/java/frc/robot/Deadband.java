@@ -12,19 +12,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class Deadband {
     
     public double deadBand(Double m_left, double deadBand) {
-        System.out.println(m_left);
-     if ( m_left > deadBand  ) {
-     //System.out.println(" none negative deadband got called");
-        return m_left;
+      return m_left;
+   //   if ( m_left > deadBand  ) {
+   //   //System.out.println(" none negative deadband got called");
+   //      return m_left;
      
-     }
-     if ( m_left < -deadBand) {
-        System.out.println("negative deadband got called");
-        return m_left;
-     }
-        return 0;
+   //   }
+   //   if ( m_left < -deadBand) {
+   //      System.out.println("negative deadband got called");
+   //      return m_left;
+   //   }
+   //      return 0;
 
-    }
+     }
     
       
     

@@ -23,7 +23,6 @@ public class ExampleCommand extends CommandBase {
   private BooleanSupplier bumperLeft;
   private XboxController gamePad;
   private Deadband dead;
-  private static double x;
   /**
    * Creates a new ExampleCommand.
    *
@@ -39,13 +38,13 @@ public class ExampleCommand extends CommandBase {
     m_subsystem = subsystem;
     this.bumperRight = bumperRight;
     this.bumperLeft = bumperLeft;
-    m_left = left;
-    m_right = right;
+    this.m_left = left;
+    this.m_right = right;
     
     gamePad = new XboxController(0);
     dead = new Deadband();
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(subsystem);
+     addRequirements(subsystem);
   }
 
   
@@ -58,9 +57,12 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double Joystickx = m_left.getAsDouble();
-    double Joysticky = m_right.getAsDouble();
+    System.out.print("example command called");
+    double Joystickx = this.m_left.getAsDouble();
+    double Joysticky = this.m_right.getAsDouble();
+        System.out.print("this is x " + Joystickx);
+        System.out.println(" " + Joysticky);
+
     if ( true == bumperLeft.getAsBoolean()) {
       m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .15, .15 * dead.deadBand(Joysticky, .15));
 
@@ -70,7 +72,7 @@ public class ExampleCommand extends CommandBase {
 
     }
     else {
-    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, x * dead.deadBand(Joysticky, .15));
+    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .5, .5* dead.deadBand(Joysticky, .15));
     }
   }
 
