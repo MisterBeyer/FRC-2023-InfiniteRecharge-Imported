@@ -13,11 +13,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PID extends PIDCommand {
   /** Creates a new PID. */
-  private final CANSparkMax elevator = new CANSparkMax(1, MotorType.kBrushless);
-  private RelativeEncoder encoder;
-  this.encoder = encoder.getPIDController;
+  private final CANSparkMax elevator = new CANSparkMax(8, MotorType.kBrushless);
+   private RelativeEncoder encoder;
   //TODO move p.i.d to constants 
   public PID() {
+
     super(
         // The controller that the command will use
         new PIDController(0.0004, 0.00001, 0.0008),
@@ -27,7 +27,7 @@ public class PID extends PIDCommand {
         () -> 2000,
         // This uses the output
         output -> {
-         elevator.set(output);
+        elevator.set(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

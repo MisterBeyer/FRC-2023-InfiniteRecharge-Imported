@@ -7,12 +7,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.commands.Elevator;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeMotor;
+import frc.robot.commands.SolenoidStart;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -36,6 +41,7 @@ import edu.wpi.first.wpilibj.Compressor;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private Joystick joystick;
   
   private  XboxController gamePad = new XboxController(0);
   private Drivebase drivebase = new Drivebase();
@@ -47,31 +53,20 @@ public class RobotContainer {
   private Deadband dead;
   private ExampleCommand example;
 
-  private Constants constant; 
+  private Constants constant;
+  private EventLoop ElevatorStart;
+
+  private IntakeMotor IntakeMotor;
+
+  private SolenoidStart Solenoid;
+
+  private Drivebase m_subsystem; 
 
 
   //private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
-    //auto = new ExampleCommand(m_subsystem, m_left, m_right);
-
-
-    //TODO MARCUS IDEA
-     // 3 motors in diffrent subsystems for arm NAME THEM (top motor, midway motor, botton motor, )
-     // 1 motor to controll intake ( use last year code)
-
-    // TODO LUKE IDEA
-
-    /*TODO MAKE A SUBSYSTEM THAT CONTROLS A ARM( Pnumatics 2 pistons both on same solenoide
-    ( look at old pnumatic code see if we can just copy and paste))  */ 
-    /*  TODO AND A INTAKE(1  motor ( have it both pull things in and expell things)
-     ( look at code from Last Year robot with same thing)) */
-    /*  TODO A ELEVATOR (1 motor( both pulls and pushes things.))
-     * have both intake 
-    */
-    
     drivebase.setDefaultCommand(
         new ExampleCommand(
           drivebase, 
@@ -90,8 +85,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-  
-       
+  // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
+  // new JoystickButton(gamePad, 2).whileTrue(Solenoid);
+
 
   }
 
@@ -101,13 +97,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // left.set(5);
-    // right.set(5);
-    
+
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team
- * 
  */
+// example.execute();
 
     //drivebase.tankDrive(5, 5);
     //drivebase.tankDrive(5, 5);
