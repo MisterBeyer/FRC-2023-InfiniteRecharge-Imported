@@ -28,4 +28,8 @@ public void setSpeed(double speed) {
         //front_Right.set(ControlMode.PercentOutput, right_Input);
 
     }
+    public void auto() {
+      front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(500);
+
+    }
 }

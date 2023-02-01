@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import java.util.function.DoubleSupplier;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -88,6 +90,7 @@ public class RobotContainer {
   // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
   // new JoystickButton(gamePad, 2).whileTrue(Solenoid);
 
+  CameraServer.startAutomaticCapture();
 
   }
 

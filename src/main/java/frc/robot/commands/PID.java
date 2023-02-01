@@ -22,12 +22,13 @@ public class PID extends PIDCommand {
         // The controller that the command will use
         new PIDController(0.0004, 0.00001, 0.0008),
         // This should return the measurement
-        () -> encoder.getPosition();,
+        () -> 0,
+        //encoder.getPosition();,
         // This should return the setpoint (can also be a constant)
         () -> 2000,
         // This uses the output
         output -> {
-        elevator.set(output);
+        //elevator.set(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

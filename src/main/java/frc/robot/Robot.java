@@ -5,11 +5,18 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Drivebase;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.*;
+import edu.wpi.first.cameraserver.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,8 +26,9 @@ import frc.robot.subsystems.Drivebase;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private Drivebase drivebase;
   private RobotContainer m_robotContainer;
+
 
   //private Drivebase m_subsystem;
 
@@ -32,7 +40,16 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
- 
+    // CameraServer.startAutomaticCapture();
+    // CvSink cvSink = CameraServer.getVideo();
+    // CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
+
+    CameraServer.startAutomaticCapture();
+    
+// Creates the CvSink and connects it to the UsbCamera
+CvSink cvSink = CameraServer.getVideo();
+
+
    //this.m_subsystem = new Drivebase();
     System.out.println("starting robot.");
     m_robotContainer = new RobotContainer();
@@ -64,7 +81,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-
+    System.out.println(" auto got called babyyyyyyyyyyyyyyyyyyy");
+   drivebase.auto();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -87,9 +105,10 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     System.out.println("teleop init");
+
   }
 
-  /** This function is called periodically during operator control. */
+  /** This function is called periodical    ly during operator control. */
   @Override
   public void teleopPeriodic() {}
 
