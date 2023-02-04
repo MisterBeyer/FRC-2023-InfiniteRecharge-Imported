@@ -14,10 +14,11 @@ import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.commands.Elevator;
+import frc.robot.commands.ElevatorBottomPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.SolenoidStart;
+import frc.robot.commands.auto;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -54,21 +55,22 @@ public class RobotContainer {
   private MotorControllerGroup right;
   private Deadband dead;
   private ExampleCommand example;
-
   private Constants constant;
-  private EventLoop ElevatorStart;
-
   private IntakeMotor IntakeMotor;
-
   private SolenoidStart Solenoid;
+  private auto autonomous;
+  Joystick j = new Joystick(0);
 
-  private Drivebase m_subsystem; 
+
+  private ElevatorBottomPosition ElevatorBottomPosition; 
 
 
   //private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+
     drivebase.setDefaultCommand(
         new ExampleCommand(
           drivebase, 
@@ -86,11 +88,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
   // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
-  // new JoystickButton(gamePad, 2).whileTrue(Solenoid);
 
-  CameraServer.startAutomaticCapture();
+    
+  new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
+   
+  //CameraServer.startAutomaticCapture();
 
   }
 
@@ -100,6 +103,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return new auto(drivebase);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team
@@ -109,8 +113,6 @@ public class RobotContainer {
     //drivebase.tankDrive(5, 5);
     //drivebase.tankDrive(5, 5);
     // An ExampleCommand will run in autonomous
-    return new CommandBase() {
-
-    };
+    
   }
 }

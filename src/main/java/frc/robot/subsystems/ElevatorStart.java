@@ -22,14 +22,27 @@ public class ElevatorStart extends SubsystemBase {
   private final CANSparkMax motor = new CANSparkMax(6, MotorType.kBrushless);
  private final CANSparkMax front_Left = new CANSparkMax(5, MotorType.kBrushless);
 
-  /** Creates a new Motor. */
    public ElevatorStart() {
    }
 
-   public void motorStart(){
-    front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
-     front_Left.set(.90);
-   }
+   public void topPosition(){
+    // front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
+    //  front_Left.set(.90);
+    System.out.println(" Elevator is at top position");
+   
+    }
+    public void mediumPosition(){
+      // front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
+      //  front_Left.set(.90);
+      System.out.println(" Elevator is at medium position");
+     
+      }
+      public void bottomPosition(){
+
+        System.out.println(" Elevator is at bottom position");
+       
+        }
+
 
   @Override
   public void periodic() {

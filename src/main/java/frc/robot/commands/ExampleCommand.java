@@ -57,11 +57,10 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.print("example command called");
     double Joystickx = this.m_left.getAsDouble();
     double Joysticky = this.m_right.getAsDouble();
-        System.out.print("this is x " + Joystickx);
-        System.out.println(" " + Joysticky);
+        // System.out.print("this is x " + Joystickx);
+        // System.out.println(" " + Joysticky);
 
     if ( true == bumperLeft.getAsBoolean()) {
       m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .15, .15 * dead.deadBand(Joysticky, .15));
@@ -75,7 +74,6 @@ public class ExampleCommand extends CommandBase {
     m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .5, .5* dead.deadBand(Joysticky, .15));
     }
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

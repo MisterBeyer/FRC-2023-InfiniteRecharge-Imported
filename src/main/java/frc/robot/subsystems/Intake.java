@@ -23,11 +23,13 @@ public class Intake extends SubsystemBase {
 
    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
   }
-  public void upAndDown() {
-
+  public void fowardAndBackward() {
+   System.out.println(" the intake is in the up posiition  or the down position");
      solenoide.toggle();
   }
+  //TODO make a if statment with motors that checks if its moving if movign the motor stops if not movign the motor spins 
   public void Motor(){
+    System.out.println(" The Intake is on or off");
 front_Left.set(.5); 
  }
   @Override

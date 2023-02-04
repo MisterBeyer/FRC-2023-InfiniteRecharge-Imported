@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.auto;
 import frc.robot.subsystems.Drivebase;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -26,7 +27,7 @@ import edu.wpi.first.cameraserver.*;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Drivebase drivebase;
+  private auto autonomous;
   private RobotContainer m_robotContainer;
 
 
@@ -38,17 +39,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     // CameraServer.startAutomaticCapture();
     // CvSink cvSink = CameraServer.getVideo();
     // CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
 
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
     
 // Creates the CvSink and connects it to the UsbCamera
-CvSink cvSink = CameraServer.getVideo();
-
+// CvSink cvSink = CameraServer.getVideo();
 
    //this.m_subsystem = new Drivebase();
     System.out.println("starting robot.");
@@ -81,8 +82,6 @@ CvSink cvSink = CameraServer.getVideo();
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    System.out.println(" auto got called babyyyyyyyyyyyyyyyyyyy");
-   drivebase.auto();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)

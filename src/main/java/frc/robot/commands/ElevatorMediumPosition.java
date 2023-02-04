@@ -5,24 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-public class Elevator extends CommandBase {
-private Elevator ElevatorStart;
-  /** Creates a new MotorStart. */
-  public Elevator() {
-  // this.ElevatorStart = ElevatorStart;
+import frc.robot.subsystems.ElevatorStart;
+
+public class ElevatorMediumPosition extends CommandBase {
+  private ElevatorStart elevator;
+
+  /** Creates a new ElevatorMediumPosition. */
+  public ElevatorMediumPosition() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //ElevatorStart
+    elevator.mediumPosition();
   }
 
   // Called once the command ends or is interrupted.

@@ -6,9 +6,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-public class SolenoidStart extends CommandBase {
-  private Intake intake;
-  public SolenoidStart() {
+
+public class IntakePnumatic extends CommandBase {
+      private Intake intake;
+  public IntakePnumatic() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -19,7 +20,7 @@ public class SolenoidStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     intake.fowardAndBackward();
+    intake.fowardAndBackward();
   }
 
   // Called once the command ends or is interrupted.
