@@ -17,6 +17,7 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.commands.ElevatorBottomPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
+import frc.robot.commands.Move10Feet;
 import frc.robot.commands.SolenoidStart;
 import frc.robot.commands.auto;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -59,6 +60,7 @@ public class RobotContainer {
   private IntakeMotor IntakeMotor;
   private SolenoidStart Solenoid;
   private auto autonomous;
+  private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
 
 
@@ -70,14 +72,14 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-
-    drivebase.setDefaultCommand(
-        new ExampleCommand(
-          drivebase, 
-          () -> gamePad.getRawAxis(1),
-          () -> gamePad.getRawAxis(5), 
-          () -> gamePad.getLeftBumper(),  
-          () -> gamePad.getRightBumper()));
+    drivebase.setEncoder();
+    // drivebase.setDefaultCommand(
+    //     new ExampleCommand(
+    //       drivebase, 
+    //       () -> gamePad.getRawAxis(1),
+    //       () -> gamePad.getRawAxis(5), 
+    //       () -> gamePad.getLeftBumper(),  
+    //       () -> gamePad.getRightBumper()));
     configureButtonBindings();
   }
 
@@ -90,8 +92,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
   // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
 
-    
-  new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
+    new JoystickButton(gamePad, 1).onTrue( new Move10Feet(drivebase));
+  //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
   //CameraServer.startAutomaticCapture();
 

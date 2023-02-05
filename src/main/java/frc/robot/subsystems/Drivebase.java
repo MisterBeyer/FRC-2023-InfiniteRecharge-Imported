@@ -12,7 +12,7 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Drivebase extends SubsystemBase {
   Constants constant = new Constants();
-    Scanner scan = new Scanner(System.in);
+    //Scanner scan = new Scanner(System.in);
     //System.out.println("HOW ARE YOU DOING TODAY");
     //int Answer = scan.nextInt();
     private final CANSparkMax front_Left = new CANSparkMax(1, MotorType.kBrushless);
@@ -21,9 +21,18 @@ public class Drivebase extends SubsystemBase {
     private final CANSparkMax back_Right = new CANSparkMax(3, MotorType.kBrushless);
 
 // TODO: create a speed limitor method that creates a speed limit verible that can be sent to example cammond
-public void setSpeed(double speed) {
-    
+public double getEncoder() {
+   return front_Left.getEncoder().getPosition() * constant.inchesPerRev;
+  }
+  public void setEncoder(){
+    front_Left.getEncoder().setPosition(0);
+    front_Right.getEncoder().setPosition(0);
+
   }    
+  
+  public void displayEncoder() {
+    System.out.println(front_Left.getEncoder().getPosition());
+  }
     public void tankDrive(double left_Input, double right_Input) {
         
        front_Left.set(left_Input );

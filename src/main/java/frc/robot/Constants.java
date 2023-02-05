@@ -15,5 +15,5 @@ import edu.wpi.first.wpilibj.Compressor;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    
+    public double inchesPerRev = 2.58;
 }
