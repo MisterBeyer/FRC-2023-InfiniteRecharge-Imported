@@ -63,15 +63,15 @@ public class ExampleCommand extends CommandBase {
         // System.out.println(" " + Joysticky);
 
     if ( true == bumperLeft.getAsBoolean()) {
-      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .15, .15 * dead.deadBand(Joysticky, .15));
+      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .15, -.15 * dead.deadBand(Joysticky, .15));
 
     }
     else if ( true == bumperRight.getAsBoolean()){
-      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, 1* dead.deadBand(Joysticky, .15));
+      m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * 1, -1* dead.deadBand(Joysticky, .15));
 
     }
     else {
-    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .5, .5* dead.deadBand(Joysticky, .15));
+    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, .15) * .5, -.5* dead.deadBand(Joysticky, .15));
     }
   }
   // Called once the command ends or is interrupted.

@@ -73,13 +73,13 @@ public class RobotContainer {
   public RobotContainer() {
 
     drivebase.setEncoder();
-    // drivebase.setDefaultCommand(
-    //     new ExampleCommand(
-    //       drivebase, 
-    //       () -> gamePad.getRawAxis(1),
-    //       () -> gamePad.getRawAxis(5), 
-    //       () -> gamePad.getLeftBumper(),  
-    //       () -> gamePad.getRightBumper()));
+    drivebase.setDefaultCommand(
+        new ExampleCommand(
+          drivebase, 
+          () -> gamePad.getRawAxis(1),
+          () -> gamePad.getRawAxis(5), 
+          () -> gamePad.getLeftBumper(),  
+          () -> gamePad.getRightBumper()));
     configureButtonBindings();
   }
 

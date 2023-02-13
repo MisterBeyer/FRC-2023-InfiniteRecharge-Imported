@@ -26,8 +26,14 @@ public class Drivebase extends SubsystemBase {
     private final PigeonIMU gyro = new PigeonIMU(10);
    private PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 
-// TODO: create a speed limitor method that creates a speed limit verible that can be sent to example cammond
-public void setGyro(){
+  public Drivebase() {
+  front_Right.setInverted(true);
+  setEncoder();
+  front_Left.getEncoder().setPositionConversionFactor(2.58);
+  front_Right.getEncoder().setPositionConversionFactor(2.58);
+
+  }
+   public void setGyro(){
   gyro.setFusedHeading(0);
 }
 public double getGyro(){
@@ -52,10 +58,14 @@ public double getEncoder() {
   }
   
   public void displayEncoder() {
-    System.out.println(front_Left.getEncoder().getPosition());
+    System.out.print(front_Left.getEncoder().getVelocity());
+    System.out.print(" ");
+    System.out.println(front_Right.getEncoder().getVelocity());
+
   }
     public void tankDrive(double left_Input, double right_Input) {
         getGyro();
+        displayEncoder();
        front_Left.set(left_Input );
         front_Right.set(right_Input );
 

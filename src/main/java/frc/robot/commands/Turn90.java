@@ -51,9 +51,6 @@ public class Turn90 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println("EXECUSTION IS GOING");
-   // drive.displayGyro();
-    //drive.getGyro();
     double error =  90-drive.getGyro();
     double sumError =+ error;
     double power = error*0.0004;
@@ -72,7 +69,7 @@ public class Turn90 extends CommandBase {
       sumError = -500;
     }
     drive.tankDrive(-power, -power);
-
+    
     }
   
   // Called once the command ends or is interrupted.
