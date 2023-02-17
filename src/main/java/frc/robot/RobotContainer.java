@@ -14,10 +14,15 @@ import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.ElevatorBottomPosition;
+import frc.robot.commands.ElevatorMediumPosition;
+import frc.robot.commands.ElevatorTopPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
+import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
+import frc.robot.commands.OutakeMotor;
 import frc.robot.commands.SolenoidStart;
 import frc.robot.commands.auto;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,7 +54,7 @@ public class RobotContainer {
   
   private  XboxController gamePad = new XboxController(0);
   private Drivebase drivebase = new Drivebase();
-  
+ private Compressor compressor;
   // private DoubleSupplier right;
   // private DoubleSupplier left;
   private MotorControllerGroup left;
@@ -83,19 +88,20 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  /*
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+   private void configureButtonBindings() {
   // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
 
-    new JoystickButton(gamePad, 1).onTrue( new Move10Feet(drivebase));
+   
+    new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
+  //   new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
+  //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
+  //   new JoystickButton(gamePad, 9).onTrue( new ElevatorTopPosition());
+  //   new JoystickButton(gamePad, 5).onTrue( new OutakeMotor());
+  //   new JoystickButton(gamePad, 6).onTrue( new IntakeMotor());
+
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
-  //CameraServer.startAutomaticCapture();
+  CameraServer.startAutomaticCapture();
 
   }
 

@@ -5,12 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorStart;
 
-public class ElevatorTopPosition extends CommandBase {
-  private ElevatorStart elevator;
-  /** Creates a new ElevatorTopPosition. */
-  public ElevatorTopPosition() {
+public class ElevatorZero extends CommandBase {
+  /** Creates a new ElevatorZero. */
+  public ElevatorZero() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -20,9 +18,7 @@ public class ElevatorTopPosition extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    elevator.topPositionII();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

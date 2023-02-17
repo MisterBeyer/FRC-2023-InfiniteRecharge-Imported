@@ -5,12 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorStart;
+import frc.robot.subsystems.Intake;
 
-public class ElevatorTopPosition extends CommandBase {
-  private ElevatorStart elevator;
-  /** Creates a new ElevatorTopPosition. */
-  public ElevatorTopPosition() {
+public class OutakeMotor extends CommandBase {
+  /** Creates a new OutakeMotor. */
+  private Intake intake;
+
+  public OutakeMotor() {
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,12 +23,14 @@ public class ElevatorTopPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.topPositionII();
+    intake.Motorbackward();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.MotorStop();
+  }
 
   // Returns true when the command should end.
   @Override

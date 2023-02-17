@@ -19,14 +19,15 @@ public class Drivebase extends SubsystemBase {
     //System.out.println("HOW ARE YOU DOING TODAY");
     //int Answer = scan.nextInt();
 
-    private final CANSparkMax front_Left = new CANSparkMax(1, MotorType.kBrushless);
-    private final CANSparkMax back_Left = new CANSparkMax(2, MotorType.kBrushless);
-    private final CANSparkMax front_Right = new CANSparkMax(4, MotorType.kBrushless);
-    private final CANSparkMax back_Right = new CANSparkMax(3, MotorType.kBrushless);
+    private final CANSparkMax front_Left = new CANSparkMax(constant.front_Left,MotorType.kBrushless);
+    private final CANSparkMax back_Left = new CANSparkMax(constant.back_Left, MotorType.kBrushless);
+    private final CANSparkMax front_Right = new CANSparkMax(constant.front_right, MotorType.kBrushless);
+    private final CANSparkMax back_Right = new CANSparkMax(constant.back_Right, MotorType.kBrushless);
     private final PigeonIMU gyro = new PigeonIMU(10);
    private PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 
   public Drivebase() {
+    
   front_Right.setInverted(true);
   setEncoder();
   front_Left.getEncoder().setPositionConversionFactor(2.58);
