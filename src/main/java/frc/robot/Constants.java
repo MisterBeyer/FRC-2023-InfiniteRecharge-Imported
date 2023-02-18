@@ -23,7 +23,7 @@ public final class Constants {
     public int elevatorLeftMotor = 5;
     public int elevatorRightMotor = 6;
     public int intakeMotor = 99999;
-        public int pigeon = 999999;
+    public int pigeon = 999999;
 
     //modfiers
     public double deadband = .15;
@@ -32,6 +32,7 @@ public final class Constants {
     public double ElevatorP = 0.0004;
     
     //math
+    public double neoTicksPerRev = 999999999999.9;
     public double gearRatio = .11;
     public double inchesPerRev = 2.58;
 }

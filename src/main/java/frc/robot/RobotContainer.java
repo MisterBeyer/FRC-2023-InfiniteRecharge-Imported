@@ -95,13 +95,13 @@ public class RobotContainer {
     new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
   //   new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
   //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
-  //   new JoystickButton(gamePad, 9).onTrue( new ElevatorTopPosition());
+    new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
   //   new JoystickButton(gamePad, 5).onTrue( new OutakeMotor());
   //   new JoystickButton(gamePad, 6).onTrue( new IntakeMotor());
 
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
-  CameraServer.startAutomaticCapture();
+  //CameraServer.startAutomaticCapture();
 
   }
 

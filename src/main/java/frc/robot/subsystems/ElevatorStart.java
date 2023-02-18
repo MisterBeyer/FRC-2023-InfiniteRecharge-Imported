@@ -19,6 +19,7 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+
 public class ElevatorStart extends SubsystemBase {
   Constants constant = new Constants();
   private double zero = .5;
@@ -30,6 +31,8 @@ public class ElevatorStart extends SubsystemBase {
 
  // 0 = bottom 50 = medium 100 = high
  public ElevatorStart() {
+  rightMotor.setInverted(true);
+  leftMotor.getEncoder().setPosition(0);
     leftMotor.setIdleMode(IdleMode.kBrake);
     rightMotor.setIdleMode(IdleMode.kBrake);
    }
@@ -75,21 +78,21 @@ public class ElevatorStart extends SubsystemBase {
    
     }
     public void mediumPosition(){
+      System.out.println(leftMotor.getEncoder().getPosition());
       if (leftMotor.getEncoder().getPosition() > 40 && leftMotor.getEncoder().getPosition() < 45) {
         leftMotor.set(0);
-        rightMotor.set(0);
+       rightMotor.set(0);
        }
        else if (leftMotor.getEncoder().getPosition() > 53) {
-         leftMotor.set(-.1);
-         rightMotor.set(-.1);
+         leftMotor.set(-.5);
+        rightMotor.set(-.5);
        }
        else{
-        leftMotor.set(.1);
-         rightMotor.set(.1);
+        leftMotor.set(.5);
+         rightMotor.set(.5);
        }
       // front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
       //  front_Left.set(.90);
-      System.out.println(" Elevator is at medium position");
      
       }
       public void bottomPosition(){

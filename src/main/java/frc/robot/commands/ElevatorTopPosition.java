@@ -11,7 +11,7 @@ public class ElevatorTopPosition extends CommandBase {
   private ElevatorStart elevator;
   /** Creates a new ElevatorTopPosition. */
   public ElevatorTopPosition() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    this.elevator = new ElevatorStart();
   }
 
   // Called when the command is initially scheduled.
