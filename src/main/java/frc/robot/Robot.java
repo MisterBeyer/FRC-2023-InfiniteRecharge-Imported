@@ -12,9 +12,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ElevatorZero;
 import frc.robot.commands.auto;
 import frc.robot.subsystems.Drivebase;
-
+import frc.robot.subsystems.ElevatorStart;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.*;
 import edu.wpi.first.cameraserver.*;
@@ -28,6 +29,9 @@ import edu.wpi.first.cameraserver.*;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private auto autonomous;
+  private ElevatorZero elevatorZero;
+  private ElevatorStart elevator;
+
   private Drivebase drive;
   private RobotContainer m_robotContainer;
 
@@ -40,18 +44,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    // CameraServer.startAutomaticCapture();
-    // CvSink cvSink = CameraServer.getVideo();
-    // CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
-
-    // CameraServer.startAutomaticCapture();
-    
-// Creates the CvSink and connects it to the UsbCamera
-// CvSink cvSink = CameraServer.getVideo();
-
-   //this.m_subsystem = new Drivebase();
+ 
+    elevator.elevatorZero();
     System.out.println("starting robot.");
     m_robotContainer = new RobotContainer();
   }

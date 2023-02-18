@@ -15,19 +15,23 @@ import edu.wpi.first.wpilibj.Compressor;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // Motors
     public int front_Left = 1;
     public int back_Left = 3;
     public int front_right = 4;
     public int back_Right = 2;
     public int elevatorLeftMotor = 5;
     public int elevatorRightMotor = 6;
-
-    public int pigeon = 999999;
     public int intakeMotor = 99999;
+        public int pigeon = 999999;
+
+    //modfiers
     public double deadband = .15;
     public double mediumSpeed = .50;
     public double slowSpeed = .15;
     public double ElevatorP = 0.0004;
     
+    //math
+    public double gearRatio = .11;
     public double inchesPerRev = 2.58;
 }

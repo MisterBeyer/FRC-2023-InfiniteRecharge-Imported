@@ -22,6 +22,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class ElevatorStart extends SubsystemBase {
   Constants constant = new Constants();
   private double zero = .5;
+  private double p = constant.ElevatorP;
 
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
@@ -37,9 +38,19 @@ public class ElevatorStart extends SubsystemBase {
     zero = leftMotor.getEncoder().getPosition();
 
    }
+
+   public void fancyZero() {
+     leftMotor.set(-.05);
+     if ( leftMotor.getBusVoltage() < 5 && leftMotor.getBusVoltage() > 8)
+     {
+    zero = leftMotor.getEncoder().getPosition();
+    leftMotor.set(0);
+
+     }
+   }
    public void topPositionII(){
     double error =  96-leftMotor.getEncoder().getPosition();
-    double power = error*0.0004;
+    double power = error*p;
     if(power > 0.10){
       power = 0.10;
     }
@@ -51,11 +62,7 @@ public class ElevatorStart extends SubsystemBase {
 
    }
    public void topPosition(){
-    double error =  96-leftMotor.getEncoder().getPosition();
-    double power = error*0.0004;
-    
-
-
+ 
     if (leftMotor.getEncoder().getPosition() > 95 && leftMotor.getEncoder().getPosition() < 100) {
      leftMotor.set(0);
      rightMotor.set(0);
@@ -73,12 +80,12 @@ public class ElevatorStart extends SubsystemBase {
         rightMotor.set(0);
        }
        else if (leftMotor.getEncoder().getPosition() > 53) {
-         leftMotor.set(-.15);
-         rightMotor.set(-.15);
+         leftMotor.set(-.1);
+         rightMotor.set(-.1);
        }
        else{
-        leftMotor.set(.15);
-         rightMotor.set(.15);
+        leftMotor.set(.1);
+         rightMotor.set(.1);
        }
       // front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
       //  front_Left.set(.90);
@@ -86,13 +93,13 @@ public class ElevatorStart extends SubsystemBase {
      
       }
       public void bottomPosition(){
-        if (leftMotor.getEncoder().getPosition() > 0 && leftMotor.getEncoder().getPosition() < 5) {
+        if (leftMotor.getEncoder().getPosition() > zero && leftMotor.getEncoder().getPosition() < zero + 3) {
           leftMotor.set(0);
           rightMotor.set(0);
          }
          else {
-           leftMotor.set(-.15);
-           rightMotor.set(-.15);
+           leftMotor.set(-.1);
+           rightMotor.set(-.1);
          }
 
         System.out.println(" Elevator is at bottom position");
