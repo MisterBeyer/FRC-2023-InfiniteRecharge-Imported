@@ -10,8 +10,9 @@ import frc.robot.subsystems.Intake;
 public class IntakeMotor extends CommandBase {
 private Intake intake;
 
-  public IntakeMotor() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public IntakeMotor(Intake intake) {
+
+    this.intake = intake;
   }
 
   // Called when the command is initially scheduled.
@@ -21,8 +22,7 @@ private Intake intake;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   intake.Motorforward();
-  }
+intake.Motorforward(); }
 
   // Called once the command ends or is interrupted.
   @Override

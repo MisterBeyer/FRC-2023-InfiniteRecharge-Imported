@@ -65,8 +65,8 @@ public double getEncoder() {
 
   }
     public void tankDrive(double left_Input, double right_Input) {
-        getGyro();
-        displayEncoder();
+        // getGyro();
+        // displayEncoder();
        front_Left.set(left_Input );
         front_Right.set(right_Input );
 

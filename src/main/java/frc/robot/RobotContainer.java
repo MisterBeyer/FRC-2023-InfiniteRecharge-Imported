@@ -14,17 +14,22 @@ import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
+//import frc.robot.commands.Auto;
 import frc.robot.commands.ElevatorBottomPosition;
 import frc.robot.commands.ElevatorMediumPosition;
+import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorTopPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
+import frc.robot.commands.ElevatorPosition;
+
 import frc.robot.commands.OutakeMotor;
 import frc.robot.commands.SolenoidStart;
-import frc.robot.commands.auto;
+//import frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -62,21 +67,22 @@ public class RobotContainer {
   private Deadband dead;
   private ExampleCommand example;
   private Constants constant;
+  private ElevatorStart elevator = new ElevatorStart();
+  private ElevatorPosition elevatorPosition;
   private IntakeMotor IntakeMotor;
   private SolenoidStart Solenoid;
-  private auto autonomous;
+ // private Auto autonomous;
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
+  private Intake intake;
 
-
-  private ElevatorBottomPosition ElevatorBottomPosition; 
 
 
   //private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
+    //  compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     drivebase.setEncoder();
     drivebase.setDefaultCommand(
         new ExampleCommand(
@@ -86,18 +92,29 @@ public class RobotContainer {
           () -> gamePad.getLeftBumper(),  
           () -> gamePad.getRightBumper()));
     configureButtonBindings();
+
+    // elevator.setDefaultCommand(
+    //     new ElevatorPosition(
+    //       elevator, 
+    //       () -> gamePad.getRawButton(1),
+    //       () -> gamePad.getRawButton(2),
+    //       () -> gamePad.getRawButton(4)
+
+    //   ));
+    configureButtonBindings();
   }
+  
 
    private void configureButtonBindings() {
   // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
 
    
-    new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
+    //new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
   //   new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
   //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
-    new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
-  //   new JoystickButton(gamePad, 5).onTrue( new OutakeMotor());
-  //   new JoystickButton(gamePad, 6).onTrue( new IntakeMotor());
+   // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
+     //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
+     new JoystickButton(gamePad, 3).onTrue( new IntakeMotor(intake));
 
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
@@ -111,7 +128,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new auto(drivebase);
+    return new Move10Feet(drivebase);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team

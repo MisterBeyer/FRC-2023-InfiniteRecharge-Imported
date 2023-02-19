@@ -29,8 +29,19 @@ public final class Constants {
     public double deadband = .15;
     public double mediumSpeed = .50;
     public double slowSpeed = .15;
-    public double ElevatorP = 0.0004;
-    
+    //elevator top 2.75
+    //elevator top 60.5 links/ 16 inches
+    //22 teeths
+    // Elevator
+    public double topPosition = 5;
+    public double medPosition = 3;
+    public double zero = 0;
+    public double ElevatorP = .4;
+    public double ElevatorI = 0.01;
+    public double ElevatorD = 0.1;
+
+
+
     //math
     public double neoTicksPerRev = 999999999999.9;
     public double gearRatio = .11;

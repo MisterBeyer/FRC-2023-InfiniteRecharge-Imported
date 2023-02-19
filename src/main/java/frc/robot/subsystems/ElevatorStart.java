@@ -42,6 +42,20 @@ public class ElevatorStart extends SubsystemBase {
 
    }
 
+   public double getLeftEncoder() {
+
+    return leftMotor.getEncoder().getPosition();
+
+   }
+   
+   public void elevatorReset() {
+    leftMotor.set(0);
+    rightMotor.set(0);
+    leftMotor.getEncoder().setPosition(0);
+    rightMotor.getEncoder().setPosition(0);
+
+   }
+
    public void fancyZero() {
      leftMotor.set(-.05);
      if ( leftMotor.getBusVoltage() < 5 && leftMotor.getBusVoltage() > 8)
@@ -108,6 +122,12 @@ public class ElevatorStart extends SubsystemBase {
         System.out.println(" Elevator is at bottom position");
        
         }
+        public void move(double power) {
+      
+         leftMotor.set(power );
+         rightMotor.set(power );
+            
+       }
 
 
   @Override
