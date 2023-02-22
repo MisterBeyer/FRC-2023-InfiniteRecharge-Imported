@@ -82,6 +82,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    CommandScheduler.getInstance().run();
+
   }
 
   /** This function is called periodically during autonomous. */

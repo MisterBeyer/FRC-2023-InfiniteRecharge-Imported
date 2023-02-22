@@ -22,18 +22,18 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
    Constants constant = new Constants();
-   this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 99999);
+   //this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 999);
   }
   public void fowardAndBackward() {
    System.out.println(" the intake is in the up posiition  or the down position");
-     solenoide.toggle();
+    // solenoide.toggle();
   }
   public void Motorforward(){
     System.out.println(" The Intake is on or off");
-    intakeMotor.set(.2); 
+    intakeMotor.set(.8); 
  }
  public void Motorbackward(){
-  intakeMotor.set(-.2);
+  intakeMotor.set(-.8);
  }
  public void MotorStop(){
   intakeMotor.set(0);

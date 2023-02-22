@@ -30,6 +30,12 @@ public class Drivebase extends SubsystemBase {
     
   front_Right.setInverted(true);
   setEncoder();
+  front_Left.setIdleMode(IdleMode.kCoast);
+  front_Right.setIdleMode(IdleMode.kCoast);
+  back_Left.setIdleMode(IdleMode.kCoast);
+  back_Right.setIdleMode(IdleMode.kCoast);
+
+
   front_Left.getEncoder().setPositionConversionFactor(2.58);
   front_Right.getEncoder().setPositionConversionFactor(2.58);
 
@@ -69,6 +75,8 @@ public double getEncoder() {
         // displayEncoder();
        front_Left.set(left_Input );
         front_Right.set(right_Input );
+        back_Left.set(left_Input);
+        back_Right.set(right_Input);
 
         //front_Right.set(ControlMode.PercentOutput, right_Input);
 

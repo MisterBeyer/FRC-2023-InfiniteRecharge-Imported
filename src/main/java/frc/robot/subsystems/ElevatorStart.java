@@ -41,7 +41,7 @@ public class ElevatorStart extends SubsystemBase {
     zero = leftMotor.getEncoder().getPosition();
 
    }
-
+   
    public double getLeftEncoder() {
 
     return leftMotor.getEncoder().getPosition();
@@ -88,8 +88,15 @@ public class ElevatorStart extends SubsystemBase {
       leftMotor.set(.1);
       rightMotor.set(.1);
     }
-    // System.out.println(" Elevator is at top position");
-   
+
+    }
+    public void up() {
+      leftMotor.set(.3);
+      rightMotor.set(.3);
+    }
+    public void down() {
+      leftMotor.set(-.3);
+      rightMotor.set(-.3);
     }
     public void mediumPosition(){
       System.out.println(leftMotor.getEncoder().getPosition());

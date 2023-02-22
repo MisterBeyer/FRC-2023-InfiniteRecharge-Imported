@@ -10,9 +10,10 @@ import frc.robot.subsystems.Intake;
 public class IntakeMotor extends CommandBase {
 private Intake intake;
 
-  public IntakeMotor(Intake intake) {
+  public IntakeMotor(Intake intakee) {
 
-    this.intake = intake;
+    this.intake = intakee;
+
   }
 
   // Called when the command is initially scheduled.

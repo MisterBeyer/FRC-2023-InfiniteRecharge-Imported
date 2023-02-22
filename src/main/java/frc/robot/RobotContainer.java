@@ -18,13 +18,16 @@ import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.ElevatorBottomPosition;
+import frc.robot.commands.ElevatorManual;
 import frc.robot.commands.ElevatorMediumPosition;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorTopPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
+import frc.robot.commands.IntakeMovements;
 import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
+import frc.robot.commands.Move5Feet;
 import frc.robot.commands.ElevatorPosition;
 
 import frc.robot.commands.OutakeMotor;
@@ -58,6 +61,8 @@ public class RobotContainer {
   private Joystick joystick;
   
   private  XboxController gamePad = new XboxController(0);
+  private  XboxController drive = new XboxController(1);
+
   private Drivebase drivebase = new Drivebase();
  private Compressor compressor;
   // private DoubleSupplier right;
@@ -74,7 +79,7 @@ public class RobotContainer {
  // private Auto autonomous;
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
-  private Intake intake;
+  private Intake intake = new Intake();
 
 
 
@@ -87,10 +92,10 @@ public class RobotContainer {
     drivebase.setDefaultCommand(
         new ExampleCommand(
           drivebase, 
-          () -> gamePad.getRawAxis(1),
-          () -> gamePad.getRawAxis(5), 
-          () -> gamePad.getLeftBumper(),  
-          () -> gamePad.getRightBumper()));
+          () -> drive.getRawAxis(1),
+          () -> drive.getRawAxis(5), 
+          () -> drive.getLeftBumper(),  
+          () -> drive.getRightBumper()));
     configureButtonBindings();
 
     // elevator.setDefaultCommand(
@@ -101,7 +106,21 @@ public class RobotContainer {
     //       () -> gamePad.getRawButton(4)
 
     //   ));
-    configureButtonBindings();
+      // elevator.setDefaultCommand(
+      //   new ElevatorManual(
+      //     elevator, 
+      //     () -> gamePad.getLeftBumper(),
+      //     () -> gamePad.getRightBumper()
+
+      // ));
+      intake.setDefaultCommand(
+        new IntakeMovements(
+          intake, 
+          () -> gamePad.getLeftTriggerAxis(),
+          () -> gamePad.getLeftTriggerAxis()
+
+      ));
+    //configureButtonBindings();
   }
   
 
@@ -114,11 +133,11 @@ public class RobotContainer {
   //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
    // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
      //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
-     new JoystickButton(gamePad, 3).onTrue( new IntakeMotor(intake));
+   // new JoystickButton(gamePad, 3).whileTrue( new IntakeMotor(intake));
 
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
-  //CameraServer.startAutomaticCapture();
+  CameraServer.startAutomaticCapture();
 
   }
 

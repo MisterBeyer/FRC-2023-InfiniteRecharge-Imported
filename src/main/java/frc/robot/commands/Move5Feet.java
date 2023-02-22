@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class Move10Feet extends CommandBase {
+public class Move5Feet extends CommandBase {
 
   private final Drivebase m_subsystem;
 
-  public Move10Feet(Drivebase subsystem) {
+  public Move5Feet(Drivebase subsystem) {
    m_subsystem = subsystem;
   }
 
@@ -23,8 +23,6 @@ public class Move10Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.tankDrive(.25, .25);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,6 +30,7 @@ public class Move10Feet extends CommandBase {
   public void execute() {
     //nick is so great
 
+      m_subsystem.tankDrive(.25, -.25);
     
     
     System.out.println(" phil swift");
@@ -41,14 +40,13 @@ public class Move10Feet extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // m_subsystem.tankDrive(0, 0);
+    m_subsystem.tankDrive(0, 0);
     m_subsystem.setIdleMode();
-    m_subsystem.setEncoder();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 500;
+    return m_subsystem.getEncoder() > 50;
   }
 }
