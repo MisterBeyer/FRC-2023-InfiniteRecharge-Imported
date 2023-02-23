@@ -13,26 +13,24 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
+import frc.robot.commands.Auto;
 //import frc.robot.commands.Auto;
-import frc.robot.commands.ElevatorBottomPosition;
 import frc.robot.commands.ElevatorManual;
-import frc.robot.commands.ElevatorMediumPosition;
 import frc.robot.commands.ElevatorPosition;
-import frc.robot.commands.ElevatorTopPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.IntakeMovements;
 import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
-import frc.robot.commands.Move5Feet;
+import frc.robot.commands.NoPidTurn90;
 import frc.robot.commands.ElevatorPosition;
-
-import frc.robot.commands.OutakeMotor;
 import frc.robot.commands.SolenoidStart;
-//import frc.robot.commands.Auto;
+import frc.robot.commands.Turn90;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -76,10 +74,13 @@ public class RobotContainer {
   private ElevatorPosition elevatorPosition;
   private IntakeMotor IntakeMotor;
   private SolenoidStart Solenoid;
+ private  SendableChooser<Command> autoChooser = new SendableChooser<>();
  // private Auto autonomous;
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
+  private Auto auto = new Auto(drivebase, intake);
+
 
 
 
@@ -87,9 +88,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    //  compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+autoChooser.setDefaultOption(" Charge Station", auto);
+autoChooser.setDefaultOption(" test", IntakeMotor);
+SmartDashboard.putData(autoChooser);
+
+    //compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     drivebase.setEncoder();
-    drivebase.setDefaultCommand(
+      drivebase.setDefaultCommand(
         new ExampleCommand(
           drivebase, 
           () -> drive.getRawAxis(1),
@@ -112,14 +117,14 @@ public class RobotContainer {
       //     () -> gamePad.getLeftBumper(),
       //     () -> gamePad.getRightBumper()
 
-      // ));
-      intake.setDefaultCommand(
-        new IntakeMovements(
-          intake, 
-          () -> gamePad.getLeftTriggerAxis(),
-          () -> gamePad.getLeftTriggerAxis()
+    //  ));
+      // intake.setDefaultCommand(
+      //   new IntakeMovements(
+      //     intake, 
+      //     () -> gamePad.getLeftTriggerAxis(),
+      //     () -> gamePad.getLeftTriggerAxis()
 
-      ));
+      // ));
     //configureButtonBindings();
   }
   
@@ -129,7 +134,7 @@ public class RobotContainer {
 
    
     //new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
-  //   new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
+     //new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
   //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
    // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
      //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
@@ -137,7 +142,7 @@ public class RobotContainer {
 
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
-  CameraServer.startAutomaticCapture();
+  //CameraServer.startAutomaticCapture();
 
   }
 
@@ -147,7 +152,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Move10Feet(drivebase);
+    return new autoChooser();
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team

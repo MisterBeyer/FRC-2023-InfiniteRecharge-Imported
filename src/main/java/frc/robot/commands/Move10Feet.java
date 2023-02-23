@@ -17,6 +17,7 @@ public class Move10Feet extends CommandBase {
 
   public Move10Feet(Drivebase subsystem) {
    m_subsystem = subsystem;
+   addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +25,7 @@ public class Move10Feet extends CommandBase {
   public void initialize() {
     m_subsystem.setEncoder();
     m_subsystem.tankDrive(.25, .25);
-
+    m_subsystem.getEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,8 +42,7 @@ public class Move10Feet extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // m_subsystem.tankDrive(0, 0);
-    m_subsystem.setIdleMode();
+    m_subsystem.tankDrive(0, 0);
     m_subsystem.setEncoder();
   }
 

@@ -71,14 +71,9 @@ public double getEncoder() {
 
   }
     public void tankDrive(double left_Input, double right_Input) {
-        // getGyro();
-        // displayEncoder();
+
        front_Left.set(left_Input );
         front_Right.set(right_Input );
-        back_Left.set(left_Input);
-        back_Right.set(right_Input);
-
-        //front_Right.set(ControlMode.PercentOutput, right_Input);
 
     }
     // Example Command X Phill Swift Fanfic when

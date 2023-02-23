@@ -11,17 +11,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class Move5Feet extends CommandBase {
+public class NoPidTurn90 extends CommandBase {
 
   private final Drivebase m_subsystem;
 
-  public Move5Feet(Drivebase subsystem) {
+  public NoPidTurn90(Drivebase subsystem) {
    m_subsystem = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_subsystem.setIdleMode();
+
     m_subsystem.setEncoder();
   }
 
@@ -30,7 +32,7 @@ public class Move5Feet extends CommandBase {
   public void execute() {
     //nick is so great
 
-      m_subsystem.tankDrive(.25, -.25);
+      m_subsystem.tankDrive(.15, -.15);
     
     
     System.out.println(" phil swift");
@@ -42,11 +44,13 @@ public class Move5Feet extends CommandBase {
   public void end(boolean interrupted) {
     m_subsystem.tankDrive(0, 0);
     m_subsystem.setIdleMode();
+
+    m_subsystem.setEncoder();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 50;
+    return m_subsystem.getEncoder() >= 200;
   }
 }

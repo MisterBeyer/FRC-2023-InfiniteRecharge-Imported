@@ -5,35 +5,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorStart;
+import frc.robot.subsystems.Intake;
 
-public class ElevatorMediumPosition extends CommandBase {
-  private ElevatorStart elevator;
+public class OutTakeMotor extends CommandBase {
+private Intake intake;
 
-  /** Creates a new ElevatorMediumPosition. */
-  public ElevatorMediumPosition() {
-       this.elevator = new ElevatorStart();
- // Use addRequirements() here to declare subsystem dependencies.
+  public OutTakeMotor(Intake intakee) {
+
+    this.intake = intakee;
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.mediumPosition();
-  }
+intake.Motorbackward(); }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) 
+  {
+    intake.MotorStop();
+
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return intake.intakeEncoder() > 50;
   }
 }
