@@ -24,7 +24,7 @@ public class ElevatorStart extends SubsystemBase {
   Constants constant = new Constants();
   private double zero = .5;
   private double p = constant.ElevatorP;
-
+  private double ramp = 0;
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
 
@@ -51,6 +51,7 @@ public class ElevatorStart extends SubsystemBase {
    public void elevatorReset() {
     leftMotor.set(0);
     rightMotor.set(0);
+    
     leftMotor.getEncoder().setPosition(0);
     rightMotor.getEncoder().setPosition(0);
 
@@ -91,12 +92,12 @@ public class ElevatorStart extends SubsystemBase {
 
     }
     public void up() {
-      leftMotor.set(.3);
-      rightMotor.set(.3);
+      leftMotor.set(.2);
+      rightMotor.set(.2);
     }
     public void down() {
-      leftMotor.set(-.3);
-      rightMotor.set(-.3);
+      leftMotor.set(-.2);
+      rightMotor.set(-.2);
     }
     public void mediumPosition(){
       System.out.println(leftMotor.getEncoder().getPosition());
