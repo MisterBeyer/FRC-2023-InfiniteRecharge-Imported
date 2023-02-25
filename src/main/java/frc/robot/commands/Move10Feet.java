@@ -17,6 +17,7 @@ public class Move10Feet extends CommandBase {
 
   public Move10Feet(Drivebase subsystem) {
    m_subsystem = subsystem;
+   m_subsystem.setIdleMode();
    addRequirements(m_subsystem);
   }
 
@@ -32,13 +33,14 @@ public class Move10Feet extends CommandBase {
   @Override
   public void execute() {
     //nick is so great
+    //but jaden is greater
 
     
     
     System.out.println(" phil swift");
     System.out.println("Encoder:" + m_subsystem.getEncoder());
   }
-
+//1 feet = 45 tick
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -49,6 +51,7 @@ public class Move10Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 500;
+    return m_subsystem.getEncoder() > 90;
   }
+  //290 worked for charge station
 }

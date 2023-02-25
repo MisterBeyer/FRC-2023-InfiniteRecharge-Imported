@@ -24,7 +24,6 @@ public class ElevatorStart extends SubsystemBase {
   Constants constant = new Constants();
   private double zero = .5;
   private double p = constant.ElevatorP;
-  private double ramp = 0;
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
 

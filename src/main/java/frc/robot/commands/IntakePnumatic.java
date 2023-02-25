@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class IntakePnumatic extends CommandBase {
-      private Intake intake;
+     // private Intake intake;
   public IntakePnumatic() {
     // Use addRequirements() here to declare subsystem dependencies.
   }

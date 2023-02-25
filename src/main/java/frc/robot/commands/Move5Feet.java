@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class NoPidTurn90 extends CommandBase {
+public class Move5Feet extends CommandBase {
 
   private final Drivebase m_subsystem;
 
-  public NoPidTurn90(Drivebase subsystem) {
+  public Move5Feet(Drivebase subsystem) {
    m_subsystem = subsystem;
   }
 
@@ -31,8 +31,28 @@ public class NoPidTurn90 extends CommandBase {
   @Override
   public void execute() {
     //nick is so great
+    double error =  200-m_subsystem.getEncoder();
+    double sumError =+ error;
+    double power = error*0.0004;
+     power = sumError + 0.00001;
+    System.out.println(error);
+    if(power > 0.2){
+      power = 0.2;
+    }
+    if(power < -0.2){
+      power = -0.2;
+    }
+    if(sumError > 500){
+        sumError = 500;
+    }
+    if(sumError < 500){
+      sumError = -500;
+    }
 
-      m_subsystem.tankDrive(.15, -.15);
+    if ( m_subsystem.getEncoder() >  198 && m_subsystem.getEncoder() < 202) {
+    m_subsystem.tankDrive(0, 0);
+  }
+   else  
     
     
     System.out.println(" phil swift");

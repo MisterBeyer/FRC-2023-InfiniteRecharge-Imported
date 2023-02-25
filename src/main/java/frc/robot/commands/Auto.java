@@ -16,7 +16,6 @@ import frc.robot.subsystems.Intake;
 public class Auto extends SequentialCommandGroup {
 
   private Move10Feet move10Feet;
-  private NoPidTurn90 NoPidTurn90;
   private IntakeMotor IntakeMotor;
   private OutTakeMotor OutTakeMotor;
 
@@ -39,7 +38,6 @@ public class Auto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(move10Feet);
-    addCommands(NoPidTurn90);
     // addCommands(IntakeMotor);
     // addCommands(OutTakeMotor);
 

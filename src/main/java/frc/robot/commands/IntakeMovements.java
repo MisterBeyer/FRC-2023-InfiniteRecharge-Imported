@@ -45,10 +45,10 @@ public class IntakeMovements extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ( in.getAsDouble() <= .1){
+    if ( in.getAsDouble() >= .1){
      intake.Motorforward();
     }
-    else if  ( out.getAsDouble() <= .1) {
+    else if  ( out.getAsDouble() >= .1) {
       intake.Motorbackward();
     }
     else {

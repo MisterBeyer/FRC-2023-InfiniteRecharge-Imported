@@ -27,7 +27,7 @@ import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.IntakeMovements;
 import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
-import frc.robot.commands.NoPidTurn90;
+import frc.robot.commands.Move5Feet;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.SolenoidStart;
 import frc.robot.commands.Turn90;
@@ -62,7 +62,7 @@ public class RobotContainer {
   private  XboxController drive = new XboxController(1);
 
   private Drivebase drivebase = new Drivebase();
- private Compressor compressor;
+ //private Compressor compressor;
   // private DoubleSupplier right;
   // private DoubleSupplier left;
   private MotorControllerGroup left;
@@ -73,8 +73,8 @@ public class RobotContainer {
   private ElevatorStart elevator = new ElevatorStart();
   private ElevatorPosition elevatorPosition;
   private IntakeMotor IntakeMotor;
-  private SolenoidStart Solenoid;
- private  SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private IntakePnumatic pnumatic; 
+ // private  SendableChooser<Command> autoChooser = new SendableChooser<>();
  // private Auto autonomous;
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
@@ -87,12 +87,13 @@ public class RobotContainer {
   //private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-autoChooser.setDefaultOption(" Charge Station", auto);
-autoChooser.setDefaultOption(" test", IntakeMotor);
-SmartDashboard.putData(autoChooser);
+   public RobotContainer() {
+//  autoChooser.setDefaultOption(" Charge Station", auto);
+//  autoChooser.addOption(" test", IntakeMotor);
+//  SmartDashboard.putData(autoChooser);
 
-    //compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+    // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+   // compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
     drivebase.setEncoder();
       drivebase.setDefaultCommand(
         new ExampleCommand(
@@ -111,30 +112,30 @@ SmartDashboard.putData(autoChooser);
     //       () -> gamePad.getRawButton(4)
 
     //   ));
-      // elevator.setDefaultCommand(
-      //   new ElevatorManual(
-      //     elevator, 
-      //     () -> gamePad.getLeftBumper(),
-      //     () -> gamePad.getRightBumper()
+      elevator.setDefaultCommand(
+        new ElevatorManual(
+          elevator, 
+          () -> gamePad.getLeftBumper(),
+          () -> gamePad.getRightBumper()
 
-    //  ));
+     ));
       // intake.setDefaultCommand(
       //   new IntakeMovements(
       //     intake, 
       //     () -> gamePad.getLeftTriggerAxis(),
-      //     () -> gamePad.getLeftTriggerAxis()
+      //     () -> gamePad.getRightTriggerAxis()
 
-      // ));
+      //  ));
     //configureButtonBindings();
   }
   
 
    private void configureButtonBindings() {
-  // new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
+   //new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
 
    
     //new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
-     //new JoystickButton(gamePad, 2).onTrue( new IntakePnumatic());
+    // new JoystickButton(gamePad, 1).onTrue( new IntakePnumatic());
   //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
    // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
      //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
@@ -142,7 +143,7 @@ SmartDashboard.putData(autoChooser);
 
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
-  //CameraServer.startAutomaticCapture();
+  CameraServer.startAutomaticCapture();
 
   }
 
@@ -152,7 +153,7 @@ SmartDashboard.putData(autoChooser);
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new autoChooser();
+    return new Move10Feet(drivebase);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team
