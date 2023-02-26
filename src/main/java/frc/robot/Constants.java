@@ -33,12 +33,12 @@ public final class Constants {
     //elevator top 60.5 links/ 16 inches
     //22 teeths
     // Elevator
-    public double topPosition = 5;
-    public double medPosition = 3;
+    public double topPosition = 16;
+    public double medPosition = 10;
     public double zero = 0;
-    public double ElevatorP = .4;
-    public double ElevatorI = 0.01;
-    public double ElevatorD = 0.1;
+    public double ElevatorP = .9;
+    public double ElevatorI = 0.00001;
+    public double ElevatorD = 0.0;
 
 
 

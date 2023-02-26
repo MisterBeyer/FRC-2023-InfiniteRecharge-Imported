@@ -94,31 +94,35 @@ public class RobotContainer {
 
     // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
    // compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
-    drivebase.setEncoder();
-      drivebase.setDefaultCommand(
-        new ExampleCommand(
-          drivebase, 
-          () -> drive.getRawAxis(1),
-          () -> drive.getRawAxis(5), 
-          () -> drive.getLeftBumper(),  
-          () -> drive.getRightBumper()));
+    // drivebase.setEncoder();
+    //   drivebase.setDefaultCommand(
+    //     new ExampleCommand(
+    //       drivebase, 
+    //       () -> drive.getRawAxis(1),
+    //       () -> drive.getRawAxis(5), 
+    //       () -> drive.getLeftBumper(),  
+    //       () -> drive.getRightBumper()));
     configureButtonBindings();
 
-    // elevator.setDefaultCommand(
-    //     new ElevatorPosition(
-    //       elevator, 
-    //       () -> gamePad.getRawButton(1),
-    //       () -> gamePad.getRawButton(2),
-    //       () -> gamePad.getRawButton(4)
-
-    //   ));
-      elevator.setDefaultCommand(
-        new ElevatorManual(
+    elevator.setDefaultCommand(
+        new ElevatorPosition(
           elevator, 
+          () -> gamePad.getRawButton(1),
+          () -> gamePad.getRawButton(2),
+          () -> gamePad.getRawButton(3),
           () -> gamePad.getLeftBumper(),
-          () -> gamePad.getRightBumper()
+          () -> gamePad.getRightBumper(),
+          () -> gamePad.getStartButton()
 
-     ));
+
+      ));
+    //   elevator.setDefaultCommand(
+    //     new ElevatorManual(
+    //       elevator, 
+    //       () -> gamePad.getLeftBumper(),
+    //       () -> gamePad.getRightBumper()
+
+    //  ));
       // intake.setDefaultCommand(
       //   new IntakeMovements(
       //     intake, 

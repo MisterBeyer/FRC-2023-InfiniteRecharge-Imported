@@ -35,27 +35,38 @@ public class ElevatorStart extends SubsystemBase {
     leftMotor.setIdleMode(IdleMode.kBrake);
     rightMotor.setIdleMode(IdleMode.kBrake);
    }
+   
    public void elevatorZero() {
-
     zero = leftMotor.getEncoder().getPosition();
 
    }
+
+   public void encoderValue() {
+    System.out.println(leftMotor.getEncoder().getPosition());
+   }
    
    public double getLeftEncoder() {
+    System.out.println(leftMotor.getEncoder().getPosition());
 
     return leftMotor.getEncoder().getPosition();
 
    }
-   
-   public void elevatorReset() {
-    leftMotor.set(0);
-    rightMotor.set(0);
-    
+   public void encoderReset(){
     leftMotor.getEncoder().setPosition(0);
     rightMotor.getEncoder().setPosition(0);
 
    }
-
+   public void elevatorReset() {
+    leftMotor.set(0);
+    rightMotor.set(0);
+    
+    // leftMotor.getEncoder().setPosition(0);
+    // rightMotor.getEncoder().setPosition(0);
+   }
+   // max height PID = 13.1
+   // top = 13.4
+   // middle = 7
+   // bottom = 0 
    public void fancyZero() {
      leftMotor.set(-.05);
      if ( leftMotor.getBusVoltage() < 5 && leftMotor.getBusVoltage() > 8)

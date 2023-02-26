@@ -41,6 +41,7 @@ public class ElevatorManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    elevator.encoderValue();
     if ( in.getAsBoolean() == true){
       elevator.up();
     }

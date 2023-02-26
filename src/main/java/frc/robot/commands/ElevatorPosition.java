@@ -31,6 +31,9 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier top;
   private BooleanSupplier medium;
   private BooleanSupplier bottom;
+  private BooleanSupplier up;
+  private BooleanSupplier down;
+  private BooleanSupplier zero;
   private XboxController gamePad;
   private Deadband dead;
   /**
@@ -42,12 +45,19 @@ public class ElevatorPosition extends CommandBase {
     ElevatorStart elevator,
     BooleanSupplier top,
     BooleanSupplier medium,
-    BooleanSupplier bottom
+    BooleanSupplier bottom,
+    BooleanSupplier up,
+    BooleanSupplier down,
+    BooleanSupplier zero
 ) {
     this.elevator = elevator;
     this.top = top;
     this.medium = medium;
     this.bottom = bottom;
+    this.up = up;
+    this.down = down;
+    this.zero = zero;
+    
     
     
     gamePad = new XboxController(0);
@@ -69,50 +79,100 @@ public class ElevatorPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // double curPos = 0;
+
+    // double error = 0;
+    // double div = 0;
+    // double power = 0;
     if(true == top.getAsBoolean())
     {
+      double curPos = elevator.getLeftEncoder();
+
+     double error = setPoint - curPos;
+     double div = prevError - error;
+     double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+    //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+
+    prevError = error;
+    sumError += error;
+  
+    sumError = MathUtil.clamp(sumError, 30, 30);
+    power = MathUtil.clamp(power, -.2, .2);
+
+    elevator.move(power);
       setPoint = constant.topPosition;
     }
     else
     {
       if(true == medium.getAsBoolean())
       {
+         double curPos = elevator.getLeftEncoder();
+
+     double error = setPoint - curPos;
+     double div = prevError - error;
+     double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+    //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+
+    prevError = error;
+    sumError += error;
+  
+    sumError = MathUtil.clamp(sumError, 30, 30);
+    power = MathUtil.clamp(power, -.2, .2);
+
+    elevator.move(power);
         setPoint = constant.medPosition;
       }
       else
       {
         if(true == bottom.getAsBoolean())
         {
-          setPoint = constant.zero;
+          setPoint = 2 +  constant.zero;
         }
+        else if ( true == up.getAsBoolean()){
+          elevator.up();
+      }
+      else if ( true == down.getAsBoolean()){
+        elevator.down();
+    }
+    else if ( true == zero.getAsBoolean()){
+      elevator.encoderReset();
+  }
+  else {
+    elevator.elevatorReset();
+  }
+
       }
     }
+    //System.out.println(elevator.getLeftEncoder());
 
-    double curPos = elevator.getLeftEncoder();
+    // double curPos = elevator.getLeftEncoder();
 
-    double error = setPoint - curPos;
-    double div = prevError - error;
-    double power = (error * constant.ElevatorP)+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    // double error = setPoint - curPos;
+    // double div = prevError - error;
+    // double power = (error * constant.ElevatorP);
+    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
 
-    prevError = error;
-    sumError += error;
+    // prevError = error;
+    // sumError += error;
   
-    sumError = MathUtil.clamp(sumError, 10000, 10000);
-    power = MathUtil.clamp(power, -.5, .5);
+    // sumError = MathUtil.clamp(sumError, 10000, 10000);
+    // power = MathUtil.clamp(power, -.2, .2);
 
-    elevator.move(power);
+    // elevator.move(power);
     //elevator.move(0);
 
     count++;
     if(0 == (count % 3))
     {
-      System.out.printf("TP:%8.1f CP:%8.1f E:%13.3f D:%13.3f SE:%15.3f P:%15.3f\n", setPoint, curPos, error, div, sumError, power);
+      //System.out.printf("TP:%8.1f CP:%8.1f E:%13.3f D:%13.3f SE:%15.3f P:%15.3f\n", setPoint, curPos, error, div, sumError, power);
     }
   }
   
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+   // elevator.encoderReset();
+  }
 
   // Returns true when the command should end.
   @Override
