@@ -18,7 +18,7 @@ import frc.robot.Constants;
 import frc.robot.commands.IntakeMotor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class Intake extends SubsystemBase {
-  //private Solenoid solenoide;
+  private Solenoid solenoide;
  // private PneumaticsControlModule pcm;
   private final CANSparkMax intakeMotor = new CANSparkMax(7, MotorType.kBrushless);
   //private final CANSparkMax front_Left = new CANSparkMax(6, MotorType.kBrushless);
@@ -26,6 +26,8 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     intakeMotor.setIdleMode(IdleMode.kBrake);
+    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+
    Constants constant = new Constants();
   // this.pcm = pcm;
   //this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 11);
@@ -33,7 +35,7 @@ public class Intake extends SubsystemBase {
   public void fowardAndBackward() {
    System.out.println(" the intake is in the up posiition  or the down position");
    
-    //solenoide.toggle();
+    solenoide.toggle();
   }
 
 public double intakeEncoder() {

@@ -45,6 +45,7 @@ public class Auto extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    addCommands(autoElevator);
     addCommands(OutTakeMotor);
     addCommands(move10Feet);
     addCommands(Move5Feet);

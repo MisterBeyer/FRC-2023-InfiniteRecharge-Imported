@@ -51,7 +51,7 @@ public class Move10Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 90;
+    return m_subsystem.getEncoder() < -720;
   }
   //290 worked for charge station
 }

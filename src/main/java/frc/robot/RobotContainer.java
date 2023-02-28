@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.soleioid;
 import frc.robot.commands.Auto;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.ElevatorManual;
@@ -30,9 +29,8 @@ import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.Move10Feet;
 import frc.robot.commands.Move5Feet;
 import frc.robot.commands.ElevatorPosition;
-import frc.robot.commands.SolenoidStart;
 import frc.robot.commands.Turn90;
-import frc.robot.commands.moveSoleioid;
+// import frc.robot.commands.moveSoleioid;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -83,7 +81,7 @@ public class RobotContainer {
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
-  private moveSoleioid soleioid = new moveSoleioid();
+  // private moveSoleioid soleioid = new moveSoleioid();
   private Auto auto = new Auto(drivebase, intake, elevator);
 
 
@@ -100,14 +98,14 @@ public class RobotContainer {
     // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
     // drivebase.setEncoder();
-      drivebase.setDefaultCommand(
-        new ExampleCommand(
-          drivebase, 
-          () -> drive.getRawAxis(1),
-          () -> drive.getRawAxis(5), 
-          () -> drive.getLeftBumper(),  
-          () -> drive.getRightBumper()));
-    configureButtonBindings();
+    //   drivebase.setDefaultCommand(
+    //     new ExampleCommand(
+    //       drivebase, 
+    //       () -> drive.getRawAxis(1),
+    //       () -> drive.getRawAxis(5), 
+    //       () -> drive.getLeftBumper(),  
+    //       () -> drive.getRightBumper()));
+    // configureButtonBindings();
 
     elevator.setDefaultCommand(
         new ElevatorPosition(
@@ -120,7 +118,7 @@ public class RobotContainer {
           () -> gamePad.getStartButton()
 
 
-      ));
+       ));
     //   elevator.setDefaultCommand(
     //     new ElevatorManual(
     //       elevator, 
@@ -131,6 +129,7 @@ public class RobotContainer {
       intake.setDefaultCommand(
         new IntakeMovements(
           intake, 
+          () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(9),
           () -> gamePad.getRawButton(10)
 
@@ -149,7 +148,7 @@ public class RobotContainer {
    // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
      //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
    // new JoystickButton(gamePad, 3).whileTrue( new IntakeMotor(intake));
-   new JoystickButton(gamePad, 4).whileTrue( new moveSoleioid());
+  //  new JoystickButton(gamePad, 4).whileTrue( new moveSoleioid());
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
   CameraServer.startAutomaticCapture();

@@ -22,17 +22,19 @@ public class IntakeMovements extends CommandBase {
   private Intake intake;
   private BooleanSupplier in;
   private BooleanSupplier out;
-
+  private BooleanSupplier on;
   // private BooleanSupplier out;
 
   public IntakeMovements(
     Intake intake,
+    BooleanSupplier on,
     BooleanSupplier in,
     BooleanSupplier out
     // BooleanSupplier out
   ) {
     
   this.intake = intake;
+  this.on = on;
   this.in = in;
   this.out = out;
 
@@ -49,8 +51,13 @@ public class IntakeMovements extends CommandBase {
      intake.Motorforward();
     }
     else if  ( out.getAsBoolean() == true) {
-      intake.Motorbackward();
+      intake.fowardAndBackward();
+
+      //intake.Motorbackward();
     }
+    // else if ( on.getAsBoolean() == true){
+    //   intake.fowardAndBackward();
+    // }
     else {
 intake.slowIntake();
    }
