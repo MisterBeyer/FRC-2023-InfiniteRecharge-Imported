@@ -20,15 +20,15 @@ import java.util.function.DoubleSupplier;
 public class IntakeMovements extends CommandBase {
 
   private Intake intake;
-  private DoubleSupplier in;
-  private DoubleSupplier out;
+  private BooleanSupplier in;
+  private BooleanSupplier out;
 
   // private BooleanSupplier out;
 
   public IntakeMovements(
     Intake intake,
-    DoubleSupplier in,
-    DoubleSupplier out
+    BooleanSupplier in,
+    BooleanSupplier out
     // BooleanSupplier out
   ) {
     
@@ -45,14 +45,15 @@ public class IntakeMovements extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ( in.getAsDouble() >= .1){
+    if ( in.getAsBoolean() ==true){
      intake.Motorforward();
     }
-    else if  ( out.getAsDouble() >= .1) {
+    else if  ( out.getAsBoolean() == true) {
       intake.Motorbackward();
     }
     else {
-intake.MotorStop();    }
+intake.slowIntake();
+   }
   }
 
   // Called once the command ends or is interrupted.

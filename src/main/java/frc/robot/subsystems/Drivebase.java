@@ -79,7 +79,7 @@ public double getEncoder() {
        // THE BACK LEFT MOTOR WON'T INVERT SO WE HAD TO MAKE IT NEGATIVE
         front_Left.set(left_Input );
          front_Right.set(right_Input );
-        back_Left.set(-left_Input);
+        back_Left.set(left_Input);
         back_Right.set(right_Input);
      }
     // Example Command X Phill Swift Fanfic when

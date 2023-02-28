@@ -74,7 +74,24 @@ public class ElevatorPosition extends CommandBase {
   public void initialize() {
    elevator.elevatorReset();
   }
-  
+  public double PID(double setPoint) {
+    setPoint = setPoint;
+    double curPos = elevator.getLeftEncoder();
+    double error = setPoint - curPos;
+
+    prevError = error;
+    sumError += error;
+    //double div = prevError - error;
+    double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+   //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+
+   
+ 
+   sumError = MathUtil.clamp(sumError, 30, 30);
+   power = MathUtil.clamp(power, -.2, .2);
+
+   return power;
+  }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -86,47 +103,50 @@ public class ElevatorPosition extends CommandBase {
     // double power = 0;
     if(true == top.getAsBoolean())
     {
-      double curPos = elevator.getLeftEncoder();
+    //   double curPos = elevator.getLeftEncoder();
 
-     double error = setPoint - curPos;
-     double div = prevError - error;
-     double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
-    //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    //  double error = setPoint - curPos;
+    //  double div = prevError - error;
+    //  double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
 
-    prevError = error;
-    sumError += error;
+    // prevError = error;
+    // sumError += error;
   
-    sumError = MathUtil.clamp(sumError, 30, 30);
-    power = MathUtil.clamp(power, -.2, .2);
+    // sumError = MathUtil.clamp(sumError, 30, 30);
+    // power = MathUtil.clamp(power, -.2, .2);
 
-    elevator.move(power);
-      setPoint = constant.topPosition;
+     elevator.move(PID(constant.topPosition));
+      //setPoint = constant.topPosition;
     }
     else
     {
       if(true == medium.getAsBoolean())
       {
-         double curPos = elevator.getLeftEncoder();
+    //      double curPos = elevator.getLeftEncoder();
 
-     double error = setPoint - curPos;
-     double div = prevError - error;
-     double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
-    //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    //  double error = setPoint - curPos;
+    //  double div = prevError - error;
+    //  double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
 
-    prevError = error;
-    sumError += error;
+    // prevError = error;
+    // sumError += error;
   
-    sumError = MathUtil.clamp(sumError, 30, 30);
-    power = MathUtil.clamp(power, -.2, .2);
+    // sumError = MathUtil.clamp(sumError, 30, 30);
+    // power = MathUtil.clamp(power, -.2, .2);
 
-    elevator.move(power);
+    elevator.move(PID(constant.medPosition));
+    
         setPoint = constant.medPosition;
       }
       else
       {
         if(true == bottom.getAsBoolean())
         {
-          setPoint = 2 +  constant.zero;
+          elevator.move(PID(0));
+
+          // setPoint = 2 +  constant.zero;
         }
         else if ( true == up.getAsBoolean()){
           elevator.up();

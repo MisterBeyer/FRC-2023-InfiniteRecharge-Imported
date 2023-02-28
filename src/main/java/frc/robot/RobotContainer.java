@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.soleioid;
 import frc.robot.commands.Auto;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.ElevatorManual;
@@ -31,6 +32,7 @@ import frc.robot.commands.Move5Feet;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.SolenoidStart;
 import frc.robot.commands.Turn90;
+import frc.robot.commands.moveSoleioid;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -72,6 +74,8 @@ public class RobotContainer {
   private Constants constant;
   private ElevatorStart elevator = new ElevatorStart();
   private ElevatorPosition elevatorPosition;
+  // private soleioid solenoid;
+  //private soleioid solenoid;
   private IntakeMotor IntakeMotor;
   private IntakePnumatic pnumatic; 
  // private  SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -79,12 +83,13 @@ public class RobotContainer {
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
-  private Auto auto = new Auto(drivebase, intake);
+  private moveSoleioid soleioid = new moveSoleioid();
+  private Auto auto = new Auto(drivebase, intake, elevator);
 
 
 
 
-  //private final Compressor compressor;
+  private final Compressor compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
@@ -93,15 +98,15 @@ public class RobotContainer {
 //  SmartDashboard.putData(autoChooser);
 
     // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-   // compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
+    compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
     // drivebase.setEncoder();
-    //   drivebase.setDefaultCommand(
-    //     new ExampleCommand(
-    //       drivebase, 
-    //       () -> drive.getRawAxis(1),
-    //       () -> drive.getRawAxis(5), 
-    //       () -> drive.getLeftBumper(),  
-    //       () -> drive.getRightBumper()));
+      drivebase.setDefaultCommand(
+        new ExampleCommand(
+          drivebase, 
+          () -> drive.getRawAxis(1),
+          () -> drive.getRawAxis(5), 
+          () -> drive.getLeftBumper(),  
+          () -> drive.getRightBumper()));
     configureButtonBindings();
 
     elevator.setDefaultCommand(
@@ -110,8 +115,8 @@ public class RobotContainer {
           () -> gamePad.getRawButton(1),
           () -> gamePad.getRawButton(2),
           () -> gamePad.getRawButton(3),
-          () -> gamePad.getLeftBumper(),
           () -> gamePad.getRightBumper(),
+          () -> gamePad.getLeftBumper(),
           () -> gamePad.getStartButton()
 
 
@@ -123,13 +128,13 @@ public class RobotContainer {
     //       () -> gamePad.getRightBumper()
 
     //  ));
-      // intake.setDefaultCommand(
-      //   new IntakeMovements(
-      //     intake, 
-      //     () -> gamePad.getLeftTriggerAxis(),
-      //     () -> gamePad.getRightTriggerAxis()
+      intake.setDefaultCommand(
+        new IntakeMovements(
+          intake, 
+          () -> gamePad.getRawButton(9),
+          () -> gamePad.getRawButton(10)
 
-      //  ));
+       ));
     //configureButtonBindings();
   }
   
@@ -144,7 +149,7 @@ public class RobotContainer {
    // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
      //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
    // new JoystickButton(gamePad, 3).whileTrue( new IntakeMotor(intake));
-
+   new JoystickButton(gamePad, 4).whileTrue( new moveSoleioid());
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
    
   CameraServer.startAutomaticCapture();
