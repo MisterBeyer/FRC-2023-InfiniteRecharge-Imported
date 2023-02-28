@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     intakeMotor.setIdleMode(IdleMode.kBrake);
-    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
 
    Constants constant = new Constants();
   // this.pcm = pcm;
