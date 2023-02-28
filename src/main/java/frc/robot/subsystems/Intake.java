@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import frc.robot.Constants;
 import frc.robot.commands.IntakeMotor;
@@ -26,24 +27,30 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     intakeMotor.setIdleMode(IdleMode.kBrake);
-    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+    this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
 
    Constants constant = new Constants();
   // this.pcm = pcm;
   //this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 11);
   }
-  public void fowardAndBackward() {
-   System.out.println(" the intake is in the up posiition  or the down position");
+  public void forward() {
+  // System.out.println(" the intake is in the up posiition  or the position");
    
-    solenoide.toggle();
+solenoide.set(true);
+   
   }
+  public void backwardd() {
+   // System.out.println(" the intake is in the posiition  or the down position");
+    
+     solenoide.set(false);
+   }
 
 public double intakeEncoder() {
   return .2;
-  //return intakeMotor.getEncoder().getPosition();
+//return intakeMotor.getEncoder().getPosition();
 }
 public void intakeReset() {
- // intakeMotor.getEncoder().setPosition(0);
+ intakeMotor.getEncoder().setPosition(0);
 }
 
   public void Motorforward(){

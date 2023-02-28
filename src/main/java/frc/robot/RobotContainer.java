@@ -82,7 +82,7 @@ public class RobotContainer {
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
   // private moveSoleioid soleioid = new moveSoleioid();
-  private Auto auto = new Auto(drivebase, intake, elevator);
+  private Auto auto = new Auto(drivebase);
 
 
 
@@ -97,22 +97,22 @@ public class RobotContainer {
 
     // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
-    // drivebase.setEncoder();
-    //   drivebase.setDefaultCommand(
-    //     new ExampleCommand(
-    //       drivebase, 
-    //       () -> drive.getRawAxis(1),
-    //       () -> drive.getRawAxis(5), 
-    //       () -> drive.getLeftBumper(),  
-    //       () -> drive.getRightBumper()));
-    // configureButtonBindings();
+    drivebase.setEncoder();
+      drivebase.setDefaultCommand(
+        new ExampleCommand(
+          drivebase, 
+          () -> drive.getRawAxis(1),
+          () -> drive.getRawAxis(5), 
+          () -> drive.getLeftBumper(),  
+          () -> drive.getRightBumper()));
+    configureButtonBindings();
 
     elevator.setDefaultCommand(
         new ElevatorPosition(
           elevator, 
-          () -> gamePad.getRawButton(1),
+          () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(2),
-          () -> gamePad.getRawButton(3),
+          () -> gamePad.getRawButton(1),
           () -> gamePad.getRightBumper(),
           () -> gamePad.getLeftBumper(),
           () -> gamePad.getStartButton()
@@ -129,9 +129,9 @@ public class RobotContainer {
       intake.setDefaultCommand(
         new IntakeMovements(
           intake, 
-          () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(9),
-          () -> gamePad.getRawButton(10)
+          () -> gamePad.getRawButton(10),
+          () -> gamePad.getRawButton(3)
 
        ));
     //configureButtonBindings();
@@ -161,7 +161,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Move10Feet(drivebase);
+    return new Move5Feet(drivebase);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team

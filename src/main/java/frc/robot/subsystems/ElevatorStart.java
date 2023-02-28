@@ -47,6 +47,7 @@ public class ElevatorStart extends SubsystemBase {
    
    public double getLeftEncoder() {
     System.out.println(leftMotor.getEncoder().getPosition());
+    
 
     return leftMotor.getEncoder().getPosition();
 
@@ -141,7 +142,7 @@ public class ElevatorStart extends SubsystemBase {
        
         }
         public void move(double power) {
-      
+        System.out.println(leftMotor.getEncoder().getPosition());
          leftMotor.set(power );
          rightMotor.set(power );
             

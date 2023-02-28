@@ -44,9 +44,13 @@ public class ElevatorManual extends CommandBase {
     elevator.encoderValue();
     if ( in.getAsBoolean() == true){
       elevator.up();
+      elevator.encoderValue();
+
     }
     else if  ( out.getAsBoolean() == true) {
       elevator.down();
+      elevator.encoderValue();
+
     }
     else {
       elevator.elevatorReset();

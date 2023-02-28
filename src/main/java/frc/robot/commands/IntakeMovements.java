@@ -34,32 +34,44 @@ public class IntakeMovements extends CommandBase {
   ) {
     
   this.intake = intake;
-  this.on = on;
-  this.in = in;
-  this.out = out;
+  this.on = on; // deploy 
+  this.in = in; // spin intake
+  this.out = out; // spiin outtake
 
   addRequirements(this.intake);  }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    boolean pressed =  false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ( in.getAsBoolean() ==true){
-     intake.Motorforward();
-    }
-    else if  ( out.getAsBoolean() == true) {
-      intake.fowardAndBackward();
 
+    boolean pressed =  false;
+    if ( in.getAsBoolean() == true ){
+      intake.Motorforward();
+      pressed = true;
+
+    }
+     if ( out.getAsBoolean() == true ) {
+      intake.backwardd();
+      pressed = true;
       //intake.Motorbackward();
     }
-    // else if ( on.getAsBoolean() == true){
+    
+    if ( on.getAsBoolean() == true){
+    intake.forward();
+    pressed = true;
     //   intake.fowardAndBackward();
-    // }
-    else {
-intake.slowIntake();
+    }
+
+
+    if (!pressed) {
+      intake.backwardd();
+      intake.slowIntake();
    }
   }
 
