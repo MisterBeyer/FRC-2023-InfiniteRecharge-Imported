@@ -82,7 +82,7 @@ public class RobotContainer {
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
   // private moveSoleioid soleioid = new moveSoleioid();
-  private Auto auto = new Auto(drivebase);
+  private Auto auto = new Auto(drivebase,elevator);
 
 
 
@@ -129,9 +129,9 @@ public class RobotContainer {
       intake.setDefaultCommand(
         new IntakeMovements(
           intake, 
-          () -> gamePad.getRawButton(9),
-          () -> gamePad.getRawButton(10),
-          () -> gamePad.getRawButton(3)
+          () -> gamePad.getRawButton(9), // on
+          () -> gamePad.getRawButton(10),// in
+          () -> gamePad.getRawButtonReleased(3) //out
 
        ));
     //configureButtonBindings();
@@ -161,7 +161,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Move5Feet(drivebase);
+    return new Auto(drivebase,elevator);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team

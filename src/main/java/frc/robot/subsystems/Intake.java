@@ -55,10 +55,10 @@ public void intakeReset() {
 
   public void Motorforward(){
     System.out.println(" The Intake is on or off");
-     intakeMotor.set(.3); 
+     intakeMotor.set(.7); 
  }
  public void Motorbackward(){
-   intakeMotor.set(-.3);
+   intakeMotor.set(-.7);
  }
  public void MotorStop(){
    intakeMotor.set(0);

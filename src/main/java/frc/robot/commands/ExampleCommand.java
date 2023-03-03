@@ -26,6 +26,15 @@ public class ExampleCommand extends CommandBase {
   private BooleanSupplier bumperLeft;
   private XboxController gamePad;
   private Deadband dead;
+  private double curr = 0;
+  private double req = 0;
+  private double current = 0;
+
+  private double delta = 0;
+
+  private double rampLeft = 0;
+  private double rampRight = 0;
+
   /**
    * Creates a new ExampleCommand.
    *
@@ -38,6 +47,7 @@ public class ExampleCommand extends CommandBase {
     BooleanSupplier bumperRight,
     BooleanSupplier bumperLeft
 ) {
+   
     m_subsystem = subsystem;
     this.bumperRight = bumperRight;
     this.bumperLeft = bumperLeft;
@@ -60,6 +70,46 @@ public class ExampleCommand extends CommandBase {
 
   }
   
+  public double rampFunction(double requested) {
+    req = requested; // from joystick -1 to 1
+    double outPut = 0.0;
+    delta = .01; // max change to speed
+    current = m_subsystem.RightGetSpeed(); // current motor voltage, -1 to 1
+  if (req > 0 && curr > 0) {
+    if( req > curr) {
+      if (curr + delta > req) {
+	      outPut = req;
+      }
+      else {
+        outPut = curr + delta;
+      }
+    }
+    else {
+      outPut = req;
+    }
+  }
+  // req -1
+  // curr -.5 - -.75
+  else if (req < 0 && curr < 0){
+    if (req < curr) {
+      if (curr - delta < req) {
+        outPut = curr - delta;
+      }
+      else {
+        outPut = req;
+      }
+    }
+    else {
+      outPut = req;
+    }
+  }
+  else { // signs are opposite
+    outPut = 0;
+  }
+  System.out.println(" outPut; " + outPut);
+  return outPut;
+
+  }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -68,12 +118,15 @@ public class ExampleCommand extends CommandBase {
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
     double deadBand = constant.deadband;
+    
     double Joystickx = this.m_left.getAsDouble();
     double Joysticky = this.m_right.getAsDouble();
-        // System.out.print("this is x " + Joystickx);
-        // System.out.println(" " + Joysticky);
+    
+   
+
 
     if ( true == bumperLeft.getAsBoolean()) {
+
       m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * slowsModifier, -slowsModifier * dead.deadBand(Joysticky, deadBand));
 
     }
@@ -82,6 +135,7 @@ public class ExampleCommand extends CommandBase {
 
     }
     else {
+      //ystem.out.println(speedLeft);
     m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * mediumModifier, -mediumModifier* dead.deadBand(Joysticky, deadBand));
     }
   }

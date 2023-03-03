@@ -28,7 +28,7 @@ public class AutoElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    setPoint = 10;
+    setPoint = 14;
     double curPos = elevator.getLeftEncoder();
     double error = setPoint - curPos;
 

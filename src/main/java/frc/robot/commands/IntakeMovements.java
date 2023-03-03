@@ -24,6 +24,10 @@ public class IntakeMovements extends CommandBase {
   private BooleanSupplier out;
   private BooleanSupplier on;
   // private BooleanSupplier out;
+  boolean Solenoid =  false;
+  boolean Intake =  false;
+  boolean Outake =  false;
+
 
   public IntakeMovements(
     Intake intake,
@@ -34,9 +38,11 @@ public class IntakeMovements extends CommandBase {
   ) {
     
   this.intake = intake;
+  this.out = out; // spiin outtake
+
   this.on = on; // deploy 
   this.in = in; // spin intake
-  this.out = out; // spiin outtake
+  // this.out = out; // spiin outtake
 
   addRequirements(this.intake);  }
 
@@ -51,29 +57,68 @@ public class IntakeMovements extends CommandBase {
   public void execute() {
 
     boolean pressed =  false;
-    if ( in.getAsBoolean() == true ){
-      intake.Motorforward();
-      pressed = true;
-
-    }
-     if ( out.getAsBoolean() == true ) {
-      intake.backwardd();
-      pressed = true;
-      //intake.Motorbackward();
-    }
+    // if ( in.getAsBoolean() == true ){
+    //   intake.Motorbackward();
     
+    //   intake.forward();
+    //   pressed = true;
+
+    // }
+
+    //  else if ( on.getAsBoolean() == true ) {
+    //   intake.forward();
+
+      
+    //   intake.Motorforward();
+
+    //   //intake.Motorbackward();
+    // }
+    // else{
+    //   intake.backwardd();
+    //   intake.slowIntake();
+    // }
+  
+
+    
+    if ( out.getAsBoolean() == true){
+    //intake.forward();
+    Solenoid = !Solenoid;
+    }
+    if ( in.getAsBoolean() == true){
+          intake.Motorbackward();
+      // Intake = !Intake;
+      // Outake = !Outake;
+      pressed = true;
+
+    }
     if ( on.getAsBoolean() == true){
-    intake.forward();
-    pressed = true;
-    //   intake.fowardAndBackward();
+     intake.Motorforward();
+     //Intake = !Intake;
+
+      pressed = true;
+
     }
 
-
-    if (!pressed) {
-      intake.backwardd();
+    if (Solenoid == true) {
+      intake.forward();
+    }
+    else {
+    intake.backwardd();
+    }
+    // if (Outake == true) {
+    //   intake.Motorbackward();
+    // }
+    // else if (Intake == true) {
+    //   intake.Motorforward();
+    // }
+    
+  //   else {
+  //     intake.slowIntake();
+  //  }
+  if ( pressed != true) {
       intake.slowIntake();
-   }
   }
+   }
 
   // Called once the command ends or is interrupted.
   @Override

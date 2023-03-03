@@ -88,7 +88,7 @@ public class ElevatorPosition extends CommandBase {
    
  
    sumError = MathUtil.clamp(sumError, 30, 30);
-   power = MathUtil.clamp(power, -.2, .2);
+   power = MathUtil.clamp(power, -.3, .3);
 
    return power;
   }

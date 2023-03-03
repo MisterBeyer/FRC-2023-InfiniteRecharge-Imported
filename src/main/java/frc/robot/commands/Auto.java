@@ -27,16 +27,16 @@ public class Auto extends SequentialCommandGroup {
   private Move5Feet Move5Feet;
 
 
-  public Auto(Drivebase subsystem
+  public Auto(Drivebase subsystem, ElevatorStart elevator
               
   ) {
     m_subsystem = subsystem;
-   // this.Elevator = elevator;
+    elevator =  Elevator;
     //Intake intake, ElevatorStart elevator
-    // ElevatorPosition(elevator, true, false, false, false, false, false)
-    this.move10Feet = new Move10Feet(subsystem);
-    this.Move5Feet = new Move5Feet(subsystem);
-   // this.autoElevator = new AutoElevator(elevator);
+    //  ElevatorPosition(Elevator, true, false, false, false, false, false)
+    // this.move10Feet = new Move10Feet(subsystem);
+    //this.Move5Feet = new Move5Feet(subsystem);
+    this.autoElevator = new AutoElevator(elevator);
     //this.OutTakeMotor = new OutTakeMotor(intake);
     // this.NoPidTurn90 = new NoPidTurn90(subsystem);
     // this.IntakeMotor = new IntakeMotor(intake);
@@ -48,8 +48,8 @@ public class Auto extends SequentialCommandGroup {
    // addCommands(autoElevator);
    // addCommands(OutTakeMotor);
     //addCommands(move10Feet);
-    addCommands(Move5Feet);
-    //addCommands(autoElevator);
+    //addCommands(Move5Feet);
+    addCommands(autoElevator);
     // addCommands(IntakeMotor);
     // addCommands(OutTakeMotor);
 

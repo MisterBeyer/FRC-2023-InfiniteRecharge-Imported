@@ -25,7 +25,7 @@ public class Move5Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.tankDrive(-.25, -.25);
+  //  m_subsystem.tankDrive(-.25, -.25);
     m_subsystem.getEncoder();
   }
 
@@ -53,7 +53,7 @@ public class Move5Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 230;
+    return  m_subsystem.getEncoder() > 1;
   }
   //290 worked for charge station
 

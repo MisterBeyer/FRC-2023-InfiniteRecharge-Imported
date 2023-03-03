@@ -25,6 +25,10 @@ public class Drivebase extends SubsystemBase {
     private final CANSparkMax back_Right = new CANSparkMax(constant.back_Right, MotorType.kBrushless);
    // private final PigeonIMU gyro = new PigeonIMU(10);
    //private PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+   private double  rampleft = 0;
+   private double  rampright = 0;
+
+
 
   public Drivebase() {
    // back_Left.setInverted(true);
@@ -42,6 +46,15 @@ back_Right.setInverted(true);
   front_Right.getEncoder().setPositionConversionFactor(2.58);
 
   }
+
+  public double leftGetSpeed() {
+    return front_Left.get();
+  }
+  public double RightGetSpeed() {
+    return front_Right.get();
+  }
+
+
    public void setGyro(){
  // gyro.setFusedHeading(0);
 }
@@ -76,7 +89,8 @@ public double getEncoder() {
 
   }
     public void tankDrive(double right_Input, double left_Input) {
-       // THE BACK LEFT MOTOR WON'T INVERT SO WE HAD TO MAKE IT NEGATIVE
+          
+
         front_Left.set(left_Input );
          front_Right.set(right_Input );
         back_Left.set(left_Input);
