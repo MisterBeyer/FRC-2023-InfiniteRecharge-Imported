@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,12 +21,14 @@ import frc.robot.commands.IntakeMotor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class Intake extends SubsystemBase {
   private Solenoid solenoide;
+  private Timer time;
  // private PneumaticsControlModule pcm;
   private final CANSparkMax intakeMotor = new CANSparkMax(7, MotorType.kBrushless);
   //private final CANSparkMax front_Left = new CANSparkMax(6, MotorType.kBrushless);
 
   /** Creates a new Intake. */
   public Intake() {
+    this.time = new Timer();
     intakeMotor.setIdleMode(IdleMode.kBrake);
     this.solenoide = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
 
@@ -38,6 +41,13 @@ public class Intake extends SubsystemBase {
    
 solenoide.set(true);
    
+  }
+  public void timeStart( ){
+    time.reset();
+    time.start();
+  }
+  public double timeGet( ){
+    return time.get();
   }
   public void backwardd() {
    // System.out.println(" the intake is in the posiition  or the down position");

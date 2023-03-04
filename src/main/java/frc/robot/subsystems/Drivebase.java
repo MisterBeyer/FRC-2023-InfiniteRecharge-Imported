@@ -11,6 +11,9 @@ import frc.robot.Constants;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 public class Drivebase extends SubsystemBase {
@@ -18,7 +21,7 @@ public class Drivebase extends SubsystemBase {
     //Scanner scan = new Scanner(System.in);
     //System.out.println("HOW ARE YOU DOING TODAY");
     //int Answer = scan.nextInt();
-
+   private Timer time = new Timer(); 
     private final CANSparkMax front_Left = new CANSparkMax(constant.front_Left,MotorType.kBrushless);
     private final CANSparkMax back_Left = new CANSparkMax(constant.back_Left, MotorType.kBrushless);
     private final CANSparkMax front_Right = new CANSparkMax(constant.front_right, MotorType.kBrushless);
@@ -31,6 +34,7 @@ public class Drivebase extends SubsystemBase {
 
 
   public Drivebase() {
+    
    // back_Left.setInverted(true);
 front_Right.setInverted(true);
 back_Right.setInverted(true);
@@ -46,7 +50,9 @@ back_Right.setInverted(true);
   front_Right.getEncoder().setPositionConversionFactor(2.58);
 
   }
-
+public double time() {
+return time.get();
+}
   public double leftGetSpeed() {
     return front_Left.get();
   }
@@ -90,11 +96,15 @@ public double getEncoder() {
   }
     public void tankDrive(double right_Input, double left_Input) {
           
+       double speed = left_Input;
+       double turn = -right_Input;
+      double LeftMove = speed + turn;
+      double rightMove = speed - turn;
 
-        front_Left.set(left_Input );
-         front_Right.set(right_Input );
-        back_Left.set(left_Input);
-        back_Right.set(right_Input);
+      front_Left.set(LeftMove );
+         front_Right.set(rightMove );
+        back_Left.set(LeftMove);
+        back_Right.set(rightMove);
      }
     // Example Command X Phill Swift Fanfic when
     // truely the best ship

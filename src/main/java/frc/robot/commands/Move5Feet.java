@@ -65,28 +65,7 @@ public class Move5Feet extends CommandBase {
     // //  power = sumError + 0.0001;
     // double power = (error * 0.04)+(sumError * 0.001);
 
-  //   if(power > 0.5){
-  //     power = 0.5;
-  //   }
-  //   if(power < -0.5){
-  //     power = -0.5;
-  //   }
-  //   if(sumError > 500){
-  //       sumError = 500;
-  //   }
-  //   if(sumError < 500){
-  //     sumError = -500;
-  //   }
-  //    power = (error * 0.04)+(sumError * 0.001);
-  //    System.out.println(power);
-
-  //   if ( m_subsystem.getEncoder() >  -.5 && m_subsystem.getEncoder() < .5) {
-  //   m_subsystem.tankDrive(0, 0);
-  // }
-  //  else {
-  //   m_subsystem.tankDrive(power, power);
-
-  //  } 
+  
     
     
 //     System.out.println(" phil swift");

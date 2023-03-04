@@ -20,26 +20,28 @@ public class Auto extends SequentialCommandGroup {
   private IntakeMotor IntakeMotor;
   private OutTakeMotor OutTakeMotor;
   private Intake intake;
-  private ElevatorStart Elevator;
+  private ElevatorStart m_elevator;
   private AutoElevator autoElevator;
   private final Drivebase m_subsystem;
-  //private Intake Intake;
   private Move5Feet Move5Feet;
+  private AutoElevatorDown down;
 
 
-  public Auto(Drivebase subsystem, ElevatorStart elevator
-              
+  public Auto(Drivebase subsystem, ElevatorStart elevator, Intake intake
   ) {
+    
     m_subsystem = subsystem;
-    elevator =  Elevator;
+    this.m_elevator =  elevator;
+    this.intake = intake;
     //Intake intake, ElevatorStart elevator
     //  ElevatorPosition(Elevator, true, false, false, false, false, false)
     // this.move10Feet = new Move10Feet(subsystem);
     //this.Move5Feet = new Move5Feet(subsystem);
-    this.autoElevator = new AutoElevator(elevator);
+    this.autoElevator = new AutoElevator(elevator,intake);
     //this.OutTakeMotor = new OutTakeMotor(intake);
     // this.NoPidTurn90 = new NoPidTurn90(subsystem);
-    // this.IntakeMotor = new IntakeMotor(intake);
+     this.IntakeMotor = new IntakeMotor(intake);
+     this.down = new AutoElevatorDown(elevator, intake);
     // this.OutTakeMotor = new OutTakeMotor(intake);
 
 
@@ -49,8 +51,9 @@ public class Auto extends SequentialCommandGroup {
    // addCommands(OutTakeMotor);
     //addCommands(move10Feet);
     //addCommands(Move5Feet);
-    addCommands(autoElevator);
-    // addCommands(IntakeMotor);
+      addCommands(autoElevator);
+      addCommands(IntakeMotor);
+      addCommands(down);
     // addCommands(OutTakeMotor);
 
   }

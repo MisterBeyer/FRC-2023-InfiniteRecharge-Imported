@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+//import java.util.Timer;
+
 import java.util.function.DoubleSupplier;
 
 import javax.sound.sampled.LineEvent.Type;
@@ -13,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.*;
@@ -26,8 +29,7 @@ public class ElevatorStart extends SubsystemBase {
   private double p = constant.ElevatorP;
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
-
-
+  private Timer time = new Timer();
  // 0 = bottom 50 = medium 100 = high
  public ElevatorStart() {
   rightMotor.setInverted(true);
@@ -35,7 +37,9 @@ public class ElevatorStart extends SubsystemBase {
     leftMotor.setIdleMode(IdleMode.kBrake);
     rightMotor.setIdleMode(IdleMode.kBrake);
    }
-   
+   public double time() {
+    return time.get();
+   }
    public void elevatorZero() {
     zero = leftMotor.getEncoder().getPosition();
 
@@ -77,19 +81,7 @@ public class ElevatorStart extends SubsystemBase {
 
      }
    }
-   public void topPositionII(){
-    double error =  96-leftMotor.getEncoder().getPosition();
-    double power = error*p;
-    if(power > 0.10){
-      power = 0.10;
-    }
-    if(power < -0.10){
-      power = -0.10;
-    }   
-    leftMotor.set(power);
-    rightMotor.set(power);
-
-   }
+   
    public void topPosition(){
  
     if (leftMotor.getEncoder().getPosition() > 95 && leftMotor.getEncoder().getPosition() < 100) {
@@ -105,6 +97,9 @@ public class ElevatorStart extends SubsystemBase {
     public void up() {
       leftMotor.set(.2);
       rightMotor.set(.2);
+    }
+    public double getSpeed() {
+      return leftMotor.get();
     }
     public void down() {
       leftMotor.set(-.2);

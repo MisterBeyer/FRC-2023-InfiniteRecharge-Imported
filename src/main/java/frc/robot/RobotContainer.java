@@ -19,6 +19,7 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.Auto;
+import frc.robot.commands.AutoElevator;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.ElevatorManual;
 import frc.robot.commands.ElevatorPosition;
@@ -82,7 +83,7 @@ public class RobotContainer {
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
   // private moveSoleioid soleioid = new moveSoleioid();
-  private Auto auto = new Auto(drivebase,elevator);
+  private Auto auto = new Auto(drivebase,elevator,intake);
 
 
 
@@ -102,7 +103,7 @@ public class RobotContainer {
         new ExampleCommand(
           drivebase, 
           () -> drive.getRawAxis(1),
-          () -> drive.getRawAxis(5), 
+          () -> drive.getRawAxis(4), 
           () -> drive.getLeftBumper(),  
           () -> drive.getRightBumper()));
     configureButtonBindings();
@@ -161,7 +162,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auto(drivebase,elevator);
+    return new  Auto(drivebase,elevator,intake);
+
+    //Auto(drivebase,elevator);
 
     // TO DO put robot moving on a timer
 /*        I hate everyone on the robotics team

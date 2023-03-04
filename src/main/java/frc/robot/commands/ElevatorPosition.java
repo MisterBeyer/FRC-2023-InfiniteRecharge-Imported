@@ -36,6 +36,8 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier zero;
   private XboxController gamePad;
   private Deadband dead;
+
+  private boolean pressed;
   /**
    * Creates a new ExampleCommand.
    *
@@ -91,13 +93,14 @@ public class ElevatorPosition extends CommandBase {
    power = MathUtil.clamp(power, -.3, .3);
 
    return power;
+    
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // double curPos = 0;
-
+   pressed = true;
     // double error = 0;
     // double div = 0;
     // double power = 0;
@@ -129,6 +132,7 @@ public class ElevatorPosition extends CommandBase {
     //  double div = prevError - error;
     //  double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
     // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    pressed = true;
 
     // prevError = error;
     // sumError += error;
@@ -144,6 +148,8 @@ public class ElevatorPosition extends CommandBase {
       {
         if(true == bottom.getAsBoolean())
         {
+          pressed = true;
+
           elevator.move(PID(0));
 
           // setPoint = 2 +  constant.zero;

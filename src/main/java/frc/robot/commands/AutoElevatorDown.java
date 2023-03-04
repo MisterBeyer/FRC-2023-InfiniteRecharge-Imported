@@ -5,45 +5,46 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
 
-public class IntakeMotor extends CommandBase {
-private Intake m_Intake;
+public class AutoElevatorDown extends CommandBase {
+  private Intake m_Intake;
+  private ElevatorStart cool;
 
-  public IntakeMotor(Intake intake) {
+  /** Creates a new AutoElevatorDown. */
+  public AutoElevatorDown(ElevatorStart elevator, Intake intake) {
+    
+    
+      m_Intake = intake;
+      cool = elevator;
 
-    m_Intake = intake;
-addRequirements(intake);
+     addRequirements(cool, m_Intake);
+    
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Intake.timeStart();
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.forward();
-    if (m_Intake.timeGet() > 1 ){
-    
-    m_Intake.Motorforward();
+    m_Intake.backwardd();
+    cool.down();
   }
-     }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) 
-  {
-   // intake.MotorStop();
-
+  public void end(boolean interrupted) {
+    cool.elevatorReset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Intake.timeGet() > 2;
+    return cool.getLeftEncoder() < 1;
   }
 }
