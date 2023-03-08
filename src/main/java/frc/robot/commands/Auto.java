@@ -35,7 +35,7 @@ public class Auto extends SequentialCommandGroup {
     this.intake = intake;
     //Intake intake, ElevatorStart elevator
     //  ElevatorPosition(Elevator, true, false, false, false, false, false)
-    // this.move10Feet = new Move10Feet(subsystem);
+     this.move10Feet = new Move10Feet(subsystem);
     //this.Move5Feet = new Move5Feet(subsystem);
     this.autoElevator = new AutoElevator(elevator,intake);
     //this.OutTakeMotor = new OutTakeMotor(intake);
@@ -54,6 +54,8 @@ public class Auto extends SequentialCommandGroup {
       addCommands(autoElevator);
       addCommands(IntakeMotor);
       addCommands(down);
+      addCommands(move10Feet);
+
     // addCommands(OutTakeMotor);
 
   }

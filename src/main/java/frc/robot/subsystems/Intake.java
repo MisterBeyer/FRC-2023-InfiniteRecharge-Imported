@@ -68,7 +68,7 @@ public void intakeReset() {
      intakeMotor.set(.7); 
  }
  public void Motorbackward(){
-   intakeMotor.set(-.7);
+   intakeMotor.set(-.6);
  }
  public void MotorStop(){
    intakeMotor.set(0);

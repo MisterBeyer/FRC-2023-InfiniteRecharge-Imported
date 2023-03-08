@@ -94,6 +94,12 @@ public double getEncoder() {
     System.out.println(front_Right.getEncoder().getVelocity());
 
   }
+  public void move(double power) {
+    front_Left.set(power );
+         front_Right.set(power );
+        back_Left.set(power);
+        back_Right.set(power);
+  }
     public void tankDrive(double right_Input, double left_Input) {
           
        double speed = left_Input;

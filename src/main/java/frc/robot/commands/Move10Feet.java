@@ -25,7 +25,7 @@ public class Move10Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.tankDrive(.25, 3.25);
+    m_subsystem.move(-.25);
     m_subsystem.getEncoder();
   }
 
@@ -51,7 +51,7 @@ public class Move10Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 410;
+    return m_subsystem.getEncoder() < - 308;
   }
   //290 worked for charge station
 }

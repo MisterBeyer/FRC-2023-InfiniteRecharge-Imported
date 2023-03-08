@@ -27,7 +27,7 @@ addRequirements(intake);
   @Override
   public void execute() {
     m_Intake.forward();
-    if (m_Intake.timeGet() > 1 ){
+    if (m_Intake.timeGet() > 2 ){
     
     m_Intake.Motorforward();
   }
@@ -44,6 +44,6 @@ addRequirements(intake);
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Intake.timeGet() > 2;
+    return m_Intake.timeGet() > 3;
   }
 }
