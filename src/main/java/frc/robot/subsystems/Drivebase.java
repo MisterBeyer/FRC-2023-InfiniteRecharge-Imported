@@ -100,6 +100,12 @@ public double getEncoder() {
         back_Left.set(power);
         back_Right.set(power);
   }
+  public void spin() {
+    front_Left.set(.25 );
+         front_Right.set(-.25 );
+        back_Left.set(.25);
+        back_Right.set(-.25);
+  }
     public void tankDrive(double right_Input, double left_Input) {
           
        double speed = left_Input;

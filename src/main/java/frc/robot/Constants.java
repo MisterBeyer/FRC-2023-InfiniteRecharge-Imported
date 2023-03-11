@@ -34,7 +34,9 @@ public final class Constants {
     //22 teeths
     // Elevator
     public double topPosition = 14;
+    //14
     public double medPosition = 13;
+    //13 as main
     public double zero = 0;
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;

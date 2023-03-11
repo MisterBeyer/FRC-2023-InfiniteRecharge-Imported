@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class Move10Feet extends CommandBase {
+public class YouSpinMeRightRound extends CommandBase {
 
   private final Drivebase m_subsystem;
 
-  public Move10Feet(Drivebase subsystem) {
+  public YouSpinMeRightRound(Drivebase subsystem) {
    m_subsystem = subsystem;
    m_subsystem.setIdleMode();
    addRequirements(m_subsystem);

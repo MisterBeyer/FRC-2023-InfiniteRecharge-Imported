@@ -77,7 +77,6 @@ public class ElevatorPosition extends CommandBase {
    elevator.elevatorReset();
   }
   public double PID(double setPoint) {
-    setPoint = setPoint;
     double curPos = elevator.getLeftEncoder();
     double error = setPoint - curPos;
 
@@ -90,7 +89,7 @@ public class ElevatorPosition extends CommandBase {
    
  
    sumError = MathUtil.clamp(sumError, 30, 30);
-   power = MathUtil.clamp(power, -.3, .4);
+   power = MathUtil.clamp(power, -.3, .5);
 
    return power;
     
@@ -99,93 +98,53 @@ public class ElevatorPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //System.out.println(bottom.getAsBoolean());
+
     // double curPos = 0;
-   pressed = true;
     // double error = 0;
     // double div = 0;
     // double power = 0;
     if(true == top.getAsBoolean())
     {
-    //   double curPos = elevator.getLeftEncoder();
-
-    //  double error = setPoint - curPos;
-    //  double div = prevError - error;
-    //  double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
-    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
-
-    // prevError = error;
-    // sumError += error;
-  
-    // sumError = MathUtil.clamp(sumError, 30, 30);
-    // power = MathUtil.clamp(power, -.2, .2);
-
-     elevator.move(PID(constant.topPosition));
-      //setPoint = constant.topPosition;
+    // System.out.println(" top has been called");
+      setPoint = constant.topPosition;
     }
     else
     {
       if(true == medium.getAsBoolean())
       {
-    //      double curPos = elevator.getLeftEncoder();
-
-    //  double error = setPoint - curPos;
-    //  double div = prevError - error;
-    //  double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
-    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
-    pressed = true;
-
-    // prevError = error;
-    // sumError += error;
-  
-    // sumError = MathUtil.clamp(sumError, 30, 30);
-    // power = MathUtil.clamp(power, -.2, .2);
-
-    elevator.move(PID(constant.medPosition));
-    
         setPoint = constant.medPosition;
       }
       else
       {
         if(true == bottom.getAsBoolean())
         {
-          pressed = true;
+          setPoint = 0;
 
-          elevator.move(PID(0));
 
           // setPoint = 2 +  constant.zero;
         }
         else if ( true == up.getAsBoolean()){
-          elevator.up();
-      }
+          System.out.println(setPoint);
+         setPoint += 0.3;
+        }
       else if ( true == down.getAsBoolean()){
-        elevator.down();
-    }
+        System.out.println(setPoint);
+
+        setPoint -= 0.3;
+      }
     else if ( true == zero.getAsBoolean()){
       elevator.encoderReset();
   }
   else {
-    elevator.elevatorReset();
+    //System.out.println(" set Point " + setPoint);
+    //elevator.elevatorReset();
   }
+  elevator.move(PID(setPoint));
+
 
       }
     }
-    //System.out.println(elevator.getLeftEncoder());
-
-    // double curPos = elevator.getLeftEncoder();
-
-    // double error = setPoint - curPos;
-    // double div = prevError - error;
-    // double power = (error * constant.ElevatorP);
-    // //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
-
-    // prevError = error;
-    // sumError += error;
-  
-    // sumError = MathUtil.clamp(sumError, 10000, 10000);
-    // power = MathUtil.clamp(power, -.2, .2);
-
-    // elevator.move(power);
-    //elevator.move(0);
 
     count++;
     if(0 == (count % 3))
@@ -193,11 +152,10 @@ public class ElevatorPosition extends CommandBase {
       //System.out.printf("TP:%8.1f CP:%8.1f E:%13.3f D:%13.3f SE:%15.3f P:%15.3f\n", setPoint, curPos, error, div, sumError, power);
     }
   }
-  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // elevator.encoderReset();
+    elevator.encoderReset();
   }
 
   // Returns true when the command should end.

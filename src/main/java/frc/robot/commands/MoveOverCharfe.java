@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class Move10Feet extends CommandBase {
+public class MoveOverCharfe extends CommandBase {
 
   private final Drivebase m_subsystem;
 
-  public Move10Feet(Drivebase subsystem) {
+  public MoveOverCharfe(Drivebase subsystem) {
    m_subsystem = subsystem;
    m_subsystem.setIdleMode();
    addRequirements(m_subsystem);
@@ -25,7 +25,7 @@ public class Move10Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.move(.25);
+    m_subsystem.move(-.35);
     m_subsystem.getEncoder();
   }
 
@@ -33,8 +33,7 @@ public class Move10Feet extends CommandBase {
   @Override
   public void execute() {
     //nick is so great
-    //but jaden is greater
-
+// bu allision sucks
     
     
     System.out.println(" phil swift");
@@ -51,7 +50,7 @@ public class Move10Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 250;
+    return m_subsystem.getEncoder() < -570;
   }
   // 250 got over cleanly 
   // - 550 to get cleanly over

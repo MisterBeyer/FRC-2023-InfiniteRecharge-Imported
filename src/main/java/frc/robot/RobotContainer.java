@@ -24,6 +24,7 @@ import frc.robot.commands.AutoElevator;
 import frc.robot.commands.ElevatorManual;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.GetOver;
 import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.IntakeMovements;
 import frc.robot.commands.IntakePnumatic;
@@ -84,6 +85,7 @@ public class RobotContainer {
   private Intake intake = new Intake();
   // private moveSoleioid soleioid = new moveSoleioid();
   private Auto auto = new Auto(drivebase,elevator,intake);
+  private GetOver fancyAuto = new GetOver(drivebase,elevator,intake);
 
 
 
@@ -96,8 +98,8 @@ public class RobotContainer {
 //  autoChooser.addOption(" test", IntakeMotor);
 //  SmartDashboard.putData(autoChooser);
 
-    // compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-    compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
+     compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+   // compressor = new Compressor(10, PneumaticsModuleType.CTREPCM);
     drivebase.setEncoder();
       drivebase.setDefaultCommand(
         new ExampleCommand(
@@ -162,7 +164,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new  Auto(drivebase,elevator,intake);
+    return new  GetOver(drivebase, elevator, intake);
+    //Auto(drivebase,elevator,intake);
 
     //Auto(drivebase,elevator);
 

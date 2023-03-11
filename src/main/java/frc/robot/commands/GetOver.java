@@ -14,14 +14,14 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Auto extends SequentialCommandGroup {
+public class GetOver extends SequentialCommandGroup {
 
   private Move10Feet move10Feet;
   private IntakeMotor IntakeMotor;
   private OutTakeMotor OutTakeMotor;
-  private YouSpinMeRightRound spin;
-
   private Intake intake;
+  private GetBackOnCharge on;
+  private MoveOverCharfe off;
   private ElevatorStart m_elevator;
   private AutoElevator autoElevator;
   private final Drivebase m_subsystem;
@@ -29,7 +29,7 @@ public class Auto extends SequentialCommandGroup {
   private AutoElevatorDown down;
 
 
-  public Auto(Drivebase subsystem, ElevatorStart elevator, Intake intake
+  public GetOver(Drivebase subsystem, ElevatorStart elevator, Intake intake
   ) {
     
     m_subsystem = subsystem;
@@ -38,10 +38,12 @@ public class Auto extends SequentialCommandGroup {
     //Intake intake, ElevatorStart elevator
     //  ElevatorPosition(Elevator, true, false, false, false, false, false)
      this.move10Feet = new Move10Feet(subsystem);
+     this.off = new MoveOverCharfe(subsystem);
+     this.on = new GetBackOnCharge(subsystem);
+
+
     //this.Move5Feet = new Move5Feet(subsystem);
     this.autoElevator = new AutoElevator(elevator,intake);
-    this.spin = new YouSpinMeRightRound(m_subsystem);
-
     //this.OutTakeMotor = new OutTakeMotor(intake);
     // this.NoPidTurn90 = new NoPidTurn90(subsystem);
      this.IntakeMotor = new IntakeMotor(intake);
@@ -51,15 +53,17 @@ public class Auto extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-   // addCommands(autoElevator);
-   // addCommands(OutTakeMotor);
+   addCommands(autoElevator);
+    //addCommands(OutTakeMotor);
     //addCommands(move10Feet);
     //addCommands(Move5Feet);
-      addCommands(autoElevator);
-      addCommands(IntakeMotor);
-      addCommands(down);
-      addCommands(move10Feet);
-      addCommands(spin);
+      // addCommands(autoElevator);
+       addCommands(IntakeMotor);
+       addCommands(down);
+      // addCommands(move10Feet);
+      addCommands(off);
+      addCommands(on);
+
 
     // addCommands(OutTakeMotor);
 

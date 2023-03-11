@@ -26,9 +26,8 @@ public class ExampleCommand extends CommandBase {
   private BooleanSupplier bumperLeft;
   private XboxController gamePad;
   private Deadband dead;
-  private double curr = 0;
   private double req = 0;
-  private double current = 0;
+  private double currentent = 0;
 
   private double delta = 0;
 
@@ -70,18 +69,19 @@ public class ExampleCommand extends CommandBase {
 
   }
   
-  public double rampFunction(double requested) {
+  public double rampFunction(double requested, double current) {
     req = requested; // from joystick -1 to 1
     double outPut = 0.0;
     delta = .01; // max change to speed
-    current = m_subsystem.RightGetSpeed(); // current motor voltage, -1 to 1
-  if (req > 0 && curr > 0) {
-    if( req > curr) {
-      if (curr + delta > req) {
+    
+    //currentent = m_subsystem.RightGetSpeed(); // currentent motor voltage, -1 to 1
+  if (req > 0 && current > 0) {
+    if( req > current) {
+      if (current + delta > req) {
 	      outPut = req;
       }
       else {
-        outPut = curr + delta;
+        outPut = current + delta;
       }
     }
     else {
@@ -89,11 +89,11 @@ public class ExampleCommand extends CommandBase {
     }
   }
   // req -1
-  // curr -.5 - -.75
-  else if (req < 0 && curr < 0){
-    if (req < curr) {
-      if (curr - delta < req) {
-        outPut = curr - delta;
+  // current -.5 - -.75
+  else if (req < 0 && current < 0){
+    if (req < current) {
+      if (current - delta < req) {
+        outPut = current - delta;
       }
       else {
         outPut = req;
@@ -114,7 +114,7 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    System.out.println(m_subsystem.getEncoder());
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
     double deadBand = constant.deadband;
@@ -122,6 +122,8 @@ public class ExampleCommand extends CommandBase {
     double Joystickx = this.m_left.getAsDouble();
     double Joysticky = this.m_right.getAsDouble();
     
+    // rampLeft = rampFunction(Joystickx, rampLeft);
+    // rampRight = rampFunction(Joystickx, rampRight);
    
 
 
@@ -136,7 +138,7 @@ public class ExampleCommand extends CommandBase {
     }
     else {
       //ystem.out.println(speedLeft);
-    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * mediumModifier, -mediumModifier* dead.deadBand(Joysticky, deadBand));
+    m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * mediumModifier, -.40* dead.deadBand(Joysticky, deadBand));
     }
   }
   // Called once the command ends or is interrupted.
