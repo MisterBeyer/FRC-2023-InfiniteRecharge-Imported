@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import java.math.*;
 
 /** An example command that uses an example subsystem.
  */
@@ -75,7 +76,21 @@ public class ElevatorPosition extends CommandBase {
   @Override
   public void initialize() {
    elevator.elevatorReset();
+   elevator.encoderReset();
   }
+
+  public double ThreshHoldInterpolatb( double error) {
+    
+    double power = constant.elevatorMaxSpeed;
+    if ( Math.abs(error) < constant.elevatorErrorThresh)
+   {
+      double t = error/constant.elevatorErrorThresh;
+      power = MathUtil.interpolate(constant.elevatorMinSpeed, constant.elevatorMaxSpeed, t);
+   }
+    
+    return power;
+  }
+
   public double PID(double setPoint) {
     double curPos = elevator.getLeftEncoder();
     double error = setPoint - curPos;
@@ -89,7 +104,14 @@ public class ElevatorPosition extends CommandBase {
    
  
    sumError = MathUtil.clamp(sumError, 30, 30);
-   power = MathUtil.clamp(power, -.3, .5);
+   double clampPower = ThreshHoldInterpolatb(error);
+   power = MathUtil.clamp(power, -clampPower, clampPower);
+   
+   System.out.println("power; " + power );
+   System.out.println("Clamp; " + clampPower );
+   System.out.println("error; " + error );
+
+
 
    return power;
     

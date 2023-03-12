@@ -41,6 +41,11 @@ public final class Constants {
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
     public double ElevatorD = 0.0;
+    public double elevatorErrorThresh = 3; // set point thresh hold 
+    public double elevatorMinSpeed = .1;
+    public double elevatorMaxSpeed = .6;
+    public double maxSetPoint = 17.0;
+    public double minSetPoint = 0;
 
 
 
