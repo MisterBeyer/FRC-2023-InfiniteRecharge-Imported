@@ -8,6 +8,7 @@ import frc.robot.Deadband;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -37,6 +38,7 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier zero;
   private XboxController gamePad;
   private Deadband dead;
+  private Intake intake;
 
   private boolean pressed;
   /**
@@ -141,6 +143,7 @@ public class ElevatorPosition extends CommandBase {
       {
         if(true == bottom.getAsBoolean())
         {
+          intake.backwardd();
           setPoint = 0;
 
 
