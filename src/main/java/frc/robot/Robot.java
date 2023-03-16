@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.commands.Auto;
-import frc.robot.commands.ElevatorZero;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -29,7 +28,6 @@ import edu.wpi.first.cameraserver.*;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   //private Auto autonomous;
-  private ElevatorZero elevatorZero;
   private ElevatorStart elevator;
 
   private Drivebase drive;

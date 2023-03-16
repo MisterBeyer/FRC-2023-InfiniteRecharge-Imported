@@ -38,7 +38,7 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier zero;
   private XboxController gamePad;
   private Deadband dead;
-  private Intake intake;
+//  private Intake intake;
 
   private boolean pressed;
   /**
@@ -143,7 +143,7 @@ public class ElevatorPosition extends CommandBase {
       {
         if(true == bottom.getAsBoolean())
         {
-          intake.backwardd();
+          //intake.backwardd();
           setPoint = 0;
 
 
@@ -165,6 +165,7 @@ public class ElevatorPosition extends CommandBase {
     //System.out.println(" set Point " + setPoint);
     //elevator.elevatorReset();
   }
+  elevator.ShowVolts();
   elevator.move(PID(setPoint));
 
 

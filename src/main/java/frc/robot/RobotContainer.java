@@ -18,20 +18,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.Auto;
-import frc.robot.commands.AutoElevator;
 //import frc.robot.commands.Auto;
-import frc.robot.commands.ElevatorManual;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.GetOver;
-import frc.robot.commands.IntakeMotor;
 import frc.robot.commands.IntakeMovements;
 import frc.robot.commands.IntakePnumatic;
-import frc.robot.commands.Move10Feet;
-import frc.robot.commands.Move5Feet;
 import frc.robot.commands.ElevatorPosition;
-import frc.robot.commands.Turn90;
+import frc.robot.commands.Autonomous.AutoElevator;
+import frc.robot.commands.Autonomous.IntakeMotor;
+import frc.robot.commands.Autonomous.Turn90;
+import frc.robot.commands.Autonomous.GetOverChargeStation.GetOver;
+import frc.robot.commands.Autonomous.MainChargeStation.Auto;
+import frc.robot.commands.Autonomous.MainChargeStation.Move10Feet;
 // import frc.robot.commands.moveSoleioid;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.*;
@@ -153,7 +151,7 @@ public class RobotContainer {
    // new JoystickButton(gamePad, 3).whileTrue( new IntakeMotor(intake));
   //  new JoystickButton(gamePad, 4).whileTrue( new moveSoleioid());
   //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
-   
+
   CameraServer.startAutomaticCapture();
 
   }

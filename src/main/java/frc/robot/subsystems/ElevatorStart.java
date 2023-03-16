@@ -42,9 +42,20 @@ public class ElevatorStart extends SubsystemBase {
    }
    public void elevatorZero() {
     zero = leftMotor.getEncoder().getPosition();
-
+ 
    }
+   public void ShowVolts() {
+    System.out.println("Left Current; " +  leftMotor.getOutputCurrent() );
 
+   System.out.println("Right Current; " +  rightMotor.getOutputCurrent() );
+
+  }
+  public double getAmpsLeft() {
+    return leftMotor.getOutputCurrent();
+  }
+  public double getAmpsRight() {
+    return rightMotor.getOutputCurrent();
+  }
    public void encoderValue() {
     System.out.println(leftMotor.getEncoder().getPosition());
    }

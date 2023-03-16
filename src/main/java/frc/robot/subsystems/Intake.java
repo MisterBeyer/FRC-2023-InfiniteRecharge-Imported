@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import frc.robot.Constants;
-import frc.robot.commands.IntakeMotor;
+import frc.robot.commands.Autonomous.IntakeMotor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class Intake extends SubsystemBase {
   private Solenoid solenoide;
@@ -55,6 +55,15 @@ solenoide.set(true);
      solenoide.set(false);
    }
 
+   public void ShowAmp() {
+    System.out.println("Left Current; " +  intakeMotor.getOutputCurrent() );
+
+
+  }
+  public double getAmpsLeft() {
+    return intakeMotor.getOutputCurrent();
+  }
+  
 public double intakeEncoder() {
   return .2;
 //return intakeMotor.getEncoder().getPosition();
