@@ -86,6 +86,8 @@ public class IntakeMovements extends CommandBase {
     }
     if ( in.getAsBoolean() == true){
           intake.Motorbackward();
+          intake.getAmpsLeft();
+
       // Intake = !Intake;
       // Outake = !Outake;
       pressed = true;
@@ -93,6 +95,8 @@ public class IntakeMovements extends CommandBase {
     }
     if ( on.getAsBoolean() == true){
      intake.Motorforward();
+     intake.getAmpsLeft();
+
      //Intake = !Intake;
 
       pressed = true;
@@ -103,6 +107,7 @@ public class IntakeMovements extends CommandBase {
       intake.forward();
     }
     else {
+      
     intake.backwardd();
     }
     // if (Outake == true) {
@@ -116,6 +121,7 @@ public class IntakeMovements extends CommandBase {
   //     intake.slowIntake();
   //  }
   if ( pressed != true) {
+    intake.getAmpsLeft();
       intake.slowIntake();
   }
    }
