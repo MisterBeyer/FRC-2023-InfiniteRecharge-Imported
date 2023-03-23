@@ -10,7 +10,9 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.BooleanSupplier;
@@ -28,6 +30,7 @@ public class ElevatorPosition extends CommandBase {
   private double sumError = 0;
   private int count = 0;
   private ElevatorStart elevator;
+  private PowerDistribution powerDis;
   private BooleanSupplier bumperRight;
   private BooleanSupplier bumperLeft;
   private BooleanSupplier top;
@@ -36,6 +39,9 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier up;
   private BooleanSupplier down;
   private BooleanSupplier zero;
+  private boolean m_down;
+  private boolean m_top;
+
   private XboxController gamePad;
   private Deadband dead;
 //  private Intake intake;
@@ -48,6 +54,7 @@ public class ElevatorPosition extends CommandBase {
    */
   public ElevatorPosition(
     ElevatorStart elevator,
+    PowerDistribution powerDis,
     BooleanSupplier top,
     BooleanSupplier medium,
     BooleanSupplier bottom,
@@ -56,6 +63,7 @@ public class ElevatorPosition extends CommandBase {
     BooleanSupplier zero
 ) {
     this.elevator = elevator;
+    this.powerDis = powerDis;
     this.top = top;
     this.medium = medium;
     this.bottom = bottom;
@@ -77,8 +85,14 @@ public class ElevatorPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
    elevator.elevatorReset();
    elevator.encoderReset();
+  }
+
+  public void setPoint0(double wantedSetpoint) {
+    
+    setPoint = wantedSetpoint;
   }
 
   public double ThreshHoldInterpolatb( double error) {
@@ -109,9 +123,9 @@ public class ElevatorPosition extends CommandBase {
    double clampPower = ThreshHoldInterpolatb(error);
    power = MathUtil.clamp(power, -clampPower, clampPower);
    
-   System.out.println("power; " + power );
-   System.out.println("Clamp; " + clampPower );
-   System.out.println("error; " + error );
+  //  System.out.println("power; " + power );
+  //  System.out.println("Clamp; " + clampPower );
+  //  System.out.println("error; " + error );
 
 
 
@@ -122,8 +136,11 @@ public class ElevatorPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double[] ar = { 2,3,1};
     //System.out.println(bottom.getAsBoolean());
-
+    SmartDashboard.putNumber("elevatorCurrentLeft", powerDis.getCurrent(1));
+    SmartDashboard.putNumber("elevatorCurrentRight", powerDis.getCurrent(2));
+    SmartDashboard.putNumberArray("testtttt", ar);
     // double curPos = 0;
     // double error = 0;
     // double div = 0;
@@ -144,17 +161,17 @@ public class ElevatorPosition extends CommandBase {
         if(true == bottom.getAsBoolean())
         {
           //intake.backwardd();
-          setPoint = 0;
+          setPoint = .5;
 
 
           // setPoint = 2 +  constant.zero;
         }
         else if ( true == up.getAsBoolean()){
-          System.out.println(setPoint);
+          //System.out.println(setPoint);
          setPoint += 0.3;
         }
       else if ( true == down.getAsBoolean()){
-        System.out.println(setPoint);
+        //System.out.println(setPoint);
 
         setPoint -= 0.3;
       }
@@ -165,7 +182,7 @@ public class ElevatorPosition extends CommandBase {
     //System.out.println(" set Point " + setPoint);
     //elevator.elevatorReset();
   }
-  elevator.ShowVolts();
+ // elevator.ShowVolts();
   elevator.move(PID(setPoint));
 
 

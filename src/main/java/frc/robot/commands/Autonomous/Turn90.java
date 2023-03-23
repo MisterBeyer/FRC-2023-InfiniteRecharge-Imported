@@ -5,6 +5,7 @@ package frc.robot.commands.Autonomous;
 
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -22,7 +23,7 @@ public class Turn90 extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   public double sumError;
   CANSparkMax front_Left;
-  Constants contant;
+  Constants contant = new Constants();
   Drivebase drive;
   CANSparkMax front_Right;
   /**
@@ -40,7 +41,9 @@ public class Turn90 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drive.setGyro();
+    drive.resetGyro();
+    addRequirements(drive);
+
 
     System.out.println("Initialized");
     drive.setIdleMode();
@@ -51,16 +54,21 @@ public class Turn90 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error =  90- 50;    //drive.getGyro();
+    
+    SmartDashboard.putNumber("yaw", drive.getGyro());
+    double error =  190 - drive.getGyro();
+
     double sumError =+ error;
-    double power = error*0.0004;
-     power = sumError + 0.00001;
-    System.out.println(error);
-    if(power > 0.2){
-      power = 0.2;
+    double power = error*0.4;
+    
+    power = (error * contant.ElevatorP)+(sumError * contant.ElevatorI);
+    SmartDashboard.putNumber("power", power);
+
+    if(power > 0.4){
+      power = 0.4;
     }
-    if(power < -0.2){
-      power = -0.2;
+    if(power < -0.4){
+      power = -0.4;
     }
     if(sumError > 500){
         sumError = 500;
@@ -68,7 +76,7 @@ public class Turn90 extends CommandBase {
     if(sumError < 500){
       sumError = -500;
     }
-    drive.tankDrive(-power, -power);
+    drive.spin(power,power);
     
     }
   
@@ -76,9 +84,9 @@ public class Turn90 extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sumError = 0;
-    drive.tankDrive(0, 0);
+    //drive.spin(0, 0);
     // drive.setEncoder(); 
-    drive.setGyro();
+    drive.resetGyro();
     
     
   }

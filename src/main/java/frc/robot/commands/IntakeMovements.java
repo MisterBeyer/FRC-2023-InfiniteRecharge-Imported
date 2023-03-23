@@ -10,7 +10,9 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.BooleanSupplier;
@@ -20,9 +22,14 @@ import java.util.function.DoubleSupplier;
 public class IntakeMovements extends CommandBase {
 
   private Intake intake;
+  private Drivebase drive;
+  private ElevatorPosition elevator;
+
+  
   private BooleanSupplier in;
   private BooleanSupplier out;
   private BooleanSupplier on;
+  private PowerDistribution powerDis;
   // private BooleanSupplier out;
   boolean Solenoid =  false;
   boolean Intake =  false;
@@ -31,6 +38,9 @@ public class IntakeMovements extends CommandBase {
 
   public IntakeMovements(
     Intake intake,
+    Drivebase drive,
+    ElevatorPosition elevator,
+    PowerDistribution powerDis,
     BooleanSupplier on,
     BooleanSupplier in,
     BooleanSupplier out
@@ -39,7 +49,9 @@ public class IntakeMovements extends CommandBase {
     
   this.intake = intake;
   this.out = out; // spiin outtake
-
+  this.drive = drive;
+  this.elevator = elevator;
+  this.powerDis = powerDis;
   this.on = on; // deploy 
   this.in = in; // spin intake
   // this.out = out; // spiin outtake
@@ -55,38 +67,26 @@ public class IntakeMovements extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    boolean pressed =  false;
-    // if ( in.getAsBoolean() == true ){
-    //   intake.Motorbackward();
-    
-    //   intake.forward();
-    //   pressed = true;
-
-    // }
-
-    //  else if ( on.getAsBoolean() == true ) {
-    //   intake.forward();
-
+    SmartDashboard.putNumber("intakeCurrent", powerDis.getCurrent(14));
       
-    //   intake.Motorforward();
+    boolean pressed =  false;
+     // 25 is the current threshold for cube 
+    if (powerDis.getCurrent(14) > 25 ) {
+       intake.backwardd();
+       elevator.setPoint0(.5);
+     // intake.timeStart();
+      if ( powerDis.getCurrent(14) > 25 && intake.timeGet() > .9) {
+        // Joe Biden disapproves of this code 
+        //elevator.setPoint0(0);
+      }
+    }
 
-    //   //intake.Motorbackward();
-    // }
-    // else{
-    //   intake.backwardd();
-    //   intake.slowIntake();
-    // }
-  
-
-    
     if ( out.getAsBoolean() == true){
     //intake.forward();
     Solenoid = !Solenoid;
     }
     if ( in.getAsBoolean() == true){
           intake.Motorbackward();
-          intake.getAmpsLeft();
 
       // Intake = !Intake;
       // Outake = !Outake;
@@ -95,7 +95,6 @@ public class IntakeMovements extends CommandBase {
     }
     if ( on.getAsBoolean() == true){
      intake.Motorforward();
-     intake.getAmpsLeft();
 
      //Intake = !Intake;
 
@@ -121,7 +120,6 @@ public class IntakeMovements extends CommandBase {
   //     intake.slowIntake();
   //  }
   if ( pressed != true) {
-    intake.getAmpsLeft();
       intake.slowIntake();
   }
    }

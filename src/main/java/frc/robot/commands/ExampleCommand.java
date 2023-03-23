@@ -7,7 +7,10 @@ package frc.robot.commands;
 import frc.robot.Deadband;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.BooleanSupplier;
@@ -22,6 +25,8 @@ public class ExampleCommand extends CommandBase {
   private final Drivebase m_subsystem;
   private final DoubleSupplier m_left;
   private final DoubleSupplier m_right;
+  private final PowerDistribution power;
+
   private BooleanSupplier bumperRight;
   private BooleanSupplier bumperLeft;
   private XboxController gamePad;
@@ -52,12 +57,11 @@ public class ExampleCommand extends CommandBase {
     this.bumperLeft = bumperLeft;
     this.m_left = right;
     this.m_right = left;
-    
+    power = new PowerDistribution();
     gamePad = new XboxController(0);
     dead = new Deadband();
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
-
 
     addRequirements(subsystem);
   }
@@ -67,47 +71,48 @@ public class ExampleCommand extends CommandBase {
   @Override
   public void initialize() {
 
+
   }
   
   public double rampFunction(double requested, double current) {
-    req = requested; // from joystick -1 to 1
-    double outPut = 0.0;
-    delta = .01; // max change to speed
+  //   req = requested; // from joystick -1 to 1
+  //   double outPut = 0.0;
+  //   delta = .01; // max change to speed
     
-    //currentent = m_subsystem.RightGetSpeed(); // currentent motor voltage, -1 to 1
-  if (req > 0 && current > 0) {
-    if( req > current) {
-      if (current + delta > req) {
-	      outPut = req;
-      }
-      else {
-        outPut = current + delta;
-      }
-    }
-    else {
-      outPut = req;
-    }
-  }
+  //   //currentent = m_subsystem.RightGetSpeed(); // currentent motor voltage, -1 to 1
+  // if (req > 0 && current > 0) {
+  //   if( req > current) {
+  //     if (current + delta > req) {
+	//       outPut = req;
+  //     }
+  //     else {
+  //       outPut = current + delta;
+  //     }
+  //   }
+  //   else {
+  //     outPut = req;
+  //   }
+  // }
   // req -1
   // current -.5 - -.75
-  else if (req < 0 && current < 0){
-    if (req < current) {
-      if (current - delta < req) {
-        outPut = current - delta;
-      }
-      else {
-        outPut = req;
-      }
-    }
-    else {
-      outPut = req;
-    }
-  }
-  else { // signs are opposite
-    outPut = 0;
-  }
-  System.out.println(" outPut; " + outPut);
-  return outPut;
+  // else if (req < 0 && current < 0){
+  //   if (req < current) {
+  //     if (current - delta < req) {
+  //       outPut = current - delta;
+  //     }
+  //     else {
+  //       outPut = req;
+  //     }
+  //   }
+  //   else {
+  //     outPut = req;
+  //   }
+  // }
+  // else { // signs are opposite
+  //   outPut = 0;
+  // }
+  // System.out.println(" outPut; " + outPut);
+  return 2;
 
   }
   
@@ -118,7 +123,8 @@ public class ExampleCommand extends CommandBase {
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
     double deadBand = constant.deadband;
-    
+    //SmartDashboard.putNumber("amp", power.getCurrent(1));
+
     double Joystickx = this.m_left.getAsDouble();
     double Joysticky = this.m_right.getAsDouble();
     

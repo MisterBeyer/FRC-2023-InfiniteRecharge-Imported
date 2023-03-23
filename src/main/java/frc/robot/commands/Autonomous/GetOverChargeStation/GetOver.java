@@ -7,10 +7,10 @@ package frc.robot.commands.Autonomous.GetOverChargeStation;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.OutTakeMotor;
 import frc.robot.commands.Autonomous.AutoElevator;
 import frc.robot.commands.Autonomous.AutoElevatorDown;
 import frc.robot.commands.Autonomous.IntakeMotor;
+import frc.robot.commands.Autonomous.OutTakeMotor;
 import frc.robot.commands.Autonomous.MainChargeStation.Move10Feet;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ElevatorStart;
@@ -31,6 +31,7 @@ public class GetOver extends SequentialCommandGroup {
   private AutoElevator autoElevator;
   private final Drivebase m_subsystem;
   private AutoElevatorDown down;
+  private GetOnChargeStation stay;
 
 
   public GetOver(Drivebase subsystem, ElevatorStart elevator, Intake intake
@@ -48,6 +49,7 @@ public class GetOver extends SequentialCommandGroup {
 
     //this.Move5Feet = new Move5Feet(subsystem);
     this.autoElevator = new AutoElevator(elevator,intake);
+    this.stay = new GetOnChargeStation(subsystem);
     //this.OutTakeMotor = new OutTakeMotor(intake);
     // this.NoPidTurn90 = new NoPidTurn90(subsystem);
      this.IntakeMotor = new IntakeMotor(intake);
@@ -67,6 +69,8 @@ public class GetOver extends SequentialCommandGroup {
       // addCommands(move10Feet);
       addCommands(off);
       addCommands(on);
+      addCommands(stay);
+
 
 
     // addCommands(OutTakeMotor);
