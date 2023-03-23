@@ -2,10 +2,12 @@ package frc.robot.subsystems;
 
 import java.util.Scanner;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.*;
@@ -14,6 +16,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 public class Drivebase extends SubsystemBase {
@@ -26,13 +29,12 @@ public class Drivebase extends SubsystemBase {
     private final CANSparkMax back_Left = new CANSparkMax(constant.back_Left, MotorType.kBrushless);
     private final CANSparkMax front_Right = new CANSparkMax(constant.front_right, MotorType.kBrushless);
     private final CANSparkMax back_Right = new CANSparkMax(constant.back_Right, MotorType.kBrushless);
-   // private final PigeonIMU gyro = new PigeonIMU(10);
-   //private PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+    private final WPI_Pigeon2 gyro = new WPI_Pigeon2(10);
    private double  rampleft = 0;
    private double  rampright = 0;
 
 
-
+// test a change
   public Drivebase() {
     
    // back_Left.setInverted(true);
@@ -50,26 +52,36 @@ back_Right.setInverted(true);
   front_Right.getEncoder().setPositionConversionFactor(2.58);
 
   }
-public double time() {
-return time.get();
-}
-  public double leftGetSpeed() {
-    return front_Left.get();
-  }
-  public double RightGetSpeed() {
-    return front_Right.get();
-  }
+ public double time() {
+  return time.get();
+ }
+ public void timeReset() {
+  time.restart();
+ }
+ public double leftGetSpeed() {
+  return front_Left.get();
+ }
+ public double RightGetSpeed() {
+   return front_Right.get();
+ }
 
-
-   public void setGyro(){
- // gyro.setFusedHeading(0);
+  public double getAmpOfLeft() {
+   return front_Left.getOutputCurrent();
+  }
+   public void resetGyro(){
+    
+ gyro.reset();
+  }
+  
+public double getGyro(){
+return gyro.getYaw();
 }
-// public double getGyro(){
-//   return gyro.getFusedHeading(fusionStatus);
-// }
-// public void displayGyro(){
-//    System.out.println(gyro.getFusedHeading(fusionStatus));
-// }
+public void displayGyro(){
+   System.out.println(gyro.getCompassHeading());
+}
+public double getY() {
+  return gyro.getPitch();
+}
 public double getEncoder() {
    return front_Left.getEncoder().getPosition() * constant.inchesPerRev;
    
@@ -94,17 +106,23 @@ public double getEncoder() {
     System.out.println(front_Right.getEncoder().getVelocity());
 
   }
+  public double  degree(){
+    short[] array = new short[3];
+    gyro.getBiasedAccelerometer(array);
+    double angle = Math.toDegrees(Math.atan2(array[1], array[2]));
+    return angle;
+  }
   public void move(double power) {
     front_Left.set(power );
          front_Right.set(power );
         back_Left.set(power);
         back_Right.set(power);
   }
-  public void spin() {
-    front_Left.set(.25 );
-         front_Right.set(-.25 );
-        back_Left.set(.25);
-        back_Right.set(-.25);
+  public void spin(double power, double powers) {
+    front_Left.set(power );
+         front_Right.set(-powers );
+        back_Left.set(power);
+        back_Right.set(-powers);
   }
     public void tankDrive(double right_Input, double left_Input) {
           

@@ -13,9 +13,11 @@ import javax.sound.sampled.LineEvent.Type;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.*;
@@ -30,8 +32,10 @@ public class ElevatorStart extends SubsystemBase {
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
   private Timer time = new Timer();
+
  // 0 = bottom 50 = medium 100 = high
  public ElevatorStart() {
+
   rightMotor.setInverted(true);
   leftMotor.getEncoder().setPosition(0);
     leftMotor.setIdleMode(IdleMode.kBrake);
@@ -50,12 +54,7 @@ public class ElevatorStart extends SubsystemBase {
    System.out.println("Right Current; " +  rightMotor.getOutputCurrent() );
 
   }
-  public double getAmpsLeft() {
-    return leftMotor.getOutputCurrent();
-  }
-  public double getAmpsRight() {
-    return rightMotor.getOutputCurrent();
-  }
+   
    public void encoderValue() {
     System.out.println(leftMotor.getEncoder().getPosition());
    }
@@ -93,18 +92,6 @@ public class ElevatorStart extends SubsystemBase {
      }
    }
    
-   public void topPosition(){
- 
-    if (leftMotor.getEncoder().getPosition() > 95 && leftMotor.getEncoder().getPosition() < 100) {
-     leftMotor.set(0);
-     rightMotor.set(0);
-    }
-    else {
-      leftMotor.set(.1);
-      rightMotor.set(.1);
-    }
-
-    }
     public void up() {
       leftMotor.set(.2);
       rightMotor.set(.2);
