@@ -16,6 +16,17 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public final class Constants {
     // Motors
+   // channel 0 left rear drive
+   // channel 1 left elevator
+   //channel 2 right elevator
+   // channel 3 right rear drive
+   // channel 11 vrm
+   // channel 12 right frot drive
+   // channel 14 intake
+   // channel 15 left front drive
+    
+
+
     public int front_Left = 1;
     public int back_Left = 3;
     public int front_right = 4;
@@ -43,9 +54,12 @@ public final class Constants {
     public double ElevatorD = 0.0;
     public double elevatorErrorThresh = 3; // set point thresh hold 
     public double elevatorMinSpeed = .1;
-    public double elevatorMaxSpeed = .6;
+    public double elevatorMaxSpeed = .2;
     public double maxSetPoint = 17.0;
     public double minSetPoint = 0;
+
+    public double chargeP = 0.004;
+    public double chargeI = 0.000004;
 
 
 

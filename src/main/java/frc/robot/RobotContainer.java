@@ -7,8 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -27,6 +29,7 @@ import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.Autonomous.AutoElevator;
 import frc.robot.commands.Autonomous.IntakeMotor;
 import frc.robot.commands.Autonomous.Turn90;
+import frc.robot.commands.Autonomous.GetOverChargeStation.GetOnChargeStation;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOver;
 import frc.robot.commands.Autonomous.MainChargeStation.Auto;
 import frc.robot.commands.Autonomous.MainChargeStation.Move10Feet;
@@ -60,7 +63,6 @@ public class RobotContainer {
   
   private  XboxController gamePad = new XboxController(0);
   private  XboxController drive = new XboxController(1);
-
   private Drivebase drivebase = new Drivebase();
  //private Compressor compressor;
   // private DoubleSupplier right;
@@ -71,7 +73,9 @@ public class RobotContainer {
   private ExampleCommand example;
   private Constants constant;
   private ElevatorStart elevator = new ElevatorStart();
-  private ElevatorPosition elevatorPosition;
+  private PowerDistribution powerDis = new PowerDistribution(18, ModuleType.kCTRE);
+  private ElevatorPosition elevatorPos = new ElevatorPosition(elevator, powerDis,null, null, null, null, null, null);
+  //private GetOnChargeStation onCharge = new GetOnChargeStation(drivebase);
   // private soleioid solenoid;
   //private soleioid solenoid;
   private IntakeMotor IntakeMotor;
@@ -81,6 +85,8 @@ public class RobotContainer {
   private Move10Feet move10Feet;
   Joystick j = new Joystick(0);
   private Intake intake = new Intake();
+  private GetOnChargeStation chillin;
+  
   // private moveSoleioid soleioid = new moveSoleioid();
   private Auto auto = new Auto(drivebase,elevator,intake);
   private GetOver fancyAuto = new GetOver(drivebase,elevator,intake);
@@ -111,6 +117,7 @@ public class RobotContainer {
     elevator.setDefaultCommand(
         new ElevatorPosition(
           elevator, 
+          powerDis,
           () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(2),
           () -> gamePad.getRawButton(1),
@@ -130,6 +137,9 @@ public class RobotContainer {
       intake.setDefaultCommand(
         new IntakeMovements(
           intake, 
+          drivebase,
+          elevatorPos,
+          powerDis,
           () -> gamePad.getRawButton(9), // on
           () -> gamePad.getRawButton(10),// in
           () -> gamePad.getRawButtonReleased(3) //out
@@ -162,7 +172,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new  GetOver(drivebase, elevator, intake);
+    return new  GetOnChargeStation(drivebase);
+    //GetOver(drivebase, elevator, intake);
     //Auto(drivebase,elevator,intake);
 
     //Auto(drivebase,elevator);
