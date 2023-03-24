@@ -4,6 +4,7 @@
 package frc.robot.commands.Autonomous;
 
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -26,6 +27,8 @@ public class Turn90 extends CommandBase {
   Constants contant = new Constants();
   Drivebase drive;
   CANSparkMax front_Right;
+
+  double gyro; 
   /**
    * Creates a new ExampleCommand.
    *
@@ -33,6 +36,7 @@ public class Turn90 extends CommandBase {
    */
   public Turn90(Drivebase subsystem  ){
     this.drive = subsystem;
+    addRequirements(subsystem);
   } 
    
   
@@ -42,7 +46,6 @@ public class Turn90 extends CommandBase {
   @Override
   public void initialize() {
     drive.resetGyro();
-    addRequirements(drive);
 
 
     System.out.println("Initialized");
@@ -55,28 +58,19 @@ public class Turn90 extends CommandBase {
   @Override
   public void execute() {
     
-    SmartDashboard.putNumber("yaw", drive.getGyro());
-    double error =  190 - drive.getGyro();
+    gyro = drive.getGyro();
+
+    SmartDashboard.putNumber("yaw", gyro);
+    double error =  -90 - gyro;
 
     double sumError =+ error;
-    double power = error*0.4;
+    double power = (error * contant.TurnP)+(sumError * contant.TurnI);
     
-    power = (error * contant.ElevatorP)+(sumError * contant.ElevatorI);
-    SmartDashboard.putNumber("power", power);
+    power = MathUtil.clamp(power, -0.2, 0.2);
+    sumError = MathUtil.clamp(sumError, -500, 500);  
 
-    if(power > 0.4){
-      power = 0.4;
-    }
-    if(power < -0.4){
-      power = -0.4;
-    }
-    if(sumError > 500){
-        sumError = 500;
-    }
-    if(sumError < 500){
-      sumError = -500;
-    }
-    drive.spin(power,power);
+    SmartDashboard.putNumber("power", power);
+    drive.spin(-power,-power);
     
     }
   
@@ -84,7 +78,7 @@ public class Turn90 extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     sumError = 0;
-    //drive.spin(0, 0);
+    drive.spin(0, 0);
     // drive.setEncoder(); 
     drive.resetGyro();
     
@@ -94,8 +88,6 @@ public class Turn90 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-   //  (drive.getGyro() >= 84)  && (drive.getGyro() <= 86) || ((drive.getGyro() >= -84) && ((drive.getGyro() <= -86) ));
-  return false;
+   return  (gyro >= 89)  && (gyro <= 91) || ((gyro >= -89) && ((gyro <= -91) ));    
   }
 }
