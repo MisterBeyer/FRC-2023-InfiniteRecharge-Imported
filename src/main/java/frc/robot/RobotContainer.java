@@ -24,11 +24,11 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMovements;
-import frc.robot.commands.IntakePnumatic;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.Autonomous.AutoElevator;
 import frc.robot.commands.Autonomous.IntakeMotor;
 import frc.robot.commands.Autonomous.Turn90;
+import frc.robot.commands.Autonomous.GetOverChargeStation.GetBackOnCharge;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOnChargeStation;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOver;
 import frc.robot.commands.Autonomous.MainChargeStation.Auto;
@@ -46,12 +46,13 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
+import com.revrobotics.CANSparkMax.IdleMode;
 
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.can.Spark;
 import frc.robot.Deadband;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -60,7 +61,8 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class RobotContainer {
   private Joystick joystick;
-  
+  private DigitalInput button = new DigitalInput(9);//figure out channel
+
   private  XboxController gamePad = new XboxController(0);
   private  XboxController drive = new XboxController(1);
   private Drivebase drivebase = new Drivebase();
@@ -75,11 +77,11 @@ public class RobotContainer {
   private ElevatorStart elevator = new ElevatorStart();
   private PowerDistribution powerDis = new PowerDistribution(18, ModuleType.kCTRE);
   private ElevatorPosition elevatorPos = new ElevatorPosition(elevator, powerDis,null, null, null, null, null, null);
+ 
   //private GetOnChargeStation onCharge = new GetOnChargeStation(drivebase);
   // private soleioid solenoid;
   //private soleioid solenoid;
   private IntakeMotor IntakeMotor;
-  private IntakePnumatic pnumatic; 
  // private  SendableChooser<Command> autoChooser = new SendableChooser<>();
  // private Auto autonomous;
   private Move10Feet move10Feet;
@@ -89,8 +91,10 @@ public class RobotContainer {
   
   // private moveSoleioid soleioid = new moveSoleioid();
   private Auto auto = new Auto(drivebase,elevator,intake);
-  private GetOver fancyAuto = new GetOver(drivebase,elevator,intake);
+  private GetOver getOver = new GetOver(drivebase,elevator,intake);
+  private Turn90 turn90 = new Turn90(drivebase);
 
+SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
 
@@ -113,7 +117,7 @@ public class RobotContainer {
           () -> drive.getLeftBumper(),  
           () -> drive.getRightBumper()));
     configureButtonBindings();
-
+   
     elevator.setDefaultCommand(
         new ElevatorPosition(
           elevator, 
@@ -127,6 +131,20 @@ public class RobotContainer {
 
 
        ));
+
+       ElevatorPosition el = 
+        new ElevatorPosition(
+          elevator, 
+          powerDis,
+          () -> gamePad.getRawButton(4),
+          () -> gamePad.getRawButton(2),
+          () -> gamePad.getRawButton(1),
+          () -> gamePad.getRightBumper(),
+          () -> gamePad.getLeftBumper(),
+          () -> gamePad.getStartButton()
+       );
+       elevator.setDefaultCommand(
+        el);
     //   elevator.setDefaultCommand(
     //     new ElevatorManual(
     //       elevator, 
@@ -138,16 +156,36 @@ public class RobotContainer {
         new IntakeMovements(
           intake, 
           drivebase,
-          elevatorPos,
+          el,
           powerDis,
           () -> gamePad.getRawButton(9), // on
           () -> gamePad.getRawButton(10),// in
           () -> gamePad.getRawButtonReleased(3) //out
 
        ));
+       m_chooser.setDefaultOption("Main Chare", auto);
+       m_chooser.addOption("On And Off Charge", getOver);
+       m_chooser.addOption("Turn 90", turn90);
+       m_chooser.addOption("None", null);
+       SmartDashboard.putData(m_chooser);
     //configureButtonBindings();
+    // SmartDashboard.putBoolean("button", button.get());
+
   }
+
+  public void elevatorState() {
+    SmartDashboard.putBoolean("button", button.get());
+    if ( button.get() ) {
+      if ( elevator.getState() == IdleMode.kBrake); {
+       elevator.coast();
+      }
+      if  ( elevator.getState() == IdleMode.kCoast) {
+       elevator.brake();
+      }
+  }
+}
   
+
 
    private void configureButtonBindings() {
    //new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
@@ -172,7 +210,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new  GetOnChargeStation(drivebase);
+    return m_chooser.getSelected();
     //GetOver(drivebase, elevator, intake);
     //Auto(drivebase,elevator,intake);
 

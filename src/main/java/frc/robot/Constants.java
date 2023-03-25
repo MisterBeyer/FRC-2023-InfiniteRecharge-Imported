@@ -52,11 +52,19 @@ public final class Constants {
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
     public double ElevatorD = 0.0;
+    public double TurnP = 0.0025;
+    public double TurnI = 0.0;
+    public double TurnD = 0.0;
     public double elevatorErrorThresh = 3; // set point thresh hold 
     public double elevatorMinSpeed = .1;
     public double elevatorMaxSpeed = .2;
     public double maxSetPoint = 17.0;
     public double minSetPoint = 0;
+
+    public double ampActivation = 25;
+    public double ampTimer = 1;
+    public double autoStowSetPoint = .5;
+
 
     public double chargeP = 0.004;
     public double chargeI = 0.000004;

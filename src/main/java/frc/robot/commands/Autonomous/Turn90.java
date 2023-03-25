@@ -62,6 +62,7 @@ public class Turn90 extends CommandBase {
 
     SmartDashboard.putNumber("yaw", gyro);
     double error =  -90 - gyro;
+    SmartDashboard.putNumber("error", error);
 
     double sumError =+ error;
     double power = (error * contant.TurnP)+(sumError * contant.TurnI);
@@ -88,6 +89,6 @@ public class Turn90 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   return  (gyro >= 89)  && (gyro <= 91) || ((gyro >= -89) && ((gyro <= -91) ));    
+   return  (gyro >= 89)  && (gyro <= 91) || ((gyro <= -89) && ((gyro >= -91) ));    
   }
 }

@@ -44,6 +44,19 @@ public class ElevatorStart extends SubsystemBase {
    public double time() {
     return time.get();
    }
+
+public IdleMode getState() {
+ return leftMotor.getIdleMode();
+}
+public void brake() {
+   leftMotor.setIdleMode(IdleMode.kBrake);
+   rightMotor.setIdleMode(IdleMode.kBrake);
+}
+public void coast() {
+  leftMotor.setIdleMode(IdleMode.kCoast);
+  rightMotor.setIdleMode(IdleMode.kCoast);
+}
+
    public void elevatorZero() {
     zero = leftMotor.getEncoder().getPosition();
  
