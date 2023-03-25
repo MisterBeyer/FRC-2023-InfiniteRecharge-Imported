@@ -24,7 +24,7 @@ public class IntakeMovements extends CommandBase {
   private Intake intake;
   private Drivebase drive;
   private ElevatorPosition elevator;
-
+  private Constants constant = new Constants();
   
   private BooleanSupplier in;
   private BooleanSupplier out;
@@ -71,14 +71,19 @@ public class IntakeMovements extends CommandBase {
       
     boolean pressed =  false;
      // 25 is the current threshold for cube 
-    if (powerDis.getCurrent(14) > 25 ) {
-       intake.backwardd();
-       elevator.setPoint0(.5);
-     // intake.timeStart();
-      if ( powerDis.getCurrent(14) > 25 && intake.timeGet() > .9) {
+    if (powerDis.getCurrent(14) > constant.ampActivation ) {
+       
+      intake.timeStart();
+      if ( powerDis.getCurrent(14) > 25 && intake.timeGet() > constant.ampTimer) {
+        intake.backwardd();
+       elevator.setPoint0(constant.autoStowSetPoint);
         // Joe Biden disapproves of this code 
         //elevator.setPoint0(0);
-      }
+      } 
+      
+    }
+    else {
+      intake.timerReset();
     }
 
     if ( out.getAsBoolean() == true){

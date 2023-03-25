@@ -51,8 +51,10 @@ solenoide.set(true);
   }
   
   public void timeStart( ){
-    time.reset();
     time.start();
+  }
+  public void timerReset() {
+    time.restart();
   }
   public double timeGet( ){
     return time.get();
