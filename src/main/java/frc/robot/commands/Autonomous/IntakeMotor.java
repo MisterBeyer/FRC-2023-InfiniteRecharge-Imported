@@ -19,6 +19,8 @@ addRequirements(intake);
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_Intake.forward();
+
     m_Intake.timeStart();
     
   }
@@ -26,7 +28,6 @@ addRequirements(intake);
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.forward();
     if (m_Intake.timeGet() > 2 ){
     
     m_Intake.Motorforward();

@@ -85,7 +85,7 @@ public class ElevatorPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+   elevator.brake();
    elevator.elevatorReset();
    elevator.encoderReset();
   }

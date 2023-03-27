@@ -92,11 +92,23 @@ public double getEncoder() {
 
   }   
   
-  public void setIdleMode(){
+  public void setBrake(){
     front_Left.setIdleMode(IdleMode.kBrake);
     front_Right.setIdleMode(IdleMode.kBrake);
     back_Left.setIdleMode(IdleMode.kBrake);
     back_Right.setIdleMode(IdleMode.kBrake);
+  }
+  public void setIdleMode() {
+    front_Left.setIdleMode(IdleMode.kBrake);
+    front_Right.setIdleMode(IdleMode.kBrake);
+    back_Left.setIdleMode(IdleMode.kBrake);
+    back_Right.setIdleMode(IdleMode.kBrake);
+  }
+  public void setCoast(){
+    front_Left.setIdleMode(IdleMode.kCoast);
+    front_Right.setIdleMode(IdleMode.kCoast);
+    back_Left.setIdleMode(IdleMode.kCoast);
+    back_Right.setIdleMode(IdleMode.kCoast);
 
   }
   

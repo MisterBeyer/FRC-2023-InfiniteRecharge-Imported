@@ -42,7 +42,7 @@ public class AutoElevator extends CommandBase {
   public void initialize() {
     cool.encoderReset();
     cool.up();
-
+    
     cool.getLeftEncoder();
 
   }
@@ -51,7 +51,6 @@ public class AutoElevator extends CommandBase {
   @Override
   public void execute() {
     cool.up();
-
     // System.out.println(" phil swift");
     System.out.println("Encoder:" + cool.getLeftEncoder());
     System.out.println("Speed:" + cool.getSpeed());

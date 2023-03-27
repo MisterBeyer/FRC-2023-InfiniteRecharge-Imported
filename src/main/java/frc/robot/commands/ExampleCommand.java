@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -71,7 +72,7 @@ public class ExampleCommand extends CommandBase {
   @Override
   public void initialize() {
 
-
+    m_subsystem.setBrake();
   }
   
   public double rampFunction(double requested, double current) {
@@ -123,6 +124,7 @@ public class ExampleCommand extends CommandBase {
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
     double deadBand = constant.deadband;
+    SmartDashboard.putNumber("encoder", m_subsystem.getEncoder());
     //SmartDashboard.putNumber("amp", power.getCurrent(1));
 
     double Joystickx = this.m_left.getAsDouble();

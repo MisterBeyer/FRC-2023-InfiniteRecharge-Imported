@@ -72,22 +72,22 @@ public class IntakeMovements extends CommandBase {
     boolean pressed =  false;
      // 25 is the current threshold for cube 
     if (powerDis.getCurrent(14) > constant.ampActivation ) {
-       
-      intake.timeStart();
+       //intake.backwardd();
+       //elevator.setPoint0(constant.autoStowSetPoint);
+      //intake.timeStart();
       if ( powerDis.getCurrent(14) > 25 && intake.timeGet() > constant.ampTimer) {
-        intake.backwardd();
-       elevator.setPoint0(constant.autoStowSetPoint);
-        // Joe Biden disapproves of this code 
+        
+        // Joe Biden approves of this code 
         //elevator.setPoint0(0);
       } 
       
     }
     else {
-      intake.timerReset();
+     // intake.timerReset();
     }
 
     if ( out.getAsBoolean() == true){
-    //intake.forward();
+    intake.forward();
     Solenoid = !Solenoid;
     }
     if ( in.getAsBoolean() == true){

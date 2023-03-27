@@ -52,7 +52,8 @@ public final class Constants {
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
     public double ElevatorD = 0.0;
-    public double TurnP = 0.0025;
+    // orginal .0025
+    public double TurnP = 0.009;
     public double TurnI = 0.0;
     public double TurnD = 0.0;
     public double elevatorErrorThresh = 3; // set point thresh hold 
@@ -65,12 +66,13 @@ public final class Constants {
     public double ampTimer = 1;
     public double autoStowSetPoint = .5;
 
+//004 P
+// 000004 I
+    public double chargeP = 0.003;
+    public double chargeI = 0.00004;
 
-    public double chargeP = 0.004;
-    public double chargeI = 0.000004;
-
-
-
+    public double degree = 180;
+    public double turnThres = 1;
     //math
     public double neoTicksPerRev = 999999999999.9;
     public double gearRatio = .11;

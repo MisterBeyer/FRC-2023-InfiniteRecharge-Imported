@@ -28,6 +28,8 @@ import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.Autonomous.AutoElevator;
 import frc.robot.commands.Autonomous.IntakeMotor;
 import frc.robot.commands.Autonomous.Turn90;
+import frc.robot.commands.Autonomous.TurnDeegree;
+import frc.robot.commands.Autonomous.ClearSideAuto.ClearSideAuto;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetBackOnCharge;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOnChargeStation;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOver;
@@ -76,7 +78,7 @@ public class RobotContainer {
   private Constants constant;
   private ElevatorStart elevator = new ElevatorStart();
   private PowerDistribution powerDis = new PowerDistribution(18, ModuleType.kCTRE);
-  private ElevatorPosition elevatorPos = new ElevatorPosition(elevator, powerDis,null, null, null, null, null, null);
+  //private ElevatorPosition elevatorPos = new ElevatorPosition(elevator, powerDis,null, null, null, null, null, null);
  
   //private GetOnChargeStation onCharge = new GetOnChargeStation(drivebase);
   // private soleioid solenoid;
@@ -92,7 +94,10 @@ public class RobotContainer {
   // private moveSoleioid soleioid = new moveSoleioid();
   private Auto auto = new Auto(drivebase,elevator,intake);
   private GetOver getOver = new GetOver(drivebase,elevator,intake);
+  private ClearSideAuto clearSide = new ClearSideAuto(drivebase, elevator, intake, powerDis);
+
   private Turn90 turn90 = new Turn90(drivebase);
+  private TurnDeegree turnDegree = new TurnDeegree(drivebase,180);
 
 SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -166,6 +171,9 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
        m_chooser.setDefaultOption("Main Chare", auto);
        m_chooser.addOption("On And Off Charge", getOver);
        m_chooser.addOption("Turn 90", turn90);
+       m_chooser.addOption("Turn Degree", turnDegree);
+       m_chooser.addOption("ClearSideAuto", clearSide);
+
        m_chooser.addOption("None", null);
        SmartDashboard.putData(m_chooser);
     //configureButtonBindings();
@@ -175,15 +183,19 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   public void elevatorState() {
     SmartDashboard.putBoolean("button", button.get());
-    if ( button.get() ) {
-      if ( elevator.getState() == IdleMode.kBrake); {
-       elevator.coast();
+    if ( button.get() == true ) {
+      
+      elevator.brake();
+      drivebase.setBrake();
       }
-      if  ( elevator.getState() == IdleMode.kCoast) {
-       elevator.brake();
+      else if  ( button.get() == false) {
+        
+       elevator.coast();
+       drivebase.setCoast();
+    
       }
   }
-}
+
   
 
 
