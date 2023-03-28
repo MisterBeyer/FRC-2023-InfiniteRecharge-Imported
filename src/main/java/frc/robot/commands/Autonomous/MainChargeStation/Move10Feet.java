@@ -7,6 +7,7 @@ package frc.robot.commands.Autonomous.MainChargeStation;
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.revrobotics.SparkMaxAlternateEncoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
@@ -25,7 +26,7 @@ public class Move10Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.move(.25);
+    m_subsystem.move(-.25);
     m_subsystem.getEncoder();
   }
 
@@ -34,7 +35,7 @@ public class Move10Feet extends CommandBase {
   public void execute() {
     //nick is so great
     //but jaden is greater
-
+    SmartDashboard.putNumber("encoder",  m_subsystem.getEncoder());
     
     
     System.out.println(" phil swift");
@@ -51,7 +52,7 @@ public class Move10Feet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 250;
+    return m_subsystem.getEncoder() < -307;
   }
   // 250 got over cleanly 
   // - 550 to get cleanly over

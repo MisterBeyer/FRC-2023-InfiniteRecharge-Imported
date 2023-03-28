@@ -25,7 +25,7 @@ public class ElevatorPosition extends CommandBase {
   Constants constant = new Constants();
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private double setPoint = 0;
+  private double setPoint = constant.lowPos;
   private double prevError = 0;
   private double sumError = 0;
   private int count = 0;
@@ -86,6 +86,7 @@ public class ElevatorPosition extends CommandBase {
   @Override
   public void initialize() {
    elevator.brake();
+   setPoint = constant.lowPos;
    elevator.elevatorReset();
    elevator.encoderReset();
   }
@@ -100,7 +101,7 @@ public class ElevatorPosition extends CommandBase {
     double power = constant.elevatorMaxSpeed;
     if ( Math.abs(error) < constant.elevatorErrorThresh)
    {
-      double t = error/constant.elevatorErrorThresh;
+      double t = Math.abs(error)/constant.elevatorErrorThresh;
       power = MathUtil.interpolate(constant.elevatorMinSpeed, constant.elevatorMaxSpeed, t);
    }
     
@@ -127,8 +128,10 @@ public class ElevatorPosition extends CommandBase {
   //  System.out.println("Clamp; " + clampPower );
   //  System.out.println("error; " + error );
 
+   SmartDashboard.putNumber("error", error);
+   SmartDashboard.putNumber("power", power);
 
-
+  
    return power;
     
   }
@@ -161,7 +164,7 @@ public class ElevatorPosition extends CommandBase {
         if(true == bottom.getAsBoolean())
         {
           //intake.backwardd();
-          setPoint = .5;
+          setPoint = constant.lowPos;
 
 
           // setPoint = 2 +  constant.zero;

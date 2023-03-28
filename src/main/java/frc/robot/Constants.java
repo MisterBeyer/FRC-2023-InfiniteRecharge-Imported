@@ -48,17 +48,19 @@ public final class Constants {
     //14
     public double medPosition = 13;
     //13 as main
+    public double lowPos = .5;
     public double zero = 0;
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
     public double ElevatorD = 0.0;
     // orginal .0025
+    //
     public double TurnP = 0.009;
     public double TurnI = 0.0;
     public double TurnD = 0.0;
     public double elevatorErrorThresh = 3; // set point thresh hold 
     public double elevatorMinSpeed = .1;
-    public double elevatorMaxSpeed = .2;
+    public double elevatorMaxSpeed = .5;
     public double maxSetPoint = 17.0;
     public double minSetPoint = 0;
 

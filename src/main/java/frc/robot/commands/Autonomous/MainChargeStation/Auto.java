@@ -46,7 +46,7 @@ public class Auto extends SequentialCommandGroup {
      this.move10Feet = new Move10Feet(subsystem);
     //this.Move5Feet = new Move5Feet(subsystem);
     this.autoElevator = new AutoElevator(elevator,intake);
-    this.spin = new YouSpinMeRightRound(m_subsystem);
+    //this.spin = new YouSpinMeRightRound(m_subsystem);
 
     //this.OutTakeMotor = new OutTakeMotor(intake);
     // this.NoPidTurn90 = new NoPidTurn90(subsystem);
@@ -65,7 +65,7 @@ public class Auto extends SequentialCommandGroup {
       addCommands(IntakeMotor);
       addCommands(down);
       addCommands(move10Feet);
-      addCommands(spin);
+      //addCommands(spin);
 
     // addCommands(OutTakeMotor);
 

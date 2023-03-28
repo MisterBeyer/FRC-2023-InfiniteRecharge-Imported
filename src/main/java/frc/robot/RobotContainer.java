@@ -168,7 +168,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
           () -> gamePad.getRawButtonReleased(3) //out
 
        ));
-       m_chooser.setDefaultOption("Main Chare", auto);
+       m_chooser.setDefaultOption("Main charge", auto);
        m_chooser.addOption("On And Off Charge", getOver);
        m_chooser.addOption("Turn 90", turn90);
        m_chooser.addOption("Turn Degree", turnDegree);
