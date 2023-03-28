@@ -64,8 +64,8 @@ public final class Constants {
     public double maxSetPoint = 17.0;
     public double minSetPoint = 0;
 
-    public double ampActivation = 25;
-    public double ampTimer = 1;
+    public double ampActivation = 30;
+    public double ampTimer = .5;
     public double autoStowSetPoint = .5;
 
 //004 P

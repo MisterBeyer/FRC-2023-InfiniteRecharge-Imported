@@ -29,6 +29,8 @@ public class IntakeMovements extends CommandBase {
   private BooleanSupplier in;
   private BooleanSupplier out;
   private BooleanSupplier on;
+  private boolean resetTimer = true;
+  private boolean gotGamepiece = false;
   private PowerDistribution powerDis;
   // private BooleanSupplier out;
   boolean Solenoid =  false;
@@ -71,31 +73,38 @@ public class IntakeMovements extends CommandBase {
       
     boolean pressed =  false;
      // 25 is the current threshold for cube 
-    if (powerDis.getCurrent(14) > constant.ampActivation ) {
-       //intake.backwardd();
-       //elevator.setPoint0(constant.autoStowSetPoint);
-      //intake.timeStart();
-      if ( powerDis.getCurrent(14) > 25 && intake.timeGet() > constant.ampTimer) {
-        
-        // Joe Biden approves of this code 
-        //elevator.setPoint0(0);
-      } 
-      
-    }
-    else {
-     // intake.timerReset();
-    }
+   
 
     if ( out.getAsBoolean() == true){
     intake.forward();
     Solenoid = !Solenoid;
     }
     if ( in.getAsBoolean() == true){
-          intake.Motorbackward();
-
-      // Intake = !Intake;
-      // Outake = !Outake;
-      pressed = true;
+          
+      if (powerDis.getCurrent(14) > constant.ampActivation ) {
+            // 25 is the current threshold for cube 
+        gotGamepiece = true;
+        Solenoid = false;
+        intake.backwardd();
+        intake.timeStart();
+      }
+      if ( gotGamepiece == true && intake.timeGet() > constant.ampTimer) {
+             resetTimer = true;
+             gotGamepiece = false;
+             
+          // Joe Biden approves of this code 
+        elevator.setPoint0(constant.lowPos);
+      }
+      
+      if( gotGamepiece == false) {
+      
+       intake.Motorbackward();
+       pressed = true;
+       if ( resetTimer == true) {
+        intake.timerReset();
+        resetTimer = false;
+         }
+      }
 
     }
     if ( on.getAsBoolean() == true){
@@ -127,6 +136,7 @@ public class IntakeMovements extends CommandBase {
   if ( pressed != true) {
       intake.slowIntake();
   }
+
    }
 
   // Called once the command ends or is interrupted.
