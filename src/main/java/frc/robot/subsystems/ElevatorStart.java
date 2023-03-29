@@ -73,7 +73,7 @@ public void coast() {
    }
    
    public double getLeftEncoder() {
-    System.out.println(leftMotor.getEncoder().getPosition());
+    //System.out.println(leftMotor.getEncoder().getPosition());
     
 
     return leftMotor.getEncoder().getPosition();
@@ -134,19 +134,7 @@ public void coast() {
       //  front_Left.set(.90);
      
       }
-      public void bottomPosition(){
-        if (leftMotor.getEncoder().getPosition() > zero && leftMotor.getEncoder().getPosition() < zero + 3) {
-          leftMotor.set(0);
-          rightMotor.set(0);
-         }
-         else {
-           leftMotor.set(-.1);
-           rightMotor.set(-.1);
-         }
-
-        System.out.println(" Elevator is at bottom position");
-       
-        }
+      
         public void move(double power) {
         System.out.println(leftMotor.getEncoder().getPosition());
          leftMotor.set(power );

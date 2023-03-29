@@ -64,13 +64,6 @@ solenoide.set(true);
     
      solenoide.set(false);
    }
-
-   public double GetAmp() {
-   return .2222222222222222;
-  }
-  
- 
-  
   
 public double intakeEncoder() {
   return .2;
@@ -82,7 +75,7 @@ public void intakeReset() {
 }
 
   public void Motorforward(){
-    System.out.println(" The Intake is on or off");
+  //  System.out.println(" The Intake is on or off");
      intakeMotor.set(.7); 
  }
  public void Motorbackward(){

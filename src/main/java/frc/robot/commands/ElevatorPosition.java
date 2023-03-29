@@ -30,6 +30,7 @@ public class ElevatorPosition extends CommandBase {
   private double sumError = 0;
   private int count = 0;
   private ElevatorStart elevator;
+  private Intake intake;
   private PowerDistribution powerDis;
   private BooleanSupplier bumperRight;
   private BooleanSupplier bumperLeft;
@@ -54,6 +55,7 @@ public class ElevatorPosition extends CommandBase {
    */
   public ElevatorPosition(
     ElevatorStart elevator,
+    Intake intake,
     PowerDistribution powerDis,
     BooleanSupplier top,
     BooleanSupplier medium,
@@ -63,6 +65,7 @@ public class ElevatorPosition extends CommandBase {
     BooleanSupplier zero
 ) {
     this.elevator = elevator;
+    this.intake = intake;
     this.powerDis = powerDis;
     this.top = top;
     this.medium = medium;
@@ -158,6 +161,7 @@ public class ElevatorPosition extends CommandBase {
       if(true == medium.getAsBoolean())
       {
         setPoint = constant.medPosition;
+        
       }
       else
       {
@@ -193,10 +197,7 @@ public class ElevatorPosition extends CommandBase {
     }
 
     count++;
-    if(0 == (count % 3))
-    {
-      //System.out.printf("TP:%8.1f CP:%8.1f E:%13.3f D:%13.3f SE:%15.3f P:%15.3f\n", setPoint, curPos, error, div, sumError, power);
-    }
+    
   }
   // Called once the command ends or is interrupted.
   @Override

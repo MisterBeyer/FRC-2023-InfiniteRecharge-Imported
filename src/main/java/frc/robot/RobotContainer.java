@@ -126,6 +126,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
     elevator.setDefaultCommand(
         new ElevatorPosition(
           elevator, 
+          intake,
           powerDis,
           () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(2),
@@ -140,6 +141,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
        ElevatorPosition el = 
         new ElevatorPosition(
           elevator, 
+          intake,
           powerDis,
           () -> gamePad.getRawButton(4),
           () -> gamePad.getRawButton(2),

@@ -63,6 +63,7 @@ public class IntakeMovements extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
     boolean pressed =  false;
   }
 
@@ -73,22 +74,24 @@ public class IntakeMovements extends CommandBase {
       
     boolean pressed =  false;
      // 25 is the current threshold for cube 
-   
+    
 
-    if ( out.getAsBoolean() == true){
+    if ( out.getAsBoolean() == true ){
     intake.forward();
     Solenoid = !Solenoid;
     }
     if ( in.getAsBoolean() == true){
-          
-      if (powerDis.getCurrent(14) > constant.ampActivation ) {
-            // 25 is the current threshold for cube 
+      if (powerDis.getCurrent(14) > constant.ampActivation  ) {
+            // 25 is the current threshold for cube
+            System.out.println("over threshold");
         gotGamepiece = true;
         Solenoid = false;
         intake.backwardd();
         intake.timeStart();
       }
       if ( gotGamepiece == true && intake.timeGet() > constant.ampTimer) {
+        System.out.println("Over 1 second");
+
              resetTimer = true;
              gotGamepiece = false;
              

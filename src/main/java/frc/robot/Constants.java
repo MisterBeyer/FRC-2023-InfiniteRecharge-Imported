@@ -46,9 +46,9 @@ public final class Constants {
     // Elevator
     public double topPosition = 14;
     //14
-    public double medPosition = 13;
+    public double medPosition = 12.5;
     //13 as main
-    public double lowPos = .5;
+    public double lowPos = .3;
     public double zero = 0;
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
