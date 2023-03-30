@@ -77,7 +77,7 @@ public double getGyro(){
 return gyro.getYaw();
 }
 public void displayGyro(){
-   System.out.println(gyro.getCompassHeading());
+   //System.out.println(gyro.getCompassHeading());
 }
 public double getY() {
   return gyro.getPitch();

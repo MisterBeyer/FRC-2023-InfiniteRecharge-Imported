@@ -69,7 +69,7 @@ public void coast() {
   }
    
    public void encoderValue() {
-    System.out.println(leftMotor.getEncoder().getPosition());
+    //System.out.println(leftMotor.getEncoder().getPosition());
    }
    
    public double getLeftEncoder() {
@@ -117,7 +117,7 @@ public void coast() {
       rightMotor.set(-.2);
     }
     public void mediumPosition(){
-      System.out.println(leftMotor.getEncoder().getPosition());
+      //System.out.println(leftMotor.getEncoder().getPosition());
       if (leftMotor.getEncoder().getPosition() > 40 && leftMotor.getEncoder().getPosition() < 45) {
         leftMotor.set(0);
        rightMotor.set(0);
@@ -136,7 +136,7 @@ public void coast() {
       }
       
         public void move(double power) {
-        System.out.println(leftMotor.getEncoder().getPosition());
+        //System.out.println(leftMotor.getEncoder().getPosition());
          leftMotor.set(power );
          rightMotor.set(power );
             

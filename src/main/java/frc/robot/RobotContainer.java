@@ -24,7 +24,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeMovements;
-import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.Autonomous.AutoElevator;
 import frc.robot.commands.Autonomous.IntakeMotor;
 import frc.robot.commands.Autonomous.Turn90;
@@ -122,21 +121,6 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
           () -> drive.getLeftBumper(),  
           () -> drive.getRightBumper()));
     configureButtonBindings();
-   
-    elevator.setDefaultCommand(
-        new ElevatorPosition(
-          elevator, 
-          intake,
-          powerDis,
-          () -> gamePad.getRawButton(4),
-          () -> gamePad.getRawButton(2),
-          () -> gamePad.getRawButton(1),
-          () -> gamePad.getRightBumper(),
-          () -> gamePad.getLeftBumper(),
-          () -> gamePad.getStartButton()
-
-
-       ));
 
        ElevatorPosition el = 
         new ElevatorPosition(

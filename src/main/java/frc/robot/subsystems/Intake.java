@@ -46,7 +46,7 @@ public class Intake extends SubsystemBase {
   public void forward() {
   // System.out.println(" the intake is in the up posiition  or the position");
    
-solenoide.set(true);
+    solenoide.set(true);
    
   }
   

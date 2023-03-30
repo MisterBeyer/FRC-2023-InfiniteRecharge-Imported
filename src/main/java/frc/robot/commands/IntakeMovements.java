@@ -77,19 +77,20 @@ public class IntakeMovements extends CommandBase {
     
 
     if ( out.getAsBoolean() == true ){
-    intake.forward();
-    Solenoid = !Solenoid;
+      intake.forward();
+      Solenoid = !Solenoid;
     }
     if ( in.getAsBoolean() == true){
-      if (powerDis.getCurrent(14) > constant.ampActivation  ) {
+      if ( powerDis.getCurrent(14) > constant.ampActivation  ) {
             // 25 is the current threshold for cube
             System.out.println("over threshold");
         gotGamepiece = true;
         Solenoid = false;
-        intake.backwardd();
-        intake.timeStart();
+        //intake.backwardd(); // todo: does this work?
+        //intake.timeStart();
+        elevator.setPoint0(constant.lowPos);
       }
-      if ( gotGamepiece == true && intake.timeGet() > constant.ampTimer) {
+      /*if ( gotGamepiece == true && intake.timeGet() > constant.ampTimer) {
         System.out.println("Over 1 second");
 
              resetTimer = true;
@@ -97,17 +98,18 @@ public class IntakeMovements extends CommandBase {
              
           // Joe Biden approves of this code 
         elevator.setPoint0(constant.lowPos);
-      }
+      }*/
       
-      if( gotGamepiece == false) {
-      
+      //if( gotGamepiece == false) {
+      else {
        intake.Motorbackward();
        pressed = true;
        if ( resetTimer == true) {
         intake.timerReset();
         resetTimer = false;
          }
-      }
+        }
+      //}
 
     }
     if ( on.getAsBoolean() == true){

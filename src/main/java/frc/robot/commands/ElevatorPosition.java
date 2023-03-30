@@ -161,7 +161,7 @@ public class ElevatorPosition extends CommandBase {
       if(true == medium.getAsBoolean())
       {
         setPoint = constant.medPosition;
-        
+        intake.forward();
       }
       else
       {
