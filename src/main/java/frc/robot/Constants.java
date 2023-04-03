@@ -44,6 +44,7 @@ public final class Constants {
     //elevator top 60.5 links/ 16 inches
     //22 teeths
     // Elevator
+    public double autoCube = 15.5;
     public double topPosition = 14;
     //14
     public double medPosition = 12.5;
@@ -70,8 +71,11 @@ public final class Constants {
 
 //004 P
 // 000004 I
-    public double chargeP = 0.003;
-    public double chargeI = 0.00004;
+// was not working on 004p
+//0028 first match use
+    public double chargeP = 0.004;
+    public double chargeI = 0.00006;
+    //0.00004 orginal i
 
     public double degree = 180;
     public double turnThres = 1;

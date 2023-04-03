@@ -49,6 +49,8 @@ public class GetOnChargeStation extends CommandBase {
     prevError = error;
     sumError += error;
     SmartDashboard.putNumber("erro", error);
+    SmartDashboard.putNumber("sumerro", sumError);
+
 
 
     //double div = prevError - error;
@@ -58,7 +60,7 @@ public class GetOnChargeStation extends CommandBase {
    SmartDashboard.putNumber("power", power);
 
  
-   sumError = MathUtil.clamp(sumError, 0, 30);
+   sumError = MathUtil.clamp(sumError, -30, 30);
    //double clampPower = ThreshHoldInterpolatb(error);
    power = MathUtil.clamp(power, -.2, .2);
    

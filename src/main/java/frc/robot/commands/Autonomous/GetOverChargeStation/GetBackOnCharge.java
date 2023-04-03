@@ -51,8 +51,9 @@ public class GetBackOnCharge extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoder() > 280;
+    return m_subsystem.getEncoder() > 250;
   }
+  //292 works to get us back on
   // 250 got over cleanly 
   // - 550 to get cleanly over
   //800 ticks to get to the first game objects

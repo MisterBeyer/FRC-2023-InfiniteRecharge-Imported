@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -35,7 +36,7 @@ public class ElevatorStart extends SubsystemBase {
 
  // 0 = bottom 50 = medium 100 = high
  public ElevatorStart() {
-
+ System.out.println("ElevatorStart Created");
   rightMotor.setInverted(true);
   leftMotor.getEncoder().setPosition(0);
     leftMotor.setIdleMode(IdleMode.kBrake);
@@ -145,6 +146,7 @@ public void coast() {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
+    SmartDashboard.putNumber("elevator Encoder", getLeftEncoder());
   }
 }

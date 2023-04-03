@@ -91,7 +91,7 @@ public class ElevatorPosition extends CommandBase {
    elevator.brake();
    setPoint = constant.lowPos;
    elevator.elevatorReset();
-   elevator.encoderReset();
+   //elevator.encoderReset();
   }
 
   public void setPoint0(double wantedSetpoint) {

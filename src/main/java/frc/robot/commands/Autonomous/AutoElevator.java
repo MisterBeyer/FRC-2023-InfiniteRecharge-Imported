@@ -9,7 +9,7 @@ import java.util.Timer;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
@@ -62,6 +62,7 @@ public class AutoElevator extends CommandBase {
   @Override
   public void end(boolean interrupted) {
    // cool.encoderReset();
+     cool.elevatorReset();
 
    
   }
@@ -69,6 +70,6 @@ public class AutoElevator extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return  cool.getLeftEncoder() > constant.topPosition;
+    return  cool.getLeftEncoder() > constant.autoCube;
 }
 }

@@ -39,7 +39,7 @@ addRequirements(intake);
   @Override
   public void end(boolean interrupted) 
   {
-   // intake.MotorStop();
+    m_Intake.MotorStop();
 
   }
 

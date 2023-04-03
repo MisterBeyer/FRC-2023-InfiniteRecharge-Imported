@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 public class Intake extends SubsystemBase {
   private Solenoid solenoide;
   private Timer time;
+  private boolean solenoidOn = false;
  // PowerDistribution powerDis = new PowerDistribution(18, ModuleType.kCTRE);
  // private PneumaticsControlModule pcm;
   private final CANSparkMax intakeMotor = new CANSparkMax(7, MotorType.kBrushless);
@@ -48,6 +49,15 @@ public class Intake extends SubsystemBase {
    
     solenoide.set(true);
    
+  }
+  public boolean getSolenoideState(){
+    return solenoidOn;
+  }
+  public void setSolenoideStateOut(){
+    solenoidOn = true;
+  }
+  public void setSolenoideStateOff(){
+    solenoidOn = false;
   }
   
   public void timeStart( ){
