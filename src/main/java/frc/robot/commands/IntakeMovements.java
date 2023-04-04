@@ -23,7 +23,7 @@ public class IntakeMovements extends CommandBase {
 
   private Intake intake;
   private Drivebase drive;
-  private ElevatorPosition elevator;
+  private ElevatorStart elevator;
   private Constants constant = new Constants();
   
   private BooleanSupplier in;
@@ -41,7 +41,7 @@ public class IntakeMovements extends CommandBase {
   public IntakeMovements(
     Intake intake,
     Drivebase drive,
-    ElevatorPosition elevator,
+    ElevatorStart elevator,
     PowerDistribution powerDis,
     BooleanSupplier on,
     BooleanSupplier in,
@@ -77,30 +77,22 @@ public class IntakeMovements extends CommandBase {
     
 
     if ( out.getAsBoolean() == true ){
-      intake.forward();
-      Solenoid = !Solenoid;
+      if ( intake.getSolenoideState() == true){
+        intake.setSolenoideStateFalse();
+      }
+      else if (intake.getSolenoideState() == false) {
+         intake.setSolenoideStateTrue();
+      }
     }
     if ( in.getAsBoolean() == true){
       if ( powerDis.getCurrent(14) > constant.ampActivation  ) {
             // 25 is the current threshold for cube
             System.out.println("over threshold");
         gotGamepiece = true;
-        Solenoid = false;
-        //intake.backwardd(); // todo: does this work?
-        //intake.timeStart();
-        elevator.setPoint0(constant.lowPos);
+        intake.setSolenoideStateFalse();
+        
+        elevator.setSetPoint(constant.lowPos);
       }
-      /*if ( gotGamepiece == true && intake.timeGet() > constant.ampTimer) {
-        System.out.println("Over 1 second");
-
-             resetTimer = true;
-             gotGamepiece = false;
-             
-          // Joe Biden approves of this code 
-        elevator.setPoint0(constant.lowPos);
-      }*/
-      
-      //if( gotGamepiece == false) {
       else {
        intake.Motorbackward();
        pressed = true;
@@ -109,35 +101,23 @@ public class IntakeMovements extends CommandBase {
         resetTimer = false;
          }
         }
-      //}
 
     }
     if ( on.getAsBoolean() == true){
      intake.Motorforward();
 
-     //Intake = !Intake;
 
       pressed = true;
 
     }
 
-    if (Solenoid == true) {
+    if (intake.getSolenoideState() == true) {
       intake.forward();
     }
     else {
-      
+    
     intake.backwardd();
     }
-    // if (Outake == true) {
-    //   intake.Motorbackward();
-    // }
-    // else if (Intake == true) {
-    //   intake.Motorforward();
-    // }
-    
-  //   else {
-  //     intake.slowIntake();
-  //  }
   if ( pressed != true) {
       intake.slowIntake();
   }

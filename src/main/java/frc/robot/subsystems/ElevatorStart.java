@@ -12,6 +12,7 @@ import javax.sound.sampled.LineEvent.Type;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -28,8 +29,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ElevatorStart extends SubsystemBase {
   Constants constant = new Constants();
-  private double zero = .5;
-  private double p = constant.ElevatorP;
+  private double setPoint = constant.lowPos;
+  private double sumError = 0;
   private final CANSparkMax leftMotor = new CANSparkMax(constant.elevatorLeftMotor , MotorType.kBrushless);
  private final CANSparkMax rightMotor = new CANSparkMax(constant.elevatorRightMotor, MotorType.kBrushless);
   private Timer time = new Timer();
@@ -58,10 +59,7 @@ public void coast() {
   rightMotor.setIdleMode(IdleMode.kCoast);
 }
 
-   public void elevatorZero() {
-    zero = leftMotor.getEncoder().getPosition();
- 
-   }
+   
    public void ShowVolts() {
     System.out.println("Left Current; " +  leftMotor.getOutputCurrent() );
 
@@ -96,15 +94,7 @@ public void coast() {
    // top = 13.4
    // middle = 7
    // bottom = 0 
-   public void fancyZero() {
-     leftMotor.set(-.05);
-     if ( leftMotor.getBusVoltage() < 5 && leftMotor.getBusVoltage() > 8)
-     {
-    zero = leftMotor.getEncoder().getPosition();
-    leftMotor.set(0);
-
-     }
-   }
+   
    
     public void up() {
       leftMotor.set(.2);
@@ -117,36 +107,56 @@ public void coast() {
       leftMotor.set(-.2);
       rightMotor.set(-.2);
     }
-    public void mediumPosition(){
-      //System.out.println(leftMotor.getEncoder().getPosition());
-      if (leftMotor.getEncoder().getPosition() > 40 && leftMotor.getEncoder().getPosition() < 45) {
-        leftMotor.set(0);
-       rightMotor.set(0);
-       }
-       else if (leftMotor.getEncoder().getPosition() > 53) {
-         leftMotor.set(-.5);
-        rightMotor.set(-.5);
-       }
-       else{
-        leftMotor.set(.5);
-         rightMotor.set(.5);
-       }
-      // front_Left.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 42).setPosition(0);
-      //  front_Left.set(.90);
-     
-      }
-      
         public void move(double power) {
         //System.out.println(leftMotor.getEncoder().getPosition());
          leftMotor.set(power );
          rightMotor.set(power );
             
        }
+       public void setSetPoint(double wantedSetPoint){
+        setPoint = wantedSetPoint;
+       }
+       public double getSetPoint(){
+        return setPoint;
+       }
+       public double ThreshHoldInterpolatb( double error) {
+    
+        double power = constant.elevatorMaxSpeed;
+        if ( Math.abs(error) < constant.elevatorErrorThresh)
+       {
+          double t = Math.abs(error)/constant.elevatorErrorThresh;
+          power = MathUtil.interpolate(constant.elevatorMinSpeed, constant.elevatorMaxSpeed, t);
+       }
+        
+        return power;
+      }
+      public double PID(double setPoint) {
+        double curPos = getLeftEncoder();
+        double error = setPoint - curPos;
+    
+        sumError += error;
+        //double div = prevError - error;
+        double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
+       //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    
+       // TODO test out what happens if we change low to a negative during summer
+     
+       sumError = MathUtil.clamp(sumError, 30, 30);
+       double clampPower = ThreshHoldInterpolatb(error);
+       power = MathUtil.clamp(power, -clampPower, clampPower);
+       
+      
+       return power;
+        
+      }
+      
 
 
   @Override
   public void periodic() {
+   setPoint = MathUtil.clamp(setPoint, constant.lowPos, constant.maxSetPoint);
+   move(PID(setPoint));
+   SmartDashboard.putNumber("elevator Encoder", getLeftEncoder());
 
-    SmartDashboard.putNumber("elevator Encoder", getLeftEncoder());
   }
 }

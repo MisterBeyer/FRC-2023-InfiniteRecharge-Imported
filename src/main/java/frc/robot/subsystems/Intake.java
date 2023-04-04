@@ -53,10 +53,10 @@ public class Intake extends SubsystemBase {
   public boolean getSolenoideState(){
     return solenoidOn;
   }
-  public void setSolenoideStateOut(){
+  public void setSolenoideStateTrue(){
     solenoidOn = true;
   }
-  public void setSolenoideStateOff(){
+  public void setSolenoideStateFalse(){
     solenoidOn = false;
   }
   

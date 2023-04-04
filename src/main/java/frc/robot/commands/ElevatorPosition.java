@@ -93,52 +93,6 @@ public class ElevatorPosition extends CommandBase {
    elevator.elevatorReset();
    //elevator.encoderReset();
   }
-
-  public void setPoint0(double wantedSetpoint) {
-    
-    setPoint = wantedSetpoint;
-  }
-
-  public double ThreshHoldInterpolatb( double error) {
-    
-    double power = constant.elevatorMaxSpeed;
-    if ( Math.abs(error) < constant.elevatorErrorThresh)
-   {
-      double t = Math.abs(error)/constant.elevatorErrorThresh;
-      power = MathUtil.interpolate(constant.elevatorMinSpeed, constant.elevatorMaxSpeed, t);
-   }
-    
-    return power;
-  }
-
-  public double PID(double setPoint) {
-    double curPos = elevator.getLeftEncoder();
-    double error = setPoint - curPos;
-
-    prevError = error;
-    sumError += error;
-    //double div = prevError - error;
-    double power = (error * constant.ElevatorP)+(sumError * constant.ElevatorI);
-   //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
-
-   
- 
-   sumError = MathUtil.clamp(sumError, 30, 30);
-   double clampPower = ThreshHoldInterpolatb(error);
-   power = MathUtil.clamp(power, -clampPower, clampPower);
-   
-  //  System.out.println("power; " + power );
-  //  System.out.println("Clamp; " + clampPower );
-  //  System.out.println("error; " + error );
-
-   SmartDashboard.putNumber("error", error);
-   SmartDashboard.putNumber("power", power);
-
-  
-   return power;
-    
-  }
-  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -154,13 +108,13 @@ public class ElevatorPosition extends CommandBase {
     if(true == top.getAsBoolean())
     {
     // System.out.println(" top has been called");
-      setPoint = constant.topPosition;
-    }
+    elevator.setSetPoint(constant.topPosition);
+  }
     else
     {
       if(true == medium.getAsBoolean())
       {
-        setPoint = constant.medPosition;
+        elevator.setSetPoint(constant.medPosition);
         intake.forward();
       }
       else
@@ -168,19 +122,18 @@ public class ElevatorPosition extends CommandBase {
         if(true == bottom.getAsBoolean())
         {
           //intake.backwardd();
-          setPoint = constant.lowPos;
-
+          elevator.setSetPoint(constant.lowPos);
 
           // setPoint = 2 +  constant.zero;
         }
         else if ( true == up.getAsBoolean()){
           //System.out.println(setPoint);
-         setPoint += 0.3;
+          elevator.setSetPoint(elevator.getSetPoint() + .3);
         }
       else if ( true == down.getAsBoolean()){
         //System.out.println(setPoint);
+        elevator.setSetPoint(elevator.getSetPoint() - .3);
 
-        setPoint -= 0.3;
       }
     else if ( true == zero.getAsBoolean()){
       elevator.encoderReset();
@@ -190,8 +143,6 @@ public class ElevatorPosition extends CommandBase {
     //elevator.elevatorReset();
   }
  // elevator.ShowVolts();
-  elevator.move(PID(setPoint));
-
 
       }
     }

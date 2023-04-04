@@ -7,11 +7,12 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorStart;
 import frc.robot.subsystems.Intake;
+import frc.robot.Constants;
 
 public class AutoElevatorDown extends CommandBase {
   private Intake m_Intake;
   private ElevatorStart cool;
-
+  private Constants constant = new Constants();
   /** Creates a new AutoElevatorDown. */
   public AutoElevatorDown(ElevatorStart elevator, Intake intake) {
     
@@ -33,7 +34,7 @@ public class AutoElevatorDown extends CommandBase {
   @Override
   public void execute() {
     m_Intake.backwardd();
-    cool.down();
+    cool.setSetPoint(constant.lowPos);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +46,6 @@ public class AutoElevatorDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return cool.getLeftEncoder() < 1;
+    return cool.getLeftEncoder() < constant.lowPos;
   }
 }

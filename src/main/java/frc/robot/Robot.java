@@ -49,7 +49,6 @@ public class Robot extends TimedRobot {
     CameraServer.startAutomaticCapture(1);
     //CameraServer.
 
-    //elevator.elevatorZero();
     System.out.println("starting robot.");
     m_robotContainer = new RobotContainer();
   }

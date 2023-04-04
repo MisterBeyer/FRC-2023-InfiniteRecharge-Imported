@@ -97,7 +97,7 @@ public class RobotContainer {
 
   private Turn90 turn90 = new Turn90(drivebase);
   private TurnDeegree turnDegree = new TurnDeegree(drivebase,180);
-
+  private boolean prevButtonState = false;
 SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -147,7 +147,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
         new IntakeMovements(
           intake, 
           drivebase,
-          el,
+          elevator,
           powerDis,
           () -> gamePad.getRawButton(9), // on
           () -> gamePad.getRawButton(10),// in
@@ -169,35 +169,37 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   public void elevatorState() {
     SmartDashboard.putBoolean("button", button.get());
-    if ( button.get() == true ) {
-      
-      elevator.brake();
+
+    if( prevButtonState != button.get() && button.get() == true) {
+     if( drivebase.getMode() == IdleMode.kBrake) {
+      drivebase.setCoast();
+      elevator.coast();
+     }
+     else if( drivebase.getMode() == IdleMode.kCoast) {
       drivebase.setBrake();
-      }
-      else if  ( button.get() == false) {
+      elevator.brake();
+     }
+
+    }
+    prevButtonState = button.get();
+    // if ( button.get() == true ) {
+    //   prevButtonState = false;
+      
+    //   elevator.brake();
+    //   drivebase.setBrake();
+    //   }
+    //   else if  ( button.get() == false) {
         
-       elevator.coast();
-       drivebase.setCoast();
+    //    elevator.coast();
+    //    drivebase.setCoast();
     
-      }
+    //   }
   }
 
   
 
 
    private void configureButtonBindings() {
-   //new JoystickButton(gamePad, 1).whileTrue(IntakeMotor);
-
-   
-    //new JoystickButton(gamePad, 1).onTrue( new ElevatorMediumPosition());
-    // new JoystickButton(gamePad, 1).onTrue( new IntakePnumatic());
-  //   new JoystickButton(gamePad, 3).onTrue( new ElevatorBottomPosition());
-   // new JoystickButton(gamePad, 4).onTrue( new ElevatorTopPosition());
-     //new JoystickButton(gamePad, 2).onTrue( new OutakeMotor());
-   // new JoystickButton(gamePad, 3).whileTrue( new IntakeMotor(intake));
-  //  new JoystickButton(gamePad, 4).whileTrue( new moveSoleioid());
-  //new JoystickButton(gamePad, 2).onTrue(ElevatorBottomPosition);
-
   CameraServer.startAutomaticCapture();
 
   }

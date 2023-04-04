@@ -91,6 +91,9 @@ public double getEncoder() {
     front_Right.getEncoder().setPosition(0);
 
   }   
+  public IdleMode getMode(){
+    return front_Left.getIdleMode();
+  }
   
   public void setBrake(){
     front_Left.setIdleMode(IdleMode.kBrake);

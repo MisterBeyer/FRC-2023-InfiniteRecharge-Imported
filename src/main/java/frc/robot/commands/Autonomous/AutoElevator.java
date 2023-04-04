@@ -41,7 +41,7 @@ public class AutoElevator extends CommandBase {
   @Override
   public void initialize() {
     cool.encoderReset();
-    cool.up();
+    cool.setSetPoint(constant.autoCube);
     
     cool.getLeftEncoder();
 
@@ -50,7 +50,6 @@ public class AutoElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cool.up();
     // System.out.println(" phil swift");
     System.out.println("Encoder:" + cool.getLeftEncoder());
     System.out.println("Speed:" + cool.getSpeed());
