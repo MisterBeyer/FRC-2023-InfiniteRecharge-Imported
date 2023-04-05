@@ -132,7 +132,10 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
           () -> gamePad.getRawButton(1),
           () -> gamePad.getRightBumper(),
           () -> gamePad.getLeftBumper(),
-          () -> gamePad.getStartButton()
+          () -> gamePad.getStartButton(),
+          () -> gamePad.getPOV()
+
+
        );
        elevator.setDefaultCommand(
         el);

@@ -43,7 +43,6 @@ public class AutoElevator extends CommandBase {
     cool.encoderReset();
     cool.setSetPoint(constant.autoCube);
     
-    cool.getLeftEncoder();
 
   }
 
@@ -59,16 +58,12 @@ public class AutoElevator extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-   // cool.encoderReset();
-     cool.elevatorReset();
-
-   
+  public void end(boolean interrupted) {   
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return  cool.getLeftEncoder() > constant.autoCube;
+    return  cool.getLeftEncoder() > constant.autoCube -.1;
 }
 }

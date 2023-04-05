@@ -47,6 +47,8 @@ public final class Constants {
     public double autoCube = 15.2;
     public double topPosition = 13.7;
     //14
+    public double medScorePos = 10.1;
+    // 10.3
     public double medPosition = 12.2;
     //13 as main
     public double lowPos = 0;
@@ -61,7 +63,7 @@ public final class Constants {
     public double TurnD = 0.0;
     public double elevatorErrorThresh = 3; // set point thresh hold 
     public double elevatorMinSpeed = .1;
-    public double elevatorMaxSpeed = .2;
+    public double elevatorMaxSpeed = .5;
     public double maxSetPoint = 17.0;
     public double minSetPoint = 0;
 

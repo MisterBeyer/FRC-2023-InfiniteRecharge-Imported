@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
 import java.math.*;
 
 /** An example command that uses an example subsystem.
@@ -40,10 +41,11 @@ public class ElevatorPosition extends CommandBase {
   private BooleanSupplier up;
   private BooleanSupplier down;
   private BooleanSupplier zero;
+  private IntSupplier  Dpad;
   private boolean m_down;
   private boolean m_top;
 
-  private XboxController gamePad;
+  public XboxController gamePad;
   private Deadband dead;
 //  private Intake intake;
 
@@ -62,7 +64,8 @@ public class ElevatorPosition extends CommandBase {
     BooleanSupplier bottom,
     BooleanSupplier up,
     BooleanSupplier down,
-    BooleanSupplier zero
+    BooleanSupplier zero,
+    IntSupplier  Dpad
 ) {
     this.elevator = elevator;
     this.intake = intake;
@@ -73,6 +76,7 @@ public class ElevatorPosition extends CommandBase {
     this.up = up;
     this.down = down;
     this.zero = zero;
+    this.Dpad = Dpad;
     
     
     
@@ -115,7 +119,7 @@ public class ElevatorPosition extends CommandBase {
       if(true == medium.getAsBoolean())
       {
         elevator.setSetPoint(constant.medPosition);
-        intake.forward();
+        intake.setSolenoideStateTrue();
       }
       else
       {
@@ -126,6 +130,9 @@ public class ElevatorPosition extends CommandBase {
 
           // setPoint = 2 +  constant.zero;
         }
+         else if( Dpad.getAsInt() > 80 && Dpad.getAsInt() < 100) {
+          elevator.setSetPoint(constant.medScorePos);
+         }
         else if ( true == up.getAsBoolean()){
           //System.out.println(setPoint);
           elevator.setSetPoint(elevator.getSetPoint() + .3);

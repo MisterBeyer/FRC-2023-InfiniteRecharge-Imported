@@ -40,12 +40,11 @@ public class AutoElevatorDown extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    cool.elevatorReset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return cool.getLeftEncoder() < constant.lowPos;
+    return cool.getLeftEncoder() < constant.lowPos + .1;
   }
 }
