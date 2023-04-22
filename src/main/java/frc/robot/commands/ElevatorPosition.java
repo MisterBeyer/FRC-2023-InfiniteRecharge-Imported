@@ -111,6 +111,8 @@ public class ElevatorPosition extends CommandBase {
     // double power = 0;
     if(true == top.getAsBoolean())
     {
+      intake.setSolenoideStateTrue();
+
     // System.out.println(" top has been called");
     elevator.setSetPoint(constant.topPosition);
   }
@@ -126,12 +128,15 @@ public class ElevatorPosition extends CommandBase {
         if(true == bottom.getAsBoolean())
         {
           //intake.backwardd();
+
           elevator.setSetPoint(constant.lowPos);
 
           // setPoint = 2 +  constant.zero;
         }
          else if( Dpad.getAsInt() > 80 && Dpad.getAsInt() < 100) {
           elevator.setSetPoint(constant.medScorePos);
+          intake.setSolenoideStateTrue();
+
          }
         else if ( true == up.getAsBoolean()){
           //System.out.println(setPoint);

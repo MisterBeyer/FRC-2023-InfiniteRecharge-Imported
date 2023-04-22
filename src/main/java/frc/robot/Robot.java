@@ -77,7 +77,6 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     SmartDashboard.putNumber("degree", m_robotContainer.j.getPOV(0));
-   System.out.println(m_robotContainer.j.getPOV());
 
     if ( m_robotContainer != null) {
     m_robotContainer.elevatorState();

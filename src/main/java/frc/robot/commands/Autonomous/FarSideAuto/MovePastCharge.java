@@ -2,20 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous.GetOverChargeStation;
+package frc.robot.commands.Autonomous.FarSideAuto;
 
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.revrobotics.SparkMaxAlternateEncoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import com.revrobotics.CANSparkMax;
 
-public class GetBackOnCharge extends CommandBase {
-
+public class MovePastCharge extends CommandBase {
   private final Drivebase m_subsystem;
 
-  public GetBackOnCharge(Drivebase subsystem) {
+  public MovePastCharge(Drivebase subsystem ) {
    m_subsystem = subsystem;
    m_subsystem.setIdleMode();
    addRequirements(m_subsystem);
@@ -24,9 +24,8 @@ public class GetBackOnCharge extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_subsystem.setBrake();
     m_subsystem.setEncoder();
-    m_subsystem.move(.35);
+    m_subsystem.move(-.35);
     m_subsystem.getEncoder();
   }
 
@@ -34,12 +33,6 @@ public class GetBackOnCharge extends CommandBase {
   @Override
   public void execute() {
     //nick is so great
-    //but jaden is greater
-
-    
-    
-    System.out.println(" phil swift");
-    System.out.println("Encoder:" + m_subsystem.getEncoder());
   }
 //1 feet = 45 tick
   // Called once the command ends or is interrupted.
@@ -52,11 +45,8 @@ public class GetBackOnCharge extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    m_subsystem.setBrake();
-
-    return m_subsystem.getEncoder() > 292;
+    return m_subsystem.getEncoder() <   -570;
   }
-  //292 works to get us back on
   // 250 got over cleanly 
   // - 550 to get cleanly over
   //800 ticks to get to the first game objects

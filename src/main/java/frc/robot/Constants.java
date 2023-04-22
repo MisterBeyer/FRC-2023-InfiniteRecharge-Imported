@@ -47,15 +47,15 @@ public final class Constants {
     public double autoCube = 15.2;
     public double topPosition = 13.7;
     //14
-    public double medScorePos = 10.1;
+    public double medScorePos = 8.7;
+    //9.8
     // 10.3
-    public double medPosition = 12.2;
+    public double medPosition = 12.4;
     //13 as main
     public double lowPos = 0;
     public double zero = 0;
     public double ElevatorP = .9;
     public double ElevatorI = 0.00001;
-    public double ElevatorD = 0.0;
     // orginal .0025
     //
     public double TurnP = 0.009;
@@ -75,9 +75,12 @@ public final class Constants {
 // 000004 I
 // was not working on 004p
 //0028 first match use
-    public double chargeP = 0.004;
-    public double chargeI = 0.00006;
+    public double chargeP = 0.0045;
+    public double chargeI = 0.000045;
+    public double chargeD = 0.00014;
+
     //0.00004 orginal i
+    // cant go over .01
 
     public double degree = 180;
     public double turnThres = 1;

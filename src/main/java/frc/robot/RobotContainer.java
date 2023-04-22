@@ -29,6 +29,7 @@ import frc.robot.commands.Autonomous.IntakeMotor;
 import frc.robot.commands.Autonomous.Turn90;
 import frc.robot.commands.Autonomous.TurnDeegree;
 import frc.robot.commands.Autonomous.ClearSideAuto.ClearSideAuto;
+import frc.robot.commands.Autonomous.FarSideAuto.FarSide;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetBackOnCharge;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOnChargeStation;
 import frc.robot.commands.Autonomous.GetOverChargeStation.GetOver;
@@ -94,6 +95,7 @@ public class RobotContainer {
   private Auto auto = new Auto(drivebase,elevator,intake);
   private GetOver getOver = new GetOver(drivebase,elevator,intake);
   private ClearSideAuto clearSide = new ClearSideAuto(drivebase, elevator, intake, powerDis);
+  private FarSide farSide = new FarSide(drivebase, elevator, intake);
 
   private Turn90 turn90 = new Turn90(drivebase);
   private TurnDeegree turnDegree = new TurnDeegree(drivebase,180);
@@ -118,6 +120,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
           drivebase, 
           () -> drive.getRawAxis(1),
           () -> drive.getRawAxis(4), 
+          () -> drive.getRawButton(2),
           () -> drive.getLeftBumper(),  
           () -> drive.getRightBumper()));
     configureButtonBindings();
@@ -161,6 +164,8 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
        m_chooser.addOption("On And Off Charge", getOver);
        m_chooser.addOption("Turn 90", turn90);
        m_chooser.addOption("Turn Degree", turnDegree);
+       m_chooser.addOption("MoveOutOfCommunity", farSide);
+
        m_chooser.addOption("ClearSideAuto", clearSide);
 
        m_chooser.addOption("None", null);

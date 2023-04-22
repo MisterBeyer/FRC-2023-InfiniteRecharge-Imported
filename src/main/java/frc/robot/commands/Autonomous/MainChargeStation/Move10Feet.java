@@ -26,7 +26,7 @@ public class Move10Feet extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.setEncoder();
-    m_subsystem.move(-.25);
+    m_subsystem.move(-.20);
     m_subsystem.getEncoder();
   }
 

@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.Deadband;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -21,7 +22,10 @@ import java.util.function.DoubleSupplier;
  */
 public class ExampleCommand extends CommandBase {
   Constants constant = new Constants();
-
+  private double setPoint = 0;
+  private double prevError = 0;
+  public double timer;
+  private double sumError = 0;
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivebase m_subsystem;
   private final DoubleSupplier m_left;
@@ -30,6 +34,7 @@ public class ExampleCommand extends CommandBase {
 
   private BooleanSupplier bumperRight;
   private BooleanSupplier bumperLeft;
+  private BooleanSupplier pid;
   private XboxController gamePad;
   private Deadband dead;
   private double req = 0;
@@ -39,6 +44,11 @@ public class ExampleCommand extends CommandBase {
 
   private double rampLeft = 0;
   private double rampRight = 0;
+  private double driveP = constant.chargeP;
+  private double driveI = constant.chargeI;
+  private double driveD = constant.chargeD;
+
+  private double div;
 
   /**
    * Creates a new ExampleCommand.
@@ -49,6 +59,7 @@ public class ExampleCommand extends CommandBase {
     Drivebase subsystem, 
     DoubleSupplier left, 
     DoubleSupplier right,
+    BooleanSupplier pid,
     BooleanSupplier bumperRight,
     BooleanSupplier bumperLeft
 ) {
@@ -56,6 +67,7 @@ public class ExampleCommand extends CommandBase {
     m_subsystem = subsystem;
     this.bumperRight = bumperRight;
     this.bumperLeft = bumperLeft;
+    this.pid = pid;
     this.m_left = right;
     this.m_right = left;
     power = new PowerDistribution();
@@ -73,53 +85,23 @@ public class ExampleCommand extends CommandBase {
   public void initialize() {
 
     m_subsystem.setBrake();
-  }
-  
-  public double rampFunction(double requested, double current) {
-  //   req = requested; // from joystick -1 to 1
-  //   double outPut = 0.0;
-  //   delta = .01; // max change to speed
-    
-  //   //currentent = m_subsystem.RightGetSpeed(); // currentent motor voltage, -1 to 1
-  // if (req > 0 && current > 0) {
-  //   if( req > current) {
-  //     if (current + delta > req) {
-	//       outPut = req;
-  //     }
-  //     else {
-  //       outPut = current + delta;
-  //     }
-  //   }
-  //   else {
-  //     outPut = req;
-  //   }
-  // }
-  // req -1
-  // current -.5 - -.75
-  // else if (req < 0 && current < 0){
-  //   if (req < current) {
-  //     if (current - delta < req) {
-  //       outPut = current - delta;
-  //     }
-  //     else {
-  //       outPut = req;
-  //     }
-  //   }
-  //   else {
-  //     outPut = req;
-  //   }
-  // }
-  // else { // signs are opposite
-  //   outPut = 0;
-  // }
-  // System.out.println(" outPut; " + outPut);
-  return 2;
+    SmartDashboard.putNumber("driveI", constant.chargeI);
+    SmartDashboard.putNumber("driveD", constant.chargeD);
 
+    SmartDashboard.putNumber("driveP", constant.chargeP);
+
+    
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    driveP = SmartDashboard.getNumber("driveP", constant.chargeP);
+    driveI = SmartDashboard.getNumber("driveI", constant.chargeI);
+    driveD = SmartDashboard.getNumber("driveI", constant.chargeD);
+
+
     //System.out.println(m_subsystem.getEncoder());
     double slowsModifier = constant.slowSpeed;
     double mediumModifier = constant.mediumSpeed;
@@ -130,11 +112,7 @@ public class ExampleCommand extends CommandBase {
     double Joystickx = this.m_left.getAsDouble();
     double Joysticky = this.m_right.getAsDouble();
     
-    // rampLeft = rampFunction(Joystickx, rampLeft);
-    // rampRight = rampFunction(Joystickx, rampRight);
-   
-
-
+  
     if ( true == bumperLeft.getAsBoolean()) {
 
       m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * slowsModifier, -slowsModifier * dead.deadBand(Joysticky, deadBand));
@@ -144,8 +122,34 @@ public class ExampleCommand extends CommandBase {
       m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * 1, -1* dead.deadBand(Joysticky, deadBand));
 
     }
+     else if( true == pid.getAsBoolean()) {
+      
+      double curPos = m_subsystem.degree();
+      double error = setPoint - curPos;
+      if( error > -10 && error < 10) {
+        m_subsystem.move(0);
+      } 
+      else{
+      prevError = error;
+      sumError += error;
+      SmartDashboard.putNumber("erro", error);
+      SmartDashboard.putNumber("sumerro", sumError);
+      double div = prevError - error;
+      sumError = MathUtil.clamp(sumError, -15, 15);
+      double power = (error * driveP)+(sumError * driveI)+(div * driveD);
+      
+
+     SmartDashboard.putNumber("power", power);
+  
+   
+    // sumError = MathUtil.clamp(sumError, -15, 15);
+     power = MathUtil.clamp(power, -.3, .3);
+
+     m_subsystem.move(-power);
+      } 
+    }
     else {
-      //ystem.out.println(speedLeft);
+      //System.out.println(speedLeft);
     m_subsystem.tankDrive(-1 * dead.deadBand(Joystickx, deadBand) * mediumModifier, -.40* dead.deadBand(Joysticky, deadBand));
     }
   }

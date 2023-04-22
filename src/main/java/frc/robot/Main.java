@@ -12,7 +12,16 @@ import edu.wpi.first.wpilibj.RobotBase;
  * call.
  */
 public final class Main {
-  private Main() {}
+  private Main() {
+
+    // Made By 
+    // Nicholas Minch, 
+    // Miles Adam, 
+    // Jaden ( maybe), 
+    // Phill ( maybe), 
+    // Bobby, 
+    // Jim wright
+  }
 
   /**
    * Main initialization function. Do not perform any initialization here.

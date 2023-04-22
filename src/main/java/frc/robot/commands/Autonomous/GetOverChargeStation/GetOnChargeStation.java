@@ -33,7 +33,11 @@ public class GetOnChargeStation extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  
+    SmartDashboard.putNumber("P", constant.chargeP);
+    SmartDashboard.putNumber("I", constant.chargeI);
+
+    m_subsystem.setBrake();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,7 +49,10 @@ public class GetOnChargeStation extends CommandBase {
 
    double curPos = m_subsystem.degree();
     double error = setPoint - curPos;
-
+    if( error > -1.5 && error < 1.5) {
+      m_subsystem.move(0);
+    } 
+    else{
     prevError = error;
     sumError += error;
     SmartDashboard.putNumber("erro", error);
@@ -53,9 +60,8 @@ public class GetOnChargeStation extends CommandBase {
 
 
 
-    //double div = prevError - error;
-    double power = (error * constant.chargeP )+(sumError * constant.chargeI);
-   //+(div * constant.ElevatorD)+(sumError * constant.ElevatorI);
+    double div = prevError - error;
+    double power = (error * constant.chargeP )+(sumError * constant.chargeI)+(div * constant.chargeD);
 
    SmartDashboard.putNumber("power", power);
 
@@ -73,6 +79,7 @@ public class GetOnChargeStation extends CommandBase {
   //   }
 
    m_subsystem.move(-power);
+  }
   }
 //1 feet = 45 tick
   // Called once the command ends or is interrupted.
